@@ -11,6 +11,15 @@ This repository provides **standardized user story templates** for GitHub Copilo
 5. **API** - API endpoint and backend stories
 6. **ISSUE** - Process/design decisions and discussions
 
+## 🎨 Design System
+
+**Figma Design System (DHCW Design System V2):**
+https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0
+
+Use this design system when creating UI stories. Reference design components, patterns, and accessibility guidelines from this Figma file.
+
+---
+
 ## 🚀 Quick Start
 
 ### For First-Time Users
@@ -19,6 +28,7 @@ This repository provides **standardized user story templates** for GitHub Copilo
 2. Read `README.md` (this file)
 3. Review the `/examples` folder to see complete story examples
 4. Use the appropriate template from `/templates` folder
+5. Reference the Figma design system for UI stories
 
 ### Using with GitHub Copilot
 
