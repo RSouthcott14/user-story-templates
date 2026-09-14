@@ -35,7 +35,8 @@ Use this design system when creating UI stories. Reference design components, pa
 When you want to generate a user story, provide:
 1. **Story Type** (UI / BUG / ENABLER / SPIKE / API / ISSUE)
 2. **Input/Context** (feature description, design, requirements)
-3. **Reference the template**: "Use the [STORY_TYPE] template from this repo"
+3. **Feature ID** for Azure DevOps linking (e.g., "577034")
+4. **Reference the template**: "Use the [STORY_TYPE] template from this repo"
 
 **Example Prompt:**
 ```
@@ -43,7 +44,17 @@ Generate a UI user story using the template in this repo.
 Context: A clinical assessment page where users select a scoring tool (FourMats or Centor).
 The page has radio buttons, validation on continue, and must be WCAG 2.1 AA compliant.
 Use Figma design at [link].
+Feature ID: 577034 (for Azure DevOps linking)
 ```
+
+### Creating in Azure DevOps
+
+**Important:** Every user story created in Azure DevOps must be linked to a parent feature.
+
+When requesting story creation, include:
+- **Feature ID** — The feature this story belongs to (e.g., "577034")
+- Stories will be automatically linked as **Parent → User Story** relationship
+- See `DEVOPS-WORK-ITEM-STRUCTURE.md` for linking guidelines
 
 ## 📁 Repository Structure
 
@@ -71,6 +82,9 @@ user-story-templates/
 │   ├── SCENARIO-NUMBERING.md          # Scenario numbering best practices
 │   ├── GHERKIN-FORMAT.md              # Gherkin (Given/When/Then) guide
 │   └── ACCESSIBILITY-CHECKLIST.md     # WCAG 2.1 AA requirements
+├── WORKFLOW.md                        # Story generation & creation workflow
+├── DEVOPS-WORK-ITEM-STRUCTURE.md      # Azure DevOps linking requirements
+├── COMPONENTS.md                      # Design system component reference
 └── .github/
     └── copilot-instructions.txt       # Instructions for Copilot
 ```
