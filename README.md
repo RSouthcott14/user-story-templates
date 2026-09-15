@@ -61,6 +61,7 @@ When requesting story creation, include:
 ```
 user-story-templates/
 ├── README.md                          # This file
+├── APPLICATION-CONTEXT.md             # Choose Pharmacy services overview
 ├── COPILOT-INSTRUCTIONS.md            # Prompting guide for consistent output
 ├── IMPROVEMENTS-AND-NOTES.md          # Suggested enhancements
 ├── templates/
@@ -84,7 +85,7 @@ user-story-templates/
 │   └── ACCESSIBILITY-CHECKLIST.md     # WCAG 2.1 AA requirements
 ├── WORKFLOW.md                        # Story generation & creation workflow
 ├── DEVOPS-WORK-ITEM-STRUCTURE.md      # Azure DevOps linking requirements
-├── COMPONENTS.md                      # Design system component reference
+├── COMPONENTS.md                      # Design system component reference (31 DHCW components)
 └── .github/
     └── copilot-instructions.txt       # Instructions for Copilot
 ```
@@ -245,6 +246,25 @@ Key Requirements:
 - [Requirement 1]
 - [Requirement 2]
 ```
+
+---
+
+## 📚 Application Context
+
+**See `APPLICATION-CONTEXT.md` for:**
+- Choose Pharmacy NextGen overview and purpose
+- All 7 services: CAS, STTT, UTI, DMR, EMS, Contraception, Independent Prescribers
+- 28 Common Ailments supported
+- User roles and responsibilities
+- Data integration points
+- Key metrics and outcomes
+- Clinical workflow pathways
+
+**Use this when creating stories to:**
+- Understand the clinical context
+- Reference correct service pathways
+- Identify appropriate user roles
+- Ensure clinical accuracy in acceptance criteria
 
 ---
 
