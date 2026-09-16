@@ -26,7 +26,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If a component node is not yet verified in `COMPONENTS.md`, name the component but do not use the generic Figma file URL as a direct component link.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If `COMPONENTS.md` only lists the DHCW Design System V2 file for a component, name the component and reference the design system file rather than calling it a direct component link.
 ```
 
 **Example:**
@@ -49,7 +49,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If a component node is not yet verified in `COMPONENTS.md`, name the component but do not use the generic Figma file URL as a direct component link.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If `COMPONENTS.md` only lists the DHCW Design System V2 file for a component, name the component and reference the design system file rather than calling it a direct component link.
 ```
 
 ---

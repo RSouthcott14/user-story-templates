@@ -19,11 +19,36 @@ When writing acceptance criteria for UI stories:
 - **Variants** — Available sizes/states
 - **Usage** — When to use (and when NOT to use)
 - **Accessibility** — WCAG 2.1 AA requirements
-- **Figma Link** — Direct verified component link when available; if a component node is not yet verified, copy the exact node link from Figma before adding it to a user story
+- **Figma Link** — Direct verified component link when available; otherwise reference the DHCW Design System V2 file and name the component in the story
 
 ---
 
 ## 🎨 DHCW Design System Components
+
+### Supplied DHCW node links
+- [Node 6057:4008](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4008)
+- [Node 6010:5423](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6010-5423)
+- [Node 6082:938](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6082-938)
+- [Node 4008:142](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-142)
+- [Node 6057:4585](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4585)
+- [Node 6247:9566](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9566)
+- [Node 6247:9567](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9567)
+- [Node 6247:9568](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9568)
+- [Node 7785:6796](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=7785-6796)
+- [Node 6057:4589](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4589)
+- [Node 6057:4590](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4590)
+- [Node 6058:4625](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6058-4625)
+- [Node 6610:4602](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6610-4602)
+- [Node 6242:6391](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6242-6391)
+- [Node 6248:5583](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6248-5583)
+- [Node 6248:5399](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6248-5399)
+- [Node 6164:79](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-79)
+- [Node 6218:4824](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6218-4824)
+- [Node 6165:80](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6165-80)
+- [Node 6219:549](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6219-549)
+- [Node 6823:4477](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6823-4477)
+- [Node 6010:5349](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6010-5349)
+- [Node 6362:4927](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6362-4927)
 
 ### 1. Action Link
 - **What it does:** Link styled as an action/button for secondary interactions
@@ -47,22 +72,22 @@ When writing acceptance criteria for UI stories:
 
 ### 5. Checkboxes
 - **What it does:** Select multiple options from a list
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Checkboxes node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Multiple selections, optional fields
 
 ### 6. Cards
 - **What it does:** Contained unit of related content
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Cards node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Grid layouts, featured content, modular content blocks
 
 ### 7. Details
 - **What it does:** Expandable/collapsible details component
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Details node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Progressive disclosure, optional content
 
 ### 8. Date Input
 - **What it does:** Date picker or date input field
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Date Input node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Date selection in forms
 
 ### 9. Expander
@@ -72,67 +97,67 @@ When writing acceptance criteria for UI stories:
 
 ### 10. Error Summary
 - **What it does:** Display validation errors and form issues
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Error Summary node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Form validation feedback, error reporting
 
 ### 11. File Upload
 - **What it does:** File upload component for document/file selection
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — File Upload node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Document upload, file attachment
 
 ### 12. Footer
 - **What it does:** Application footer with links and information
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Footer node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Page footer, footer links, company info
 
 ### 13. Header
 - **What it does:** Application header/navigation bar
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Header node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Main navigation, branding, user controls
 
 ### 14. Important Information
 - **What it does:** Highlight critical information or warnings
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Important Information node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Important alerts, critical messages, warnings
 
 ### 15. Inset Text
 - **What it does:** Visually distinct text block for important notes
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Inset Text node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Help text, tips, notes to users
 
 ### 16. Notification Banners
 - **What it does:** Display notifications, alerts, and messages
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Notification Banners node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Success/error/info/warning messages, system notifications
 
 ### 17. Pagination
 - **What it does:** Navigate between pages of content
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Pagination node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Lists with 20+ items, search results
 
 ### 18. Panel
 - **What it does:** Container for grouped content or sidebar
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Panel node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Content grouping, sidebar panels, containers
 
 ### 19. Radios
 - **What it does:** Select one option from a mutually exclusive list
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Radios node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Single selection, radio button groups
 
 ### 20. Select
 - **What it does:** Dropdown/select component for option selection
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Select node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Dropdown lists, 5+ options, space-constrained layouts
 
 ### 21. Site Navigation
 - **What it does:** Main site/application navigation structure
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Site Navigation node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Main app navigation, navigation menus
 
 ### 22. Skip Link
 - **What it does:** Accessibility link to skip to main content
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Skip Link node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Keyboard navigation accessibility
 
 ### 23. Summary List
@@ -142,17 +167,17 @@ When writing acceptance criteria for UI stories:
 
 ### 24. Table
 - **What it does:** Display structured tabular data
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Table node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Data comparison, structured data, sortable/filterable lists
 
 ### 25. Textarea
 - **What it does:** Multi-line text input for longer content
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Textarea node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Comments, descriptions, notes, longer text input
 
 ### 26. Tabs
 - **What it does:** Switch between content panels using tab navigation
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Tabs node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Multiple related content sections, dashboard pages
 
 ### 27. Tag
@@ -162,22 +187,22 @@ When writing acceptance criteria for UI stories:
 
 ### 28. Text Input
 - **What it does:** Single-line text input for user data entry
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Text Input node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Email, username, search, single-line text input
 
 ### 29. Time Out
 - **What it does:** Session timeout/timeout warning component
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Time Out node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Session management, timeout warnings
 
 ### 30. Warning Callouts
 - **What it does:** Highlight warning information
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Warning Callouts node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Warning messages, important notices
 
 ### 31. Warning Text
 - **What it does:** Warning text styling for cautionary messages
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0) — Warning Text node not yet verified
+- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
 - **Usage:** Warning messages, cautionary text
 
 ---
