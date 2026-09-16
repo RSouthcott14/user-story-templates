@@ -42,12 +42,12 @@ When writing acceptance criteria for UI stories:
 
 ### 4. Buttons
 - **What it does:** Primary and secondary action buttons
-- **Figma:** [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-475)
 - **Usage:** Call-to-action, form submission, confirmations
 
 ### 5. Checkboxes
 - **What it does:** Select multiple options from a list
-- **Figma:** [Checkboxes](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Checkboxes](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4008)
 - **Usage:** Multiple selections, optional fields
 
 ### 6. Cards
