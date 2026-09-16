@@ -102,37 +102,37 @@ When writing acceptance criteria for UI stories:
 
 ### 16. Notification Banners
 - **What it does:** Display notifications, alerts, and messages
-- **Figma:** [Notification Banners](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Notification Banners](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6610-4602)
 - **Usage:** Success/error/info/warning messages, system notifications
 
 ### 17. Pagination
 - **What it does:** Navigate between pages of content
-- **Figma:** [Pagination](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Pagination](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9568)
 - **Usage:** Lists with 20+ items, search results
 
 ### 18. Panel
 - **What it does:** Container for grouped content or sidebar
-- **Figma:** [Panel](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Panel](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4590)
 - **Usage:** Content grouping, sidebar panels, containers
 
 ### 19. Radios
 - **What it does:** Select one option from a mutually exclusive list
-- **Figma:** [Radios](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Radios](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6058-4625)
 - **Usage:** Single selection, radio button groups
 
 ### 20. Select
 - **What it does:** Dropdown/select component for option selection
-- **Figma:** [Select](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Select](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6242-6391)
 - **Usage:** Dropdown lists, 5+ options, space-constrained layouts
 
 ### 21. Site Navigation
 - **What it does:** Main site/application navigation structure
-- **Figma:** [Site Navigation](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Site Navigation](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6248-5583)
 - **Usage:** Main app navigation, navigation menus
 
 ### 22. Skip Link
 - **What it does:** Accessibility link to skip to main content
-- **Figma:** [Skip Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Skip Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6248-5399)
 - **Usage:** Keyboard navigation accessibility
 
 ### 23. Summary List
