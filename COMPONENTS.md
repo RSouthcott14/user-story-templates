@@ -137,27 +137,27 @@ When writing acceptance criteria for UI stories:
 
 ### 23. Summary List
 - **What it does:** Display key-value pairs in a summary format
-- **Figma:** [Summary List](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Summary List](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-77)
 - **Usage:** Review screens, data summaries, check your answers
 
 ### 24. Table
 - **What it does:** Display structured tabular data
-- **Figma:** [Table](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Table](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-79)
 - **Usage:** Data comparison, structured data, sortable/filterable lists
 
 ### 25. Textarea
 - **What it does:** Multi-line text input for longer content
-- **Figma:** [Textarea](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Textarea](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6218-4824)
 - **Usage:** Comments, descriptions, notes, longer text input
 
 ### 26. Tabs
 - **What it does:** Switch between content panels using tab navigation
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Tabs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6165-80)
 - **Usage:** Multiple related content sections, dashboard pages
 
 ### 27. Tag
 - **What it does:** Visual label or tag for categorization
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Tag](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-78)
 - **Usage:** Status badges, category labels, metadata tags
 
 ### 28. Text Input
