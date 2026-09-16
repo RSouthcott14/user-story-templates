@@ -72,7 +72,7 @@ When writing acceptance criteria for UI stories:
 
 ### 10. Error Summary
 - **What it does:** Display validation errors and form issues
-- **Figma:** [Error Summary](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Error Summary](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4585)
 - **Usage:** Form validation feedback, error reporting
 
 ### 11. File Upload
