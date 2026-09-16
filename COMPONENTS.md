@@ -25,6 +25,11 @@ When writing acceptance criteria for UI stories:
 
 ## 🎨 DHCW Design System Components
 
+### Supplied DHCW node links
+- [Node 6057:4008](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4008)
+- [Node 6010:5423](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6010-5423)
+- [Node 6082:938](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6082-938)
+
 ### 1. Action Link
 - **What it does:** Link styled as an action/button for secondary interactions
 - **Figma:** [Action Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9493)
