@@ -13,7 +13,7 @@ You provide:
 - **Feature/Page name** and context
 - **User role** who will use the feature
 - **Key requirements** or acceptance criteria
-- **Design reference** (Figma links, screenshots)
+- **Design reference** (DHCW Design System V2 Figma links, screenshots)
 - **Story type** (UI, BUG, ENABLER, SPIKE, API, ISSUE)
 
 **Example:**
@@ -36,7 +36,7 @@ Key Requirements:
 ### Step 2: Story Generated in Chat (I Draft)
 I will:
 1. ✅ Review your requirements against the template
-2. ✅ Validate components against COMPONENTS.md design system
+2. ✅ Validate components against COMPONENTS.md and DHCW Design System V2
 3. ✅ Draft the complete story with all acceptance criteria
 4. ✅ Use Gherkin format (Given/When/Then) for all scenarios
 5. ✅ Display the full story in the chat for your review
@@ -163,6 +163,8 @@ Before creation in DevOps, each story is validated for:
 
 ### Design System Compliance
 - ✅ Components exist in COMPONENTS.md
+- ✅ UI stories use `templates/UI-Template.md`
+- ✅ UI stories reference DHCW Design System V2 and canonical component links where available
 - ✅ Accessibility requirements met (WCAG 2.1 AA)
 - ✅ Color contrast verified
 - ✅ Keyboard navigation specified

@@ -22,6 +22,15 @@
 - [Story ID]: [Story Title] — [relationship: blocks/depends on/relates to]
 - [Story ID]: [Story Title]
 
+### Design Reference
+**Design system:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
+
+**Template:** [`templates/UI-Template.md`](UI-Template.md)
+
+**Component guidance:** [`COMPONENTS.md`](../COMPONENTS.md)
+
+List each DHCW component used by the story and link to its canonical Figma component reference where available. Do not introduce an unlisted component without confirming it against `COMPONENTS.md`.
+
 ---
 
 ## Acceptance Criteria
@@ -106,7 +115,7 @@ And all images have alt text: "[description]"
 - [ ] Code peer reviewed and approved
 - [ ] Unit tests written (80%+ coverage)
 - [ ] Accessibility testing completed (WCAG 2.1 AA)
-- [ ] UI matches design (Figma/mock-up)
+- [ ] UI matches DHCW Design System V2 (Figma/mock-up)
 - [ ] Browser compatibility verified (Chrome, Firefox, Safari, Edge)
 - [ ] Mobile responsiveness tested
 - [ ] Documentation updated (if applicable)

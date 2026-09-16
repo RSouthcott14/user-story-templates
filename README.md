@@ -16,7 +16,14 @@ This repository provides **standardized user story templates** for GitHub Copilo
 **Figma Design System (DHCW Design System V2):**
 https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0
 
-Use this design system when creating UI stories. Reference design components, patterns, and accessibility guidelines from this Figma file.
+Use this design system when creating UI stories. Always use the [`UI-Template`](templates/UI-Template.md), validate components against [`COMPONENTS.md`](COMPONENTS.md), and reference the relevant DHCW Design System V2 component links in the story. Canonical component links currently verified:
+
+- [Action link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9493)
+- [Back link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9492)
+- [Breadcrumbs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9495)
+- [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-475)
+- [Summary list](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-77)
+- [Tag](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-78)
 
 ---
 
@@ -28,7 +35,7 @@ Use this design system when creating UI stories. Reference design components, pa
 2. Read `README.md` (this file)
 3. Review the `/examples` folder to see complete story examples
 4. Use the appropriate template from `/templates` folder
-5. Reference the Figma design system for UI stories
+5. Use the [`UI-Template`](templates/UI-Template.md) and reference the DHCW Design System V2 for UI stories
 
 ### Using with GitHub Copilot
 
@@ -241,7 +248,7 @@ Generate a [STORY_TYPE] user story using the template in the user-story-template
 
 Title: [What you want to build]
 Context: [Background/why]
-Design Reference: [Figma link or description]
+Design Reference: DHCW Design System V2 — [Figma link or description]
 Key Requirements:
 - [Requirement 1]
 - [Requirement 2]
