@@ -77,12 +77,12 @@ When writing acceptance criteria for UI stories:
 
 ### 11. File Upload
 - **What it does:** File upload component for document/file selection
-- **Figma:** [File Upload](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [File Upload](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6925-14601)
 - **Usage:** Document upload, file attachment
 
 ### 12. Footer
 - **What it does:** Application footer with links and information
-- **Figma:** [Footer](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Footer](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9566)
 - **Usage:** Page footer, footer links, company info
 
 ### 13. Header
