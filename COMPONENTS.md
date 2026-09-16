@@ -27,22 +27,22 @@ When writing acceptance criteria for UI stories:
 
 ### 1. Action Link
 - **What it does:** Link styled as an action/button for secondary interactions
-- **Figma:** [Action Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Action Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9493)
 - **Usage:** Secondary navigation and actions throughout the interface
 
 ### 2. Back Link
 - **What it does:** Navigate back to previous page or section
-- **Figma:** [Back Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Back Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9492)
 - **Usage:** Page hierarchy navigation
 
 ### 3. Breadcrumbs
 - **What it does:** Show current location in hierarchy
-- **Figma:** [Breadcrumbs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Breadcrumbs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9495)
 - **Usage:** Deep page hierarchies, multi-level navigation
 
 ### 4. Buttons
 - **What it does:** Primary and secondary action buttons
-- **Figma:** [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-475)
 - **Usage:** Call-to-action, form submission, confirmations
 
 ### 5. Checkboxes
@@ -137,7 +137,7 @@ When writing acceptance criteria for UI stories:
 
 ### 23. Summary List
 - **What it does:** Display key-value pairs in a summary format
-- **Figma:** [Summary List](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Summary List](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-77)
 - **Usage:** Review screens, data summaries, check your answers
 
 ### 24. Table
@@ -157,7 +157,7 @@ When writing acceptance criteria for UI stories:
 
 ### 27. Tag
 - **What it does:** Visual label or tag for categorization
-- **Figma:** [Tag](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Tag](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-78)
 - **Usage:** Status badges, category labels, metadata tags
 
 ### 28. Text Input

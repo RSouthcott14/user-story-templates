@@ -137,7 +137,13 @@ And all images/icons have alt text describing the tool
 ---
 
 ## Design Reference
-[Link to Figma design or mockup showing tool selection page]
+[DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
+
+Template: [`templates/UI-Template.md`](../templates/UI-Template.md)
+
+Components: [`COMPONENTS.md`](../COMPONENTS.md)
+
+[Link to the feature-specific Figma design or mockup showing the tool selection page]
 
 ## Test Plan
 [Link to test cases created from these acceptance criteria]

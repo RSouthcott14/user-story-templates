@@ -17,7 +17,7 @@ Feature ID: [Ticket ID or leave blank]
 Page Name: [Page Title]
 User Role: [Pharmacist / Clinician / Admin]
 Context: [Brief description of why this page exists]
-Design Reference: [Figma link or description]
+Design Reference: DHCW Design System V2 — [Figma link or description]
 
 Key Requirements:
 - [Requirement 1]
@@ -26,6 +26,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links.
 ```
 
 **Example:**
@@ -48,6 +49,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links.
 ```
 
 ---
@@ -342,6 +344,8 @@ Instead of "requirements", give specific examples:
 
 ### 3. **Reference the Templates**
 Always mention "using the [STORY_TYPE]-Template from this repo". Copilot will follow the structure automatically.
+
+For UI stories, use [`templates/UI-Template.md`](templates/UI-Template.md) and the DHCW Design System V2. Validate component choices against [`COMPONENTS.md`](COMPONENTS.md) and include canonical component links where they are available.
 
 ### 4. **Specify the Format**
 Always request "Use Gherkin format (Given/When/Then)" to ensure consistent output.
