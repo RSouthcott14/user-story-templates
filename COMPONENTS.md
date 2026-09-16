@@ -52,7 +52,7 @@ When writing acceptance criteria for UI stories:
 
 ### 6. Cards
 - **What it does:** Contained unit of related content
-- **Figma:** [Cards](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Cards](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6082-938)
 - **Usage:** Grid layouts, featured content, modular content blocks
 
 ### 7. Details
