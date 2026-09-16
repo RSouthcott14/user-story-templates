@@ -26,7 +26,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 component links listed next to each component.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 reference listed next to each component.
 ```
 
 **Example:**
@@ -49,7 +49,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 component links listed next to each component.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 reference listed next to each component.
 ```
 
 ---
@@ -345,7 +345,7 @@ Instead of "requirements", give specific examples:
 ### 3. **Reference the Templates**
 Always mention "using the [STORY_TYPE]-Template from this repo". Copilot will follow the structure automatically.
 
-For UI stories, use [`templates/UI-Template.md`](templates/UI-Template.md) and the DHCW Design System V2. Validate component choices against [`COMPONENTS.md`](COMPONENTS.md) and include the component links listed next to each component.
+For UI stories, use [`templates/UI-Template.md`](templates/UI-Template.md) and the DHCW Design System V2. Validate component choices against [`COMPONENTS.md`](COMPONENTS.md) and include the design system reference listed next to each component.
 
 ### 4. **Specify the Format**
 Always request "Use Gherkin format (Given/When/Then)" to ensure consistent output.

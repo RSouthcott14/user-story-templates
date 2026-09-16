@@ -14,9 +14,9 @@ This repository provides **standardized user story templates** for GitHub Copilo
 ## 🎨 Design System
 
 **Figma Design System (DHCW Design System V2):**
-https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0
+https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2
 
-Use this design system when creating UI stories. Always use the [`UI-Template`](templates/UI-Template.md), validate components against [`COMPONENTS.md`](COMPONENTS.md), and reference the DHCW Design System V2 component links listed next to each component.
+Use this design system when creating UI stories. Always use the [`UI-Template`](templates/UI-Template.md), validate components against [`COMPONENTS.md`](COMPONENTS.md), and reference the DHCW Design System V2 link listed next to each component.
 
 ---
 

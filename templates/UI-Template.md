@@ -23,13 +23,13 @@
 - [Story ID]: [Story Title]
 
 ### Design Reference
-**Design system:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0)
+**Design system:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
 
 **Template:** [`templates/UI-Template.md`](UI-Template.md)
 
 **Component guidance:** [`COMPONENTS.md`](../COMPONENTS.md)
 
-List each DHCW component used by the story and link to the DHCW Design System V2 component reference listed in `COMPONENTS.md`. Do not introduce an unlisted component without confirming it against `COMPONENTS.md`.
+List each DHCW component used by the story and link to the DHCW Design System V2 reference listed in `COMPONENTS.md`. Do not introduce an unlisted component without confirming it against `COMPONENTS.md`.
 
 ---
 
