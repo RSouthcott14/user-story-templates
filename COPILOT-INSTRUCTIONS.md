@@ -26,7 +26,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If a component node is not yet verified in `COMPONENTS.md`, name the component but do not use the generic Figma file URL as a direct component link.
 ```
 
 **Example:**
@@ -49,7 +49,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If a component node is not yet verified in `COMPONENTS.md`, name the component but do not use the generic Figma file URL as a direct component link.
 ```
 
 ---
