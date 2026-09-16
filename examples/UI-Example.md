@@ -143,6 +143,11 @@ Template: [`templates/UI-Template.md`](../templates/UI-Template.md)
 
 Components: [`COMPONENTS.md`](../COMPONENTS.md)
 
+Used components in this story:
+- [Back Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9492)
+- [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-475)
+- [Radios](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+
 [Link to the feature-specific Figma design or mockup showing the tool selection page]
 
 ## Test Plan
