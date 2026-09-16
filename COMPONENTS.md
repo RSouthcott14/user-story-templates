@@ -67,7 +67,7 @@ When writing acceptance criteria for UI stories:
 
 ### 9. Expander
 - **What it does:** Expandable container for additional content
-- **Figma:** [Expander](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Expander](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-142)
 - **Usage:** Collapsible sections, accordion patterns
 
 ### 10. Error Summary
