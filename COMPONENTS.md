@@ -45,6 +45,9 @@ When writing acceptance criteria for UI stories:
 - [Node 6164:79](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-79)
 - [Node 6218:4824](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6218-4824)
 - [Node 6165:80](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6165-80)
+- [Node 6219:549](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6219-549)
+- [Node 6823:4477](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6823-4477)
+- [Node 6010:5349](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6010-5349)
 
 ### 1. Action Link
 - **What it does:** Link styled as an action/button for secondary interactions
