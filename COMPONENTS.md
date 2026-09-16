@@ -172,12 +172,12 @@ When writing acceptance criteria for UI stories:
 
 ### 30. Warning Callouts
 - **What it does:** Highlight warning information
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Warning Callouts](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6010-5349)
 - **Usage:** Warning messages, important notices
 
 ### 31. Warning Text
 - **What it does:** Warning text styling for cautionary messages
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Warning Text](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-6)
 - **Usage:** Warning messages, cautionary text
 
 ---
