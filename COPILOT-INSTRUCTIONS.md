@@ -26,7 +26,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If `COMPONENTS.md` only lists the DHCW Design System V2 file for a component, name the component and reference the design system file rather than calling it a direct component link.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 reference listed next to each component.
 ```
 
 **Example:**
@@ -49,7 +49,7 @@ Key Requirements:
 
 Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
 Use Gherkin format (Given/When/Then).
-Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the relevant canonical DHCW Design System V2 component links. If `COMPONENTS.md` only lists the DHCW Design System V2 file for a component, name the component and reference the design system file rather than calling it a direct component link.
+Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 reference listed next to each component.
 ```
 
 ---
@@ -345,7 +345,7 @@ Instead of "requirements", give specific examples:
 ### 3. **Reference the Templates**
 Always mention "using the [STORY_TYPE]-Template from this repo". Copilot will follow the structure automatically.
 
-For UI stories, use [`templates/UI-Template.md`](templates/UI-Template.md) and the DHCW Design System V2. Validate component choices against [`COMPONENTS.md`](COMPONENTS.md) and include canonical component links where they are available.
+For UI stories, use [`templates/UI-Template.md`](templates/UI-Template.md) and the DHCW Design System V2. Validate component choices against [`COMPONENTS.md`](COMPONENTS.md) and include the design system reference listed next to each component.
 
 ### 4. **Specify the Format**
 Always request "Use Gherkin format (Given/When/Then)" to ensure consistent output.
