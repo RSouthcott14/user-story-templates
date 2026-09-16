@@ -62,7 +62,7 @@ When writing acceptance criteria for UI stories:
 
 ### 8. Date Input
 - **What it does:** Date picker or date input field
-- **Figma:** [Date Input](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Date Input](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4583)
 - **Usage:** Date selection in forms
 
 ### 9. Expander
