@@ -27,7 +27,7 @@ When writing acceptance criteria for UI stories:
 
 ### 1. Action Link
 - **What it does:** Link styled as an action/button for secondary interactions
-- **Figma:** [Action Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Action Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9493)
 - **Usage:** Secondary navigation and actions throughout the interface
 
 ### 2. Back Link
