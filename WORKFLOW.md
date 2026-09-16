@@ -164,7 +164,7 @@ Before creation in DevOps, each story is validated for:
 ### Design System Compliance
 - ✅ Components exist in COMPONENTS.md
 - ✅ UI stories use `templates/UI-Template.md`
-- ✅ UI stories reference DHCW Design System V2 and canonical component links where available
+- ✅ UI stories reference DHCW Design System V2 and the component links listed in COMPONENTS.md
 - ✅ Accessibility requirements met (WCAG 2.1 AA)
 - ✅ Color contrast verified
 - ✅ Keyboard navigation specified

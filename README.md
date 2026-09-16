@@ -16,15 +16,7 @@ This repository provides **standardized user story templates** for GitHub Copilo
 **Figma Design System (DHCW Design System V2):**
 https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=0-1&p=f&t=gJFnGjUAnCoFKNFr-0
 
-Use this design system when creating UI stories. Always use the [`UI-Template`](templates/UI-Template.md), validate components against [`COMPONENTS.md`](COMPONENTS.md), and reference the relevant DHCW Design System V2 component links in the story. Canonical component links currently verified:
-
-- [Action link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9493)
-- [Back link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9492)
-- [Breadcrumbs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9495)
-- [Buttons](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008-475)
-- [Expander](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=4008%3A477&p=f&t=XLKMNx830YHG118W-0)
-- [Summary list](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-77)
-- [Tag](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6164-78)
+Use this design system when creating UI stories. Always use the [`UI-Template`](templates/UI-Template.md), validate components against [`COMPONENTS.md`](COMPONENTS.md), and reference the DHCW Design System V2 component links listed next to each component.
 
 ---
 
