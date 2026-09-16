@@ -162,12 +162,12 @@ When writing acceptance criteria for UI stories:
 
 ### 28. Text Input
 - **What it does:** Single-line text input for user data entry
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Text Input](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6219-549)
 - **Usage:** Email, username, search, single-line text input
 
 ### 29. Time Out
 - **What it does:** Session timeout/timeout warning component
-- **Figma:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Time Out](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6823-4477)
 - **Usage:** Session management, timeout warnings
 
 ### 30. Warning Callouts
