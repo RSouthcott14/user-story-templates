@@ -57,7 +57,7 @@ When writing acceptance criteria for UI stories:
 
 ### 7. Details
 - **What it does:** Expandable/collapsible details component
-- **Figma:** [Details](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Details](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6082-938)
 - **Usage:** Progressive disclosure, optional content
 
 ### 8. Date Input
