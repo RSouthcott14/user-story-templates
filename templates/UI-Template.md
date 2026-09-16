@@ -29,7 +29,7 @@
 
 **Component guidance:** [`COMPONENTS.md`](../COMPONENTS.md)
 
-List each DHCW component used by the story and link to its canonical Figma component reference where available. If a component node is marked as not yet verified in `COMPONENTS.md`, name the component and the DHCW Design System V2 file, but do not present the generic file URL as a direct component link. Do not introduce an unlisted component without confirming it against `COMPONENTS.md`.
+List each DHCW component used by the story and link to its canonical Figma component reference where available. If `COMPONENTS.md` only lists the DHCW Design System V2 file for a component, name the component and reference the design system file rather than calling it a direct component link. Do not introduce an unlisted component without confirming it against `COMPONENTS.md`.
 
 ---
 
