@@ -87,17 +87,17 @@ When writing acceptance criteria for UI stories:
 
 ### 13. Header
 - **What it does:** Application header/navigation bar
-- **Figma:** [Header](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Header](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9567)
 - **Usage:** Main navigation, branding, user controls
 
 ### 14. Important Information
 - **What it does:** Highlight critical information or warnings
-- **Figma:** [Important Information](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Important Information](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=7785-6796)
 - **Usage:** Important alerts, critical messages, warnings
 
 ### 15. Inset Text
 - **What it does:** Visually distinct text block for important notes
-- **Figma:** [Inset Text](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Inset Text](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6057-4589)
 - **Usage:** Help text, tips, notes to users
 
 ### 16. Notification Banners
