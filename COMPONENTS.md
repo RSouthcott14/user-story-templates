@@ -32,12 +32,12 @@ When writing acceptance criteria for UI stories:
 
 ### 2. Back Link
 - **What it does:** Navigate back to previous page or section
-- **Figma:** [Back Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Back Link](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9492)
 - **Usage:** Page hierarchy navigation
 
 ### 3. Breadcrumbs
 - **What it does:** Show current location in hierarchy
-- **Figma:** [Breadcrumbs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
+- **Figma:** [Breadcrumbs](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=6247-9495)
 - **Usage:** Deep page hierarchies, multi-level navigation
 
 ### 4. Buttons
