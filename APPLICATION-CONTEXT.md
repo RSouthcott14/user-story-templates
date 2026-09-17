@@ -258,6 +258,43 @@ The CCM journey refers to the user interface and workflow for managing clinical 
 
 ---
 
+## 🔐 User Authentication
+
+**Choose Pharmacy** will use **Microsoft Entra ID (formerly Azure Active Directory)** as its identity provider for authentication. This approach provides a single, centrally managed identity for all users, allowing organisations such as NWSSP to provision and manage pharmacy staff accounts while enabling Choose Pharmacy to consume identity information without maintaining a separate username and password store.
+
+### Authentication Process
+
+1. **User accesses Choose Pharmacy**
+    - A pharmacist, pharmacy technician, trainee pharmacist, or other authorised user navigates to Choose Pharmacy.
+    - The application detects that the user is unauthenticated and redirects them to Microsoft Entra ID
+
+2. **User signs in using Entra ID**
+    - The user enters their organisational credentials.
+    - Entra ID validates the credentials and applies any configured security controls such as:
+        - Multi-Factor Authentication (MFA)
+        - Conditional Access Policies
+        - Password Protection Policies
+        - Risk-based authentication
+
+3. **Authentication token issued**
+    - Upon successful authentication, Entra ID issues:
+        - An **ID Token** containing the authenticated user's identity.
+        - An **Access Token** that can be used to call Microsoft Graph APIs.
+
+4. **Choose Pharmacy validates the token**
+    - The application verifies:
+        - Token signature
+        - Issuing authority
+        - Audience
+        - Expiry date/time
+    - Once validated, the user is considered authenticated.
+
+5. **User profile retrieval**
+    - Choose Pharmacy then uses the Graph API Access Token to retrieve user attributes from Microsoft Graph.
+    - These attributes are used to create or update the user's profile within Choose Pharmacy.
+
+---
+
 ## 👥 User Roles
 
 ### Pharmacy User (Community Pharmacist)
