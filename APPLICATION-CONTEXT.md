@@ -400,38 +400,92 @@ This ensures that clinical documentation created by community pharmacy services 
 
 ## 👥 User Roles
 
-### Pharmacy User (Community Pharmacist)
+### Pharmacist (GPHC starts with 2)
 
-**Permissions:**
-- Access to assigned pharmacy records
-- Record consultations for all applicable services
-- Access to Welsh GP record (where eligible)
-- Generate referrals and summaries
-- Dispense medicines
-- Create patient history records
+Can:
 
-**Responsibilities:**
-- Clinical assessment of patients
-- Appropriate service pathway selection
-- Accurate consultation recording
-- Appropriate referrals
-- GP communication
+- Create, view, update and complete consultations.
+- Access patient records required for the consultation process.
+- Record clinical interventions.
+- Supply medicines where permitted by service rules.
+- Prescribe medicines if they have appropriate permissions
+- Access pharmacy-level operational reports.
+- Manage delegated tasks.
 
-### Pharmacy Manager
+Cannot:
 
-**Permissions:**
-- View pharmacy performance metrics
-- Manage staff and access levels
-- Configure pharmacy settings
-- View pharmacy reports
+- Manage user permissions.
+- Modify system configuration.
 
-### GP / Medical Records Team
+### Pharmacy Technician (GPHC Starts with 5)
 
-**Permissions:**
-- View consultation summaries
-- Access referral letters
-- Update GP records with pharmacy actions
-- Review DMR submissions
+Can:
+
+- Create and update specific consultations (DMR and CS)
+- Record patient information.
+- Perform workflow activities permitted by service rules.
+- View pharmacy operational reports.
+
+Cannot:
+
+- Complete activities restricted to a Pharmacist.
+- Manage users or system settings.
+
+### Trainee Pharmacist (GPHC Starts with 4)
+
+Can:
+
+- Create and update consultations under supervision.
+- Record Patient Information
+- Perform workflow activities permitted by service rules.
+
+Cannot:
+
+- Complete consultations requiring pharmacist authorisation.
+- Access restricted reporting or administration functionality.
+
+### Superintendent Pharmacist
+
+Can:
+
+- View all consultations across pharmacies they are responsible for.
+- Access contractual, performance, quality, and payment reports.
+- Monitor service utilisation and compliance metrics.
+- Review audit and governance reports.
+- Perform me functions as Pharmacist role
+
+Cannot:
+
+- Modify platform-wide configuration.
+
+### Pharmacy Administrator
+
+Can:
+
+- Manage pharmacy demographic information.
+- View reports (Non Clinical Information)
+- Support local user administration where delegated.
+
+Cannot:
+
+- Access clinical consultation functions.
+- View patient clinical records 
+- View patient history
+- Access WGPR
+
+### System Administrator (DHCW)
+
+Can:
+
+- Configure system settings.
+- Support diagnostics and operational management.
+- Manage reference data and environment configuration.
+- Access audit monitoring tools.
+- Make changes to the auto applied user permissions
+
+Cannot:
+
+- Undertake clinical activities as a pharmacy user unless given that function via override for support/testing purposes
 
 ---
 
