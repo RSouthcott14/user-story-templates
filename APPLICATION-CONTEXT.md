@@ -306,25 +306,25 @@ To support the delivery of safe and effective patient care, Choose Pharmacy retr
 Information available through the WGPR typically includes:
 
 - **Patient demographics**
-    - Name
-    - Address
-    - Contact details
+- Name
+- Address
+- Contact details
 - **GP registration details**
-    - Registered GP Practice
+- Registered GP Practice
 - **Medication information**
-    - Current medications
-    - Medications prescribed within the previous two years
+- Current medications
+- Medications prescribed within the previous two years
 - **Allergies and adverse drug reactions**
 - **Clinical problems and diagnoses**
-    - Current health conditions
-    - Significant past medical history
+- Current health conditions
+- Significant past medical history
 - **Recent test results**
-    - Blood test results
-    - X-ray and other diagnostic results from the previous year
+- Blood test results
+- X-ray and other diagnostic results from the previous year
 - **Procedures and preventative care**
-    - Operations
-    - Vaccinations
-    - Immunisations
+- Operations
+- Vaccinations
+- Immunisations
 
 ### Shared Medicines Record (SMR)
 
@@ -354,21 +354,21 @@ The **Care Data Repository (CDR)** provides demographic and reference data to su
 Choose Pharmacy uses the CDR for:
 
 - **Retrieval of patient demographics**
-    - NHS Number
-    - Name
-    - Date of Birth
-    - Gender
-    - Address and contact information (where available)
+- NHS Number
+- Name
+- Date of Birth
+- Gender
+- Address and contact information (where available)
 - **Creation and maintenance of patient demographic records**
-    - Where a patient cannot be traced through an NHS Number match, Choose Pharmacy may create a provisional ("Bronze") patient record within the CDR.
+- Where a patient cannot be traced through an NHS Number match, Choose Pharmacy may create a provisional ("Bronze") patient record within the CDR.
 - **Retrieval of pharmacy organisation information**
-    - Organisation name
-    - Organisation code
-    - Associated Health Board
+- Organisation name
+- Organisation code
+- Associated Health Board
 - **Retrieval of GP organisation information**
-    - GP Practice name
-    - GP Practice code
-    - Associated Health Board
+- GP Practice name
+- GP Practice code
+- Associated Health Board
 
 **Choose Pharmacy does not use the CDR as a source of clinical information.** Its use is limited to demographic and organisational data required for patient identification, record matching and service administration.
 
