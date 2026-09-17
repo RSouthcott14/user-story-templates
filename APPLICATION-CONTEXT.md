@@ -295,6 +295,109 @@ The CCM journey refers to the user interface and workflow for managing clinical 
 
 ---
 
+## 📋 Clinical Information Retrieval
+
+To support the delivery of safe and effective patient care, Choose Pharmacy retrieves information from a number of national clinical systems across NHS Wales. These systems provide access to patient demographics, clinical records, medicines information, referral data, discharge notifications and clinical documents.
+
+### Welsh GP Record (WGPR)
+
+**EMIS (Egton Medical Information Systems)** provides access to the patient's Welsh GP Record (WGPR), which contains a summary of key information from the patient's GP record.
+
+Information available through the WGPR typically includes:
+
+- **Patient demographics**
+    - Name
+    - Address
+    - Contact details
+- **GP registration details**
+    - Registered GP Practice
+- **Medication information**
+    - Current medications
+    - Medications prescribed within the previous two years
+- **Allergies and adverse drug reactions**
+- **Clinical problems and diagnoses**
+    - Current health conditions
+    - Significant past medical history
+- **Recent test results**
+    - Blood test results
+    - X-ray and other diagnostic results from the previous year
+- **Procedures and preventative care**
+    - Operations
+    - Vaccinations
+    - Immunisations
+
+### Shared Medicines Record (SMR)
+
+The **Shared Medicines Record (SMR)** provides a consolidated view of medicines information from across NHS Wales, supporting medicines reconciliation, prescribing decisions and clinical safety checks.
+
+Information available through the SMR includes:
+
+- Current medicines prescribed to the patient
+- Historic medicines and recent medication changes
+- Prescribing information from primary and secondary care settings
+- Medicines administration information, including medicines administered during hospital admissions
+- Hospital discharge medicines
+- Allergies
+- Intolerances and adverse reactions
+
+The SMR aggregates structured medicines information from:
+
+- GP clinical systems
+- Hospital Electronic Prescribing and Medicines Administration (ePMA) systems
+- Electronic Prescription Service (EPS)
+- Other participating NHS Wales medicines systems
+
+### Care Data Repository (CDR)
+
+The **Care Data Repository (CDR)** provides demographic and reference data to support patient identification, patient matching and organisation lookups.
+
+Choose Pharmacy uses the CDR for:
+
+- **Retrieval of patient demographics**
+    - NHS Number
+    - Name
+    - Date of Birth
+    - Gender
+    - Address and contact information (where available)
+- **Creation and maintenance of patient demographic records**
+    - Where a patient cannot be traced through an NHS Number match, Choose Pharmacy may create a provisional ("Bronze") patient record within the CDR.
+- **Retrieval of pharmacy organisation information**
+    - Organisation name
+    - Organisation code
+    - Associated Health Board
+- **Retrieval of GP organisation information**
+    - GP Practice name
+    - GP Practice code
+    - Associated Health Board
+
+**Choose Pharmacy does not use the CDR as a source of clinical information.** Its use is limited to demographic and organisational data required for patient identification, record matching and service administration.
+
+### Discharge Advice Letter (DAL) Service
+
+The **FIORANO DAL Service** delivers discharge notifications into Choose Pharmacy, supporting post-discharge services such as Medicines Review and Discharge Medicines Review workflows.
+
+Discharge notifications include:
+
+- Patient NHS Number
+- NDR Super Session ID
+
+These identifiers enable Choose Pharmacy to retrieve the associated discharge documentation and link the information to the correct patient record.
+
+### Welsh Care Records Service (WCRS)
+
+The **Welsh Care Records Service (WCRS)** is used for the storage and retrieval of clinical documents.
+
+Choose Pharmacy uses WCRS to:
+
+- Search for patient documents
+- Retrieve patient documents
+- Write clinical documents generated within Choose Pharmacy
+- Store consultation summaries and associated clinical records where required
+
+This ensures that clinical documentation created by community pharmacy services can be shared securely with other authorised healthcare professionals involved in the patient's care.
+
+---
+
 ## 👥 User Roles
 
 ### Pharmacy User (Community Pharmacist)
