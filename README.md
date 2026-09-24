@@ -63,14 +63,13 @@ user-story-templates/
 ├── README.md                          # This file
 ├── APPLICATION-CONTEXT.md             # Choose Pharmacy services overview
 ├── COPILOT-INSTRUCTIONS.md            # Prompting guide for consistent output
-├── IMPROVEMENTS-AND-NOTES.md          # Suggested enhancements
 ├── templates/
 │   ├── UI-Template.md                 # UI story template
 │   ├── BUG-Template.md                # Bug template
 │   ├── ENABLER-Template.md            # Enabler template
-│   ├── SPIKE-Template.md              # Spike template (IMPROVED)
-│   ├── API-Template.md                # API template (IMPROVED)
-│   └── ISSUE-Template.md              # Issue template (IMPROVED)
+│   ├── SPIKE-Template.md              # Spike template
+│   ├── API-Template.md                # API template
+│   └── ISSUE-Template.md              # Issue template
 ├── examples/
 │   ├── UI-Example.md                  # Complete UI story example
 │   ├── BUG-Example.md                 # Complete Bug example
@@ -83,11 +82,14 @@ user-story-templates/
 │   ├── SCENARIO-NUMBERING.md          # Scenario numbering best practices
 │   ├── GHERKIN-FORMAT.md              # Gherkin (Given/When/Then) guide
 │   └── ACCESSIBILITY-CHECKLIST.md     # WCAG 2.1 AA requirements
+├── api-standards/
+│   ├── README.md                      # Index of API standards
+│   └── PATH-CONVENTIONS.md            # Base path, versioning, resource groups, HTTP methods
 ├── WORKFLOW.md                        # Story generation & creation workflow
 ├── DEVOPS-WORK-ITEM-STRUCTURE.md      # Azure DevOps linking requirements
 ├── COMPONENTS.md                      # Design system component reference (31 DHCW components)
 └── .github/
-    └── copilot-instructions.txt       # Instructions for Copilot
+    └── copilot-instructions.md        # Auto-loaded instructions for GitHub Copilot
 ```
 
 ## 📖 Using Each Template
@@ -246,6 +248,21 @@ Key Requirements:
 - [Requirement 1]
 - [Requirement 2]
 ```
+
+---
+
+## 🔧 API Standards
+
+**See `api-standards/` for:**
+- Base path and versioning conventions (`/api/v1/`)
+- Resource group structure and patient-scoped path patterns
+- HTTP method usage
+- Path segment naming style
+
+**Use this when creating API stories to:**
+- Ensure endpoint paths follow the established pattern
+- Correctly scope patient vs non-patient resources
+- Apply the right HTTP method for the operation
 
 ---
 
