@@ -11,7 +11,7 @@ Refer to [examples/API-Example.md](../examples/API-Example.md) for a worked exam
 
 ### Endpoint Path
 
-Validate every endpoint against [api-standards/PATH-CONVENTIONS.md](../api-standards/PATH-CONVENTIONS.md) before writing the story.
+Validate every endpoint against [standards/API-PATH-CONVENTIONS.md](../standards/API-PATH-CONVENTIONS.md) before writing the story.
 
 - Base path is `/api/v1/`
 - Resource groups are **lowercase, plural, kebab-case**
@@ -24,7 +24,7 @@ If the path provided violates these rules, correct it and state why before proce
 
 ### Code Systems
 
-Refer to [api-standards/CODE-SYSTEMS.md](../api-standards/CODE-SYSTEMS.md) when deciding whether a field needs a code system.
+Refer to [standards/API-CODE-SYSTEMS.md](../standards/API-CODE-SYSTEMS.md) when deciding whether a field needs a code system.
 
 - A code system is required when a field has a **finite, predefined set of values** where each value has distinct clinical or operational meaning and drives system behaviour
 - The code system name must match the existing domain enumeration name exactly — check [ChoosePharmacy.Domain.Types](https://dev.azure.com/NHS-Wales-Digital/Choose%20Pharmacy%20NextGen/_git/ChoosePharmacy.Api?path=/src/ChoosePharmacy.Domain.Types) before writing a code system

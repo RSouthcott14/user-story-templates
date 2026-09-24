@@ -82,9 +82,10 @@ user-story-templates/
 │   ├── SCENARIO-NUMBERING.md          # Scenario numbering best practices
 │   ├── GHERKIN-FORMAT.md              # Gherkin (Given/When/Then) guide
 │   └── ACCESSIBILITY-CHECKLIST.md     # WCAG 2.1 AA requirements
-├── api-standards/
-│   ├── README.md                      # Index of API standards
-│   └── PATH-CONVENTIONS.md            # Base path, versioning, resource groups, HTTP methods
+├── standards/
+│   ├── README.md                      # Index of standards
+│   ├── API-PATH-CONVENTIONS.md        # API base path, versioning, resource groups, HTTP methods
+│   └── API-CODE-SYSTEMS.md            # API code system rules, naming, URI pattern, domain enumerations
 ├── WORKFLOW.md                        # Story generation & creation workflow
 ├── DEVOPS-WORK-ITEM-STRUCTURE.md      # Azure DevOps linking requirements
 ├── COMPONENTS.md                      # Design system component reference (31 DHCW components)
@@ -253,7 +254,7 @@ Key Requirements:
 
 ## 🔧 API Standards
 
-**See `api-standards/` for:**
+**See `standards/` for:**
 - Base path and versioning conventions (`/api/v1/`)
 - Resource group structure and patient-scoped path patterns
 - HTTP method usage

@@ -10,8 +10,8 @@ Reference documentation for how Choose Pharmacy NextGen APIs are structured. Use
 
 | File | Covers |
 |---|---|
-| [PATH-CONVENTIONS.md](PATH-CONVENTIONS.md) | Base path, versioning, resource groups, patient-scoped paths, HTTP methods, path segment style |
-| [CODE-SYSTEMS.md](CODE-SYSTEMS.md) | When to create a code system, naming rules, URI pattern, mapping to domain enumerations |
+| [API-PATH-CONVENTIONS.md](API-PATH-CONVENTIONS.md) | Base path, versioning, resource groups, patient-scoped paths, HTTP methods, path segment style |
+| [API-CODE-SYSTEMS.md](API-CODE-SYSTEMS.md) | When to create a code system, naming rules, URI pattern, mapping to domain enumerations |
 
 ---
 
