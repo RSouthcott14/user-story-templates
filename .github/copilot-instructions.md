@@ -2,6 +2,10 @@
 
 This repository contains user story templates and standards for **Choose Pharmacy NextGen** — an NHS Wales Digital (DHCW) platform for community pharmacy services across Wales.
 
+## Branch
+
+Always work on the **`main`** branch. Do not create feature branches or suggest branching strategies for this repository.
+
 ---
 
 ## API Stories
