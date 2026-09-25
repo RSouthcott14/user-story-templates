@@ -1,5 +1,3 @@
-local GW
-
 # User Story Templates for GitHub Copilot
 
 This repository provides **standardized user story templates** for GitHub Copilot to generate consistent, high-quality user stories in the same format every time.
