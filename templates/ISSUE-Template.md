@@ -1,183 +1,132 @@
-# API User Story Template
+# Issue Template
 
-## Story Type: API
+## Story Type: ISSUE
 
 ---
 
 ## Description
 
-### Story Card
-**As a** [consumer/system]  
-**I want** [API capability]  
-**So that** [business value/integration]
+### Title
+[Short, specific statement of the issue — e.g. "Should we use FluentValidation or DataAnnotations for request validation?"]
 
-### Background
-[Why is this API needed? What does it enable? Integration context?]
+### Context
+[Why has this issue been raised? What prompted the discussion? Include the feature or delivery context.]
 
-### Objective
-[Clear description of what the API endpoint provides]
+### Issue / Problem Statement
+[The specific question or problem that needs to be resolved. One clear sentence.]
 
----
-
-## Endpoint Details
-
-**HTTP Method:** [GET / POST / PUT / PATCH / DELETE]  
-**Endpoint:** `[/api/resource]`  
-**Full URL:** `[https://api.example.com/api/resource]`
-
-### Path Parameters
-- `{id}`: [Description] - [Type: string/integer]
-
-### Query Parameters
-- `filter`: [Description] - Optional
-- `limit`: [Description] - Optional
+### Current Position
+[What is true today? Is there an existing approach, or is this a net-new decision?]
 
 ---
 
-## Request
+## Considerations
 
-### Request Headers
-```
-Authorization: Bearer {token}
-Content-Type: application/json
-Accept: application/json
-```
+[Factors that must be taken into account when evaluating options — technical constraints, team capability, compliance, timelines, existing patterns in the codebase.]
 
-### Request Body (Example)
-```json
-{
-  "field1": "value1",
-  "field2": 123
-}
-```
+- [Consideration 1]
+- [Consideration 2]
+- [Consideration 3]
 
 ---
 
-## Response
+## Options
 
-### Success Response (200 OK)
-```json
-{
-  "id": "123456",
-  "status": "success",
-  "data": {
-    "field1": "value1"
-  }
-}
-```
+### Option 1: [Name]
 
-### Error Response (400 Bad Request)
-```json
-{
-  "status": "error",
-  "code": "INVALID_REQUEST",
-  "message": "Missing required field: field1"
-}
-```
+[Description of the option.]
+
+**Pros:**
+- [Pro 1]
+- [Pro 2]
+
+**Cons:**
+- [Con 1]
+- [Con 2]
 
 ---
 
-## Error Handling
+### Option 2: [Name]
 
-| Status Code | Error | Description |
-|-------------|-------|-------------|
-| 400 | INVALID_REQUEST | Missing/invalid parameters |
-| 401 | UNAUTHORIZED | Invalid credentials |
-| 403 | FORBIDDEN | No permission |
-| 404 | NOT_FOUND | Resource doesn't exist |
-| 500 | SERVER_ERROR | Server-side error |
+[Description of the option.]
 
----
+**Pros:**
+- [Pro 1]
+- [Pro 2]
 
-## Authentication & Authorization
-
-**Authentication Method:** [Bearer Token / API Key / OAuth 2.0]
-
-**Required Roles:**
-- [Role 1]: [What can they do?]
-- [Role 2]: [What can they do?]
+**Cons:**
+- [Con 1]
+- [Con 2]
 
 ---
 
-## Acceptance Criteria
+## Recommendation
 
-### Scenario 1: Success Path
-```gherkin
-Given the client has a valid token
-When a valid request is sent to [endpoint]
-Then the API returns status 200
-And the response matches the schema
-```
+**Recommended option:** Option [1 / 2]
 
-### Scenario 2: Validation
-```gherkin
-Given a request with missing required field
-When the request is sent
-Then the API returns status 400
-And appropriate error message is returned
-```
-
-### Scenario 3: Authentication
-```gherkin
-Given the client has no valid token
-When a request is sent
-Then the API returns status 401
-```
-
-### Scenario 4: Authorization
-```gherkin
-Given the client has no permission
-When a request is sent
-Then the API returns status 403
-```
-
-### Scenario 5: Data Integrity
-```gherkin
-Given a valid request
-When the API creates/updates a resource
-Then the data is persisted correctly
-And subsequent GET request returns the same data
-```
-
-### Scenario 6: Performance
-```gherkin
-Given a valid request
-When the API processes the request
-Then response time is < 200ms (95th percentile)
-```
+[Rationale — why this option is preferred given the considerations above.]
 
 ---
 
 ## Dependencies
 
-**External Services:**
-- [Service name]: [Purpose]
+- [Work item or system this decision affects]
+- [Work item or system this decision affects]
 
-**Database:**
-- [Tables/Collections]: [Which data is read/written]
+## Risks / Impact
+
+- [Risk or impact of the recommended option, or of deferring the decision]
+
+## Action Required
+
+- [ ] [Who needs to do what, by when, for this issue to be resolved]
 
 ---
 
-## Rate Limiting
-- **Limit:** 1000 requests per minute
-- **Exceeded Response:** Status 429
+## Outcome / Decision
+
+> *To be completed after the issue is resolved.*
+
+**Decision:** [The agreed option]
+**Rationale:** [Why this was chosen]
+**Date decided:** [DD/MM/YYYY]
+**Decided by:** [Names / roles]
+
+---
+
+## Acceptance Criteria
+
+### Scenario 1: Decision Made
+```gherkin
+Given the issue has been reviewed by the relevant stakeholders
+When the team reaches agreement
+Then the decision is documented in the Outcome section
+And the rationale is recorded
+And affected stakeholders are informed
+```
+
+### Scenario 2: Action Defined
+```gherkin
+Given the decision has been made
+When next steps are determined
+Then action items are clearly listed
+And an owner is assigned to each action
+And a timeline is defined
+```
+
+---
+
+## Related Work Items
+
+- [Feature / Story ID]: [Title] — [relationship]
 
 ---
 
 ## Definition of Done
 
-- [ ] Endpoint implemented per specification
-- [ ] All acceptance criteria met
-- [ ] Request/response validation working
-- [ ] Error handling implemented
-- [ ] Authentication/authorization verified
-- [ ] Unit tests passing (80%+ coverage)
-- [ ] Integration tests passing
-- [ ] API documentation generated
-- [ ] Performance benchmarks met
-- [ ] Ready for integration testing
-
----
-
-## Notes
-[Additional technical details or considerations]
+- [ ] Issue clearly stated and understood by the team
+- [ ] At least two options documented with trade-offs
+- [ ] Recommendation made with rationale
+- [ ] Decision recorded in Outcome section
+- [ ] Affected work items updated or created
+- [ ] Stakeholders informed of the decision
