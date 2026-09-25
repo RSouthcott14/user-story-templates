@@ -1,5 +1,7 @@
 # Acceptance Criteria Best Practices
 
+**Last Updated:** 25 September 2026
+
 ## What Are Acceptance Criteria?
 
 **Acceptance Criteria** define the conditions that must be met for a user story to be considered "done". They specify what the feature should do, not how it should be built.

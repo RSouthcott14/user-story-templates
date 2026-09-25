@@ -1,3 +1,5 @@
+Updated 25/09/2026
+
 # Copilot Instructions: Generating User Stories
 
 Use these prompts with GitHub Copilot to generate high-quality, consistent user stories.
