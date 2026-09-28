@@ -57,16 +57,62 @@ Use [templates/UI-Template.md](../templates/UI-Template.md) for all UI stories.
 
 ### Acceptance Criteria
 
-UI stories follow exactly **6 scenarios** in this order:
+UI stories follow exactly **6 organizational sections** which may contain one or more scenarios.
 
-1. **Page Structure & Content** — elements displayed when the page loads
-2. **Default State** — initial values and selections before the user acts
-3. **User Interaction** — what changes when the user acts on the page
-4. **Navigation** — flow to the next page and what data is carried forward
-5. **Validation** — error handling for invalid or missing input
-6. **Accessibility** — WCAG 2.1 AA: keyboard tab order, screen reader announcements, focus management
+**Scenarios are numbered sequentially 1–N** across all sections (numbers do NOT reset per section).
+
+**Total scenario count must be declared** at the top of Acceptance Criteria.
+
+Structure:
+```markdown
+## Acceptance Criteria
+
+**Total Scenarios: 6** (or more if required)
+
+### Page Structure & Content
+
+**Scenario 1: [Specific test title]**
+```gherkin
+Given...
+When...
+Then...
+```
+
+### Default State
+
+**Scenario 2: [Specific test title]**
+```gherkin
+Given...
+When...
+Then...
+```
+
+### User Interaction
+
+**Scenario 3: [Specific test title]**
+**Scenario 4: [Another specific test title in this section]**
+
+### Navigation
+
+**Scenario 5: [Specific test title]**
+
+### Validation
+
+**Scenario 6: [Specific test title]**
+
+### Accessibility
+
+**Scenario 7: [WCAG 2.1 AA compliance]**
+```
 
 Rules:
+- ✅ Scenarios numbered sequentially: Scenario 1, 2, 3, 4, 5, 6...
+- ✅ Section headings are organizational containers (Page Structure, Default State, etc.)
+- ✅ Numbers do NOT reset per section
+- ✅ Each scenario has a specific, descriptive title
+- ✅ Each scenario is a complete Given/When/Then block
+- ✅ Total scenario count declared at top
+- ❌ Never use sub-numbering (3a, 3b, 3c is NOT allowed)
 - State the exact tab order in the accessibility scenario: e.g. `Then focus order is: Back → [field] → Continue`
 - State the exact screen reader announcement for interactive elements
 - Validation scenarios must include the exact error message string
