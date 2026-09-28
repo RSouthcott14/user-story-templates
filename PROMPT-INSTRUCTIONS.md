@@ -26,7 +26,15 @@ Key Requirements:
 - [Requirement 2]
 - [Requirement 3]
 
-Include all 6 scenario sections (Page Structure, Default State, Action, Navigation, Validation, Accessibility).
+**IMPORTANT NUMBERING RULES:**
+- Scenarios must be numbered sequentially: Scenario 1, Scenario 2, Scenario 3, etc.
+- Section headings are organizational containers (Page Structure & Content, Default State, User Interaction, Navigation, Validation, Accessibility) — NOT scenario titles
+- Scenario numbers do NOT reset per section
+- Each scenario must have a specific, descriptive title (not the section name)
+- Never use sub-numbering (3a, 3b, 3c is NOT allowed)
+- Declare total scenario count at top: "**Total Scenarios: 6**"
+
+Include all 6 section headings with scenarios underneath. Each section may contain one or more sequentially-numbered scenarios.
 Use Gherkin format (Given/When/Then).
 Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 reference listed next to each component.
 ```

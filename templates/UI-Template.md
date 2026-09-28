@@ -14,9 +14,6 @@
 ### Context
 [Set the scene. Why does this story matter? What problem does it solve? Include any relevant background or journey context.]
 
-### Assumptions
-[Assumptions]
-
 ### Out of Scope
 - [What is explicitly NOT included in this story]
 - [Keep dev/QA aligned on boundaries]
@@ -38,8 +35,11 @@ List each DHCW component used by the story and link to the DHCW Design System V2
 
 ## Acceptance Criteria
 
-### Scenario 1: Page Structure & Content
-**Title**: [What should be displayed]
+**Total Scenarios: 6**
+
+### Page Structure & Content
+
+**Scenario 1: [Specific title - what is displayed on page load]**
 
 ```gherkin
 Given the user navigates to [page name]
@@ -52,8 +52,9 @@ And the [element] contains the text "[specific text]"
 And the layout is [description of layout]
 ```
 
-### Scenario 2: Default State
-**Title**: [Initial appearance]
+### Default State
+
+**Scenario 2: [Specific title - initial appearance and values]**
 
 ```gherkin
 Given the user navigates to [page name]
@@ -63,8 +64,9 @@ And [specific element] is [state: enabled/disabled/selected]
 And the page shows [description]
 ```
 
-### Scenario 3: User Interaction - Action
-**Title**: [What happens when user acts]
+### User Interaction
+
+**Scenario 3: [Specific title - user action and result]**
 
 ```gherkin
 Given the user is on [page name]
@@ -75,8 +77,9 @@ And [visual feedback] is displayed
 And the selection is persisted
 ```
 
-### Scenario 4: Navigation
-**Title**: [Page flow/transitions]
+### Navigation
+
+**Scenario 4: [Specific title - navigation flow]**
 
 ```gherkin
 Given the user has completed [action] on [page name]
@@ -86,8 +89,9 @@ And the [data] is passed to [next page]
 And the user's selections are retained
 ```
 
-### Scenario 5: Validation
-**Title**: [Error handling]
+### Validation
+
+**Scenario 5: [Specific title - validation error handling]**
 
 ```gherkin
 Given the user is on [page name]
@@ -97,8 +101,9 @@ And the error is displayed near [element location]
 And the form/page remains on [current page]
 ```
 
-### Scenario 6: Accessibility
-**Title**: [WCAG 2.1 AA compliance]
+### Accessibility
+
+**Scenario 6: [Specific title - WCAG 2.1 AA compliance]**
 
 ```gherkin
 Given the page is rendered

@@ -31,23 +31,71 @@ Scenario: [What this scenario tests]
 
 ## Story Type-Specific Criteria
 
-### UI Stories (6 Sections)
+### UI Stories (Numbered Scenarios)
 
-UI stories consistently follow this 6-section pattern:
+UI stories use **sequential scenario numbering** across 6 organizational sections.
 
-1. **Scenario 1: Page Structure & Content** — What elements are displayed?
-2. **Scenario 2: Default State** — What's the initial state when page loads?
-3. **Scenario 3: User Interaction / Action** — What happens when user acts?
-4. **Scenario 4: Navigation / Flow** — How does user move to next page?
-5. **Scenario 5: Validation / Error Handling** — What happens on invalid input?
-6. **Scenario 6: Accessibility** — WCAG 2.1 AA compliance (keyboard, screen reader, contrast)
+**Total scenario count must be declared** at the top of Acceptance Criteria: `**Total Scenarios: 6**`
+
+Scenarios are numbered **1, 2, 3, 4, 5, 6...** — numbers do NOT reset per section.
+
+**Structure:**
+
+```markdown
+## Acceptance Criteria
+
+**Total Scenarios: 6**
+
+### Page Structure & Content
+
+**Scenario 1: [Specific test title]**
+```gherkin
+Given...
+When...
+Then...
+```
+
+### Default State
+
+**Scenario 2: [Specific test title]**
+```gherkin
+...
+```
+
+### User Interaction
+
+**Scenario 3: [Specific test title]**
+
+### Navigation
+
+**Scenario 4: [Specific test title]**
+
+### Validation
+
+**Scenario 5: [Specific test title]**
+
+### Accessibility
+
+**Scenario 6: [WCAG 2.1 AA compliance test]**
+```
+
+**Key Points:**
+- ✅ Scenarios numbered sequentially: 1, 2, 3, 4, 5, 6...
+- ✅ Section headings are organizational containers (Page Structure & Content, Default State, etc.)
+- ✅ Numbers do NOT reset per section
+- ✅ Each scenario has a specific, descriptive title
+- ✅ Total scenario count declared at top
+- ❌ Never use sub-numbering (3a, 3b, 3c is NOT allowed)
 
 **Example (Tool Selection Page):**
 ```gherkin
-Scenario 1: Page Structure & Content
+### Page Structure & Content
+
+**Scenario 1: Tool selection page displays all available options**
   Given the user navigates to tool selection page
   When the page loads
-  Then radio button group displays with options
+  Then radio button group displays with all available tools
+```
   And Continue button is visible
   And page heading shows "[Condition Name]"
 

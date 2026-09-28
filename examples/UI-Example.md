@@ -31,8 +31,11 @@ This story is part of the Clinical Conditions Management (CCM) journey. After th
 
 ## Acceptance Criteria
 
-### Scenario 1: Page Structure & Content
-**Title**: Tool selection page displays all available options
+**Total Scenarios: 6**
+
+### Page Structure & Content
+
+**Scenario 1: Tool selection page displays all available options**
 
 ```gherkin
 Given the user has selected a clinical condition
@@ -51,8 +54,9 @@ And each tool option displays:
   - Icon or visual indicator (if in design)
 ```
 
-### Scenario 2: Default State
-**Title**: Page loads with no pre-selection
+### Default State
+
+**Scenario 2: Page loads with no pre-selection**
 
 ```gherkin
 Given the user navigates to the tool selection page
@@ -63,8 +67,9 @@ And the Continue button displays enabled state (not greyed out)
 And the page heading clearly indicates: "Select the assessment tool for [Condition Name]"
 ```
 
-### Scenario 3: Tool Selection - Action
-**Title**: User selects a tool and selection persists
+### User Interaction
+
+**Scenario 3: User selects a tool and selection persists**
 
 ```gherkin
 Given the user is on the tool selection page
@@ -76,8 +81,9 @@ And clicking another tool option switches the selection
 And the selected tool persists when user navigates away and returns
 ```
 
-### Scenario 4: Navigation
-**Title**: User proceeds to assessment with selected tool
+### Navigation
+
+**Scenario 4: User proceeds to assessment with selected tool**
 
 ```gherkin
 Given the user has selected a tool: "FourMats"
@@ -89,8 +95,9 @@ And the condition selection is retained
 And the user can return to this page via Back button (selections retained)
 ```
 
-### Scenario 5: Validation
-**Title**: User cannot proceed without selection
+### Validation
+
+**Scenario 5: User cannot proceed without selection**
 
 ```gherkin
 Given the user is on the tool selection page
@@ -102,17 +109,14 @@ And the user remains on the tool selection page
 And focus returns to the radio button group
 ```
 
-### Scenario 6: Accessibility
-**Title**: WCAG 2.1 AA compliance for keyboard and screen reader users
+### Accessibility
+
+**Scenario 6: WCAG 2.1 AA compliance for keyboard and screen reader users**
 
 ```gherkin
 Given the page is rendered
 When a user navigates using Tab key
-Then all interactive elements (radio buttons, Continue button) are focusable in logical order:
-  1. Back button
-  2. First tool radio button
-  3. Second tool radio button (if multiple)
-  4. Continue button
+Then focus order is: Back button → First tool radio button → Second tool radio button → Continue button
 And each radio button announces via screen reader: "[Tool Name], radio button, [selected/not selected]"
 And the fieldset is labeled: "Tool Selection"
 And focus indicator is visible (minimum 3:1 contrast)
