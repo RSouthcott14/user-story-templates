@@ -7,7 +7,7 @@
 ## Description
 
 ### Story Card
-**As a** Community Pharmacist  
+**As a** pharmacy user  
 **I want** to record the completion of a Point of Care Test (POCT) within the Clinical Conditions Management consultation workflow  
 **So that** I can document patient consent, test kit details, results, and clinical governance information for STTT (Sore Throat Test and Treat) consultations
 
@@ -26,8 +26,8 @@ This page forms part of the Clinical Conditions Management (CCM) consultation wo
 **Service Context (from APPLICATION-CONTEXT.md):**
 - **Service:** Sore Throat Test and Treat (STTT)
 - **Workflow Stage:** Post-assessment (after FeverPain or Centor scoring)
-- **User:** Community Pharmacist
-- **Clinical Governance:** Test kit traceability, patient consent documentation, result recording
+- **User:** Pharmacy User
+- **Clinical Governance:** Test kit, patient consent documentation, result recording
 
 The information captured supports clinical decision-making, regulatory compliance, and patient safety by ensuring complete documentation of test details and outcomes.
 
@@ -36,10 +36,7 @@ The information captured supports clinical decision-making, regulatory complianc
 ### Out of Scope
 
 - POCT test kit inventory management (separate story)
-- Throat swab collection procedure guidance (covered in training docs)
-- POCT result interpretation and clinical recommendations (separate story - STTT Assessment Results)
-- Backend API for storing POCT data (separate API story)
-- Integration with laboratory systems (future phase)
+- Backend API for retrieving POCT tests (separate API story)
 
 ---
 
@@ -65,6 +62,7 @@ Scenario 1: User navigates to POCT recording page
   And the user has selected to proceed with POCT testing
   When the POCT recording page loads
   Then the following page structure is displayed:
+    - High level caption "Clinical Conditions Management"
     - Page heading: "Point of Care Test" (H1)
     - Section 1: "Patient consent" (H2)
       - Question: "Do you have the patient's consent?" (mandatory)
