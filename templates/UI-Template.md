@@ -14,6 +14,9 @@
 ### Context
 [Set the scene. Why does this story matter? What problem does it solve? Include any relevant background or journey context.]
 
+### Assumptions
+[Assumptions]
+
 ### Out of Scope
 - [What is explicitly NOT included in this story]
 - [Keep dev/QA aligned on boundaries]
