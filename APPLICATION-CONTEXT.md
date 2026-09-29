@@ -509,6 +509,18 @@ Cannot:
 - Tracks referral outcomes
 - GP record updates
 
+### Welsh Reference and Terminology Service (WRTS)
+
+**Purpose:** WRTS will be the primary source of standardised clinical terminology and medicines reference data across the Choose Pharmacy application, providing access to nationally managed terminology and reference datasets to support safe, consistent and interoperable clinical recording.
+
+**WRTS will support:**
+
+- **Medicines and product selection** through the retrieval of DM+D (Dictionary of Medicines and Devices) concepts. All medicines will be recorded using SNOMED CT identifiers. Depending on the dispensing scenario, the code stored will typically be an **AMPP (Actual Medicinal Product Pack)** where a specific product pack has been supplied, or a **VMPP (Virtual Medicinal Product Pack)** where prescribing or recording is undertaken at a branded virtual pack level.
+
+- **Clinical coding and recording** by providing access to standardised terminology sets used throughout consultations. This includes the recording of **SNOMED CT codes for symptoms, conditions, diagnoses, observations and clinical outcomes**, ensuring consistent data capture and supporting interoperability with other NHS Wales systems.
+
+- **Allergy, condition and clinical concept searching**, enabling users to search for and record patient information against recognised **SNOMED CT clinical concepts** rather than relying on free-text entry. This improves data quality, enhances patient safety and supports downstream reporting, analytics and information sharing.
+
 ---
 
 ## 📊 Key Metrics & Outcomes
