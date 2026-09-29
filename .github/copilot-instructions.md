@@ -35,6 +35,22 @@ Refer to [standards/API-CODE-SYSTEMS.md](../standards/API-CODE-SYSTEMS.md) when 
 - URI pattern: `https://fhir.nhs.wales/ChoosePharmacy/CodeSystem/{kebab-case-enum-name}`
 - Do not create a code system for booleans, free text, numerics, dates, or identifiers
 
+### Response Patterns
+
+Refer to [standards/API-RESPONSE-PATTERNS.md](../standards/API-RESPONSE-PATTERNS.md) for standardized response formats.
+
+- All responses must follow the documented patterns to ensure consistency across endpoints
+- Reference data and lookup endpoints wrap results in a response DTO
+- Use `CodedElement` type for coded concepts
+
+### Error Handling
+
+Refer to [standards/API-ERROR-HANDLING.md](../standards/API-ERROR-HANDLING.md) for error response structure.
+
+- All errors return ASP.NET Core `ProblemDetails` format with standardized fields
+- Include exact error message strings in validation scenarios
+- Error responses must match the documented structure
+
 ### Acceptance Criteria
 
 - Group by **outcome path** — not by technical category
