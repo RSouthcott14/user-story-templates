@@ -10,7 +10,9 @@ Reference documentation for how Choose Pharmacy NextGen APIs are structured. Use
 
 | File | Covers |
 |---|---|
-| [API-PATH-CONVENTIONS.md](API-PATH-CONVENTIONS.md) | Base path, versioning, resource groups, patient-scoped paths, HTTP methods, path segment style |
+| [API-PATH-CONVENTIONS.md](API-PATH-CONVENTIONS.md) | Base path, versioning, resource groups, patient-scoped paths, service-scoped paths, reference data paths, query parameter naming, HTTP methods, path segment style |
+| [API-RESPONSE-PATTERNS.md](API-RESPONSE-PATTERNS.md) | Lookup/reference data response structure, single resource responses, paginated lists, empty results, submission responses, response headers, consistency rules |
+| [API-ERROR-HANDLING.md](API-ERROR-HANDLING.md) | Error response format, HTTP status codes, error code naming conventions, message guidelines, acceptance criteria for errors |
 | [API-CODE-SYSTEMS.md](API-CODE-SYSTEMS.md) | When to create a code system, naming rules, URI pattern, mapping to domain enumerations |
 
 ---

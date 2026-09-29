@@ -112,9 +112,28 @@ PUT /api/v1/Patient/{nhsNumber}
 
 ---
 
+## Service-Scoped Endpoints
+
+Resources that are specific to a particular service (and not shared across services) are nested under the parent service context. These are **not patient-scoped** but are service-scoped reference data or lookups.
+
+```
+/api/v1/{parentContext}/{service}/{resource}
+```
+
+**Examples:**
+```
+GET  /api/v1/consultations/ccm/conditions
+GET  /api/v1/consultations/ems/conditions
+POST /api/v1/consultations/cas/clinicians
+```
+
+> **Use when:** A resource is only ever used by a specific service and would never be shared with other services. Do not use if the resource might be referenced by multiple services — use the general reference data pattern instead.
+
+---
+
 ## Reference / Lookup Endpoints
 
-Reference data and lookup endpoints use a **domain-named resource group** — not a technical prefix like `valuesets`. The resource group names the domain, and the sub-resource names the specific data being retrieved.
+Reference data and lookup endpoints use a **domain-named resource group** — not a technical prefix like `valuesets`. The resource group names the domain, and the sub-resource names the specific data being retrieved. Use this pattern for shared reference data.
 
 ```
 GET /api/v1/{domain}/{data}
@@ -126,6 +145,8 @@ GET /api/v1/allergies/substance
 GET /api/v1/allergies/manifestations
 GET /api/v1/cas/conditions
 ```
+
+> **Use when:** A resource is shared across multiple services or multiple features and is not service-specific. For service-specific lookups, use the Service-Scoped Endpoints pattern.
 
 ---
 
@@ -153,11 +174,40 @@ Use `GET` with query parameters for simple lookups. Use `POST` with a request bo
 
 ---
 
+## Query Parameter Naming
+
+Query parameters follow consistent naming conventions across all endpoints:
+
+| Purpose | Parameter Name | Type | Example |
+|---------|---|---|---|
+| Search/query text | `q` | string | `?q=diabetes` |
+| Result count limit | `limit` | integer | `?limit=10` |
+| Skip/offset for pagination | `skip` | integer | `?skip=20` |
+| Sort order | `sortBy` | string | `?sortBy=display` |
+| Filter by status | `status` | string | `?status=active` |
+| Filter by date range | `from`, `to` | date-time | `?from=2026-01-01&to=2026-12-31` |
+
+**Naming rules:**
+- Use **camelCase** for all query parameters
+- Use **`q` for search/query text** (not `searchTerm`, `search`, or `term`)
+- Avoid abbreviations beyond `q` for search
+- Be explicit about filter intent (`status=active` not `active=true`)
+
+**Examples:**
+```
+GET /api/v1/allergies/substance?q=penicillin&limit=20
+GET /api/v1/consultations/ccm/conditions?q=diab&limit=10
+GET /api/v1/Addresses/search?q=CF10&limit=5
+```
+
+---
+
 ## Path Segment Style
 
 - Sub-resources within a patient path use **lowercase kebab-case**: `gp-record`, `consultations`
 - Service type identifiers use **lowercase**: `ems`, `cas`, `sttt`
 - Route parameters use **camelCase**: `{patientId}`, `{nhsNumber}`, `{odsCode}`, `{pharmacyAccountNumber}`
+- Query parameters use **camelCase**: `searchTerm`, `limit`, `skip`, `sortBy`
 
 ---
 
