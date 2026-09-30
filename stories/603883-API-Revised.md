@@ -235,4 +235,3 @@ And the detail message indicates missing or invalid authentication
 
 - **Parent Feature:** [604314](https://dev.azure.com/NHS-Wales-Digital/Choose%20Pharmacy%20NextGen/_workitems/edit/604314)
 - **Related:** [603126](https://dev.azure.com/NHS-Wales-Digital/Choose%20Pharmacy%20NextGen/_workitems/edit/603126) — IPS Conditions UI story
-
