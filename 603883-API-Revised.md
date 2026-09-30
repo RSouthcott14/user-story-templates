@@ -1,4 +1,4 @@
-# API Example: GET /api/v1/consultations/ccm/ipsconditions - Retrieve CCM IPS Condition Concepts
+# API Example: GET /api/v1/consultations/ccm/ips-conditions - Retrieve CCM IPS Condition Concepts
 
 ## Story Type: API | Feature: 604314 | Effort: 13 hours
 
