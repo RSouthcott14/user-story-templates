@@ -1,4 +1,4 @@
-# API Example: GET /api/v1/consultations/ccm/conditions - Retrieve CCM Consultation Condition Concepts
+# API Example: GET /api/v1/consultations/ccm/ipsconditions - Retrieve CCM IPS Condition Concepts
 
 ## Story Type: API | Feature: 604314 | Effort: 13 hours
 
@@ -26,7 +26,7 @@ Deliver a search endpoint that retrieves condition concepts by partial search te
 ## Endpoint Details
 
 **HTTP Method:** GET  
-**Endpoint:** `/api/v1/consultations/ccm/conditions`
+**Endpoint:** `/api/v1/consultations/ccm/ipsconditions`
 
 ### Query Parameters
 - `q`: [string, required] - Search query (condition name or SNOMED code)
@@ -62,14 +62,14 @@ Accept: application/fhir+json
 
 ### Request Example - Service Spec Mode
 ```
-GET /api/v1/consultations/ccm/conditions?q=diab&mode=service-spec&limit=10
+GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=service-spec&limit=10
 Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
 Content-Type: application/json
 ```
 
 ### Request Example - Extended Mode
 ```
-GET /api/v1/consultations/ccm/conditions?q=diab&mode=extended&limit=10
+GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=extended&limit=10
 Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
 Content-Type: application/json
 ```
@@ -139,7 +139,7 @@ Content-Type: application/json
 ### Scenario 1: Search Service Spec ValueSet by condition name
 ```gherkin
 Given a partial search term representing a condition name or SNOMED code
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=service-spec&limit=10 is called
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=service-spec&limit=10 is called
 Then the API returns status 200
 And the system queries the Service Specification ValueSet from the DHCW FHIR Terminology Server
 And the response contains matching SNOMED CT concepts from that ValueSet
@@ -150,7 +150,7 @@ And results are ordered by relevance (best match first)
 ### Scenario 2: Search Extended ValueSet by condition name
 ```gherkin
 Given a partial search term representing a condition name or SNOMED code
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=extended&limit=10 is called
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=extended&limit=10 is called
 Then the API returns status 200
 And the system queries the Extended Condition ValueSet from the DHCW FHIR Terminology Server
 And the response contains matching SNOMED CT concepts from that ValueSet
@@ -161,7 +161,7 @@ And results are ordered by relevance (best match first)
 ### Scenario 3: Limit results to specified maximum (Service Spec mode)
 ```gherkin
 Given the system has valid condition search results from the Service Spec ValueSet
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=service-spec&limit=5 is called
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=service-spec&limit=5 is called
 Then the API returns status 200
 And the response.conditions array contains no more than 5 items
 And results respect the limit parameter
@@ -170,7 +170,7 @@ And results respect the limit parameter
 ### Scenario 4: Limit results to specified maximum (Extended mode)
 ```gherkin
 Given the system has valid condition search results from the Extended ValueSet
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=extended&limit=5 is called
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=extended&limit=5 is called
 Then the API returns status 200
 And the response.conditions array contains no more than 5 items
 And results respect the limit parameter
@@ -179,7 +179,7 @@ And results respect the limit parameter
 ### Scenario 5: Validation - search query missing
 ```gherkin
 Given the search query parameter is not provided
-When GET /api/v1/consultations/ccm/conditions?mode=service-spec&limit=10 is called (no q parameter)
+When GET /api/v1/consultations/ccm/ipsconditions?mode=service-spec&limit=10 is called (no q parameter)
 Then the API returns status 400
 And the response type is "ValidationException"
 And the errors object contains: { "q": ["Search query must be provided"] }
@@ -188,7 +188,7 @@ And the errors object contains: { "q": ["Search query must be provided"] }
 ### Scenario 6: Validation - mode parameter missing
 ```gherkin
 Given the mode parameter is not provided
-When GET /api/v1/consultations/ccm/conditions?q=diab&limit=10 is called (no mode parameter)
+When GET /api/v1/consultations/ccm/ipsconditions?q=diab&limit=10 is called (no mode parameter)
 Then the API returns status 400
 And the response type is "ValidationException"
 And the errors object contains: { "mode": ["Mode must be specified (service-spec or extended)"] }
@@ -197,7 +197,7 @@ And the errors object contains: { "mode": ["Mode must be specified (service-spec
 ### Scenario 7: Validation - invalid mode value
 ```gherkin
 Given the mode parameter contains an invalid value
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=invalid&limit=10 is called
+When GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=invalid&limit=10 is called
 Then the API returns status 400
 And the response type is "ValidationException"
 And the errors object contains: { "mode": ["Mode must be either 'service-spec' or 'extended'"] }
@@ -206,7 +206,7 @@ And the errors object contains: { "mode": ["Mode must be either 'service-spec' o
 ### Scenario 8: Validation - invalid limit parameter
 ```gherkin
 Given a limit parameter outside the valid range (1-100)
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=service-spec&limit=150 is called
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=service-spec&limit=150 is called
 Then the API returns status 400
 And the response type is "ValidationException"
 And the errors object contains: { "limit": ["Limit must be between 1 and 100"] }
@@ -215,7 +215,7 @@ And the errors object contains: { "limit": ["Limit must be between 1 and 100"] }
 ### Scenario 9: No results found
 ```gherkin
 Given a search query that matches no condition concepts in the selected ValueSet
-When GET /api/v1/consultations/ccm/conditions?q=xyz&mode=service-spec is called
+When GET /api/v1/consultations/ccm/ipsconditions?q=xyz&mode=service-spec is called
 Then the API returns status 200
 And the response is: { "conditions": [] }
 ```
@@ -223,7 +223,7 @@ And the response is: { "conditions": [] }
 ### Scenario 10: Authentication failure
 ```gherkin
 Given no authorization token is provided
-When GET /api/v1/consultations/ccm/conditions?q=diab&mode=service-spec is called without Authorization header
+When GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=service-spec is called without Authorization header
 Then the API returns status 401
 And the response type is "AuthenticationException"
 And the detail message indicates missing or invalid authentication
