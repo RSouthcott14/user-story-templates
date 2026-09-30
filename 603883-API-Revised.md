@@ -14,12 +14,12 @@
 ### Background
 The system needs to retrieve condition concepts from the DHCW FHIR Terminology Server using one of two ValueSets depending on the clinical context:
 - **Service Spec ValueSet**: Service specification specific clinical concepts approved for standard IPS pathway use
-- **Extended Condition ValueSet**: Broader set of condition concepts for out-of-scope clinical scenarios
+- **Outside Service Spec ValueSet**: Broader set of condition concepts for out-of-scope clinical scenarios
 
-A `mode` query parameter allows callers to specify which ValueSet to search against. This supports the Clinical Conditions Management (CCM) journey where prescribers record presenting complaints and diagnoses, with flexibility for both standard and extended condition searching.
+A `mode` query parameter allows callers to specify which ValueSet to search against. This supports the Clinical Conditions Management (CCM) journey where prescribers record presenting complaints and diagnoses, with flexibility for both standard and outside-service-spec condition searching.
 
 ### Objective
-Deliver a search endpoint that retrieves condition concepts by partial search term (name or SNOMED code) from either the Service Specification or Extended ValueSet based on the `mode` parameter, with result limiting and proper validation.
+Deliver a search endpoint that retrieves condition concepts by partial search term (name or SNOMED code) from either the Service Specification or Outside Service Spec ValueSet based on the `mode` parameter, with result limiting and proper validation.
 
 ---
 
@@ -31,9 +31,9 @@ Deliver a search endpoint that retrieves condition concepts by partial search te
 ### Query Parameters
 - `q`: [string, required] - Search query (condition name or SNOMED code)
 - `limit`: [integer, optional, default: 10] - Maximum results to return (1-100)
-- `mode`: [string, required, enum: `service-spec` | `extended`] - Determines which ValueSet to search
+- `mode`: [string, required, enum: `service-spec` | `outside-service-spec`] - Determines which ValueSet to search
   - `service-spec`: Search Service Specification specific clinical concepts
-  - `extended`: Search Extended Condition ValueSet (out-of-scope conditions)
+  - `outside-service-spec`: Search Outside Service Spec Condition ValueSet (out-of-scope conditions)
 
 ### Terminology Reference
 
@@ -43,11 +43,11 @@ Deliver a search endpoint that retrieves condition concepts by partial search te
 **FHIR URI:** `[TBD - confirm with Terminology team]`  
 **Description:** Service specification specific clinical concept conditions approved for use within standard IPS pathway
 
-#### Extended Mode
-**ValueSet Name:** `IPS Extended Condition Concepts`  
+#### Outside Service Spec Mode
+**ValueSet Name:** `IPS Outside Service Spec Condition Concepts`  
 **ValueSet ID:** `[TBD - confirm with Terminology team]`  
 **FHIR URI:** `[TBD - confirm with Terminology team]`  
-**Description:** Extended set of condition concepts beyond the standard service specification scope
+**Description:** Outside service specification set of condition concepts beyond the standard service specification scope
 
 ---
 
@@ -67,9 +67,9 @@ Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
 Content-Type: application/json
 ```
 
-### Request Example - Extended Mode
+### Request Example - Outside Service Spec Mode
 ```
-GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=extended&limit=10
+GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=outside-service-spec&limit=10
 Authorization: Bearer eyJhbGciOiJSUzI1NiIs...
 Content-Type: application/json
 ```
@@ -147,12 +147,12 @@ And each result includes: code, display, system (http://snomed.info/sct)
 And results are ordered by relevance (best match first)
 ```
 
-### Scenario 2: Search Extended ValueSet by condition name
+### Scenario 2: Search Outside Service Spec ValueSet by condition name
 ```gherkin
 Given a partial search term representing a condition name or SNOMED code
-**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=extended&limit=10 is called
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=outside-service-spec&limit=10 is called
 Then the API returns status 200
-And the system queries the Extended Condition ValueSet from the DHCW FHIR Terminology Server
+And the system queries the Outside Service Spec ValueSet from the DHCW FHIR Terminology Server
 And the response contains matching SNOMED CT concepts from that ValueSet
 And each result includes: code, display, system (http://snomed.info/sct)
 And results are ordered by relevance (best match first)
@@ -167,10 +167,10 @@ And the response.conditions array contains no more than 5 items
 And results respect the limit parameter
 ```
 
-### Scenario 4: Limit results to specified maximum (Extended mode)
+### Scenario 4: Limit results to specified maximum (Outside Service Spec mode)
 ```gherkin
-Given the system has valid condition search results from the Extended ValueSet
-**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=extended&limit=5 is called
+Given the system has valid condition search results from the Outside Service Spec ValueSet
+**When** GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=outside-service-spec&limit=5 is called
 Then the API returns status 200
 And the response.conditions array contains no more than 5 items
 And results respect the limit parameter
@@ -191,7 +191,7 @@ Given the mode parameter is not provided
 When GET /api/v1/consultations/ccm/ipsconditions?q=diab&limit=10 is called (no mode parameter)
 Then the API returns status 400
 And the response type is "ValidationException"
-And the errors object contains: { "mode": ["Mode must be specified (service-spec or extended)"] }
+And the errors object contains: { "mode": ["Mode must be specified (service-spec or outside-service-spec)"] }
 ```
 
 ### Scenario 7: Validation - invalid mode value
@@ -200,7 +200,7 @@ Given the mode parameter contains an invalid value
 When GET /api/v1/consultations/ccm/ipsconditions?q=diab&mode=invalid&limit=10 is called
 Then the API returns status 400
 And the response type is "ValidationException"
-And the errors object contains: { "mode": ["Mode must be either 'service-spec' or 'extended'"] }
+And the errors object contains: { "mode": ["Mode must be either 'service-spec' or 'outside-service-spec'"] }
 ```
 
 ### Scenario 8: Validation - invalid limit parameter
