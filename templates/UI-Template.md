@@ -7,7 +7,7 @@
 ## Description
 
 ### Story Card
-**As a** [user role]  
+**As a** pharmacy user  
 **I want** [what they want to do]  
 **So that** [the business value/outcome]
 
@@ -25,9 +25,9 @@
 ### Design Reference
 **Design system:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
 
-**Template:** [`templates/UI-Template.md`](UI-Template.md)
-
 **Component guidance:** [`COMPONENTS.md`](../COMPONENTS.md)
+
+**Error messaging standard:** [`standards/UI-ERROR-MESSAGING.md`](../standards/UI-ERROR-MESSAGING.md)
 
 List each DHCW component used by the story and link to the DHCW Design System V2 reference listed in `COMPONENTS.md`. Do not introduce an unlisted component without confirming it against `COMPONENTS.md`.
 
@@ -96,10 +96,17 @@ And the user's selections are retained
 ```gherkin
 Given the user is on [page name]
 When the user [performs invalid action]
-Then an error message displays: "[specific error text]"
+Then an error message displays: "[Exact error message from standards/UI-ERROR-MESSAGING.md]"
 And the error is displayed near [element location]
+And the error is styled with: [color: red / icon: warning]
+And the error message has role="alert" for screen reader announcement
+And aria-live="polite" for dynamic content
 And the form/page remains on [current page]
+And focus returns to [field name]
+And no data is persisted
 ```
+
+**Note:** All error messages MUST follow the standardized format defined in [`standards/UI-ERROR-MESSAGING.md`](../standards/UI-ERROR-MESSAGING.md).
 
 ### Accessibility
 

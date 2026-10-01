@@ -17,7 +17,6 @@ Generate a UI user story using the UI-Template from this repo.
 Feature: [Feature Name]
 Feature ID: [Ticket ID or leave blank]
 Page Name: [Page Title]
-User Role: [Pharmacist / Clinician / Admin]
 Context: [Brief description of why this page exists]
 Design Reference: DHCW Design System V2 — [Figma link or description]
 
@@ -37,6 +36,11 @@ Key Requirements:
 Include all 6 section headings with scenarios underneath. Each section may contain one or more sequentially-numbered scenarios.
 Use Gherkin format (Given/When/Then).
 Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), validate every UI component against [`COMPONENTS.md`](COMPONENTS.md), and include the DHCW Design System V2 reference listed next to each component.
+
+**IMPORTANT: Error Messaging Standard**
+- All validation scenarios MUST use exact error messages following [`standards/UI-ERROR-MESSAGING.md`](standards/UI-ERROR-MESSAGING.md)
+- Error messages must include: exact text, location, styling (red + icon), accessibility (role="alert", aria-live="polite"), focus return, and "no data is persisted"
+- Never use vague error messages; be specific about what failed and how to fix it
 ```
 
 **Example:**
@@ -46,8 +50,7 @@ Generate a UI user story using the UI-Template from this repo.
 Feature: Clinical Conditions Management - Template Selection
 Feature ID: 577034
 Page Name: Template Selection Page
-User Role: Clinical Assessment Specialist
-Context: After selecting a clinical condition, user chooses a template-based assessment path (standard vs. rapid assessment).
+Context: After selecting a clinical condition, a pharmacy user chooses a template-based assessment path (standard vs. rapid assessment).
 Design Reference: See Figma link in CCM project, frame "Template Selection"
 
 Key Requirements:

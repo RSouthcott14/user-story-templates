@@ -7,7 +7,7 @@
 ## Description
 
 ### Story Card
-**As a** Clinical Assessment Specialist  
+**As a** pharmacy user  
 **I want** to select a clinical scoring tool from available options  
 **So that** I can conduct the most appropriate clinical assessment for the patient's condition
 
@@ -102,12 +102,17 @@ And the user can return to this page via Back button (selections retained)
 ```gherkin
 Given the user is on the tool selection page
 When the user clicks Continue without selecting a tool
-Then an error message displays: "Please select an assessment tool to continue"
-And the error appears in red, near the radio button group
+Then an error message displays: "Select Assessment Tool"
+And the error appears near the radio button group
+And the error is styled in red with a warning icon
 And the error message includes role="alert" for screen readers
+And aria-live="polite" for dynamic announcement
 And the user remains on the tool selection page
-And focus returns to the radio button group
+And focus returns to the Assessment Tool field
+And no data is persisted
 ```
+
+**Note:** Error messages follow [`standards/UI-ERROR-MESSAGING.md`](../standards/UI-ERROR-MESSAGING.md).
 
 ### Accessibility
 
