@@ -1,5 +1,5 @@
 ---
-description: "Use when: creating or updating a UI user story. Start by choosing to work on an existing story from the stories/ folder or providing a DevOps work item reference to copy. Then the agent prompts for page details (feature, requirements, components) and generates a complete Gherkin-formatted acceptance criteria story markdown file ready for revision and ADO submission."
+description: "Use when: creating or updating a UI user story. Start by choosing to work on an existing story from the stories/ folder or providing a DevOps work item reference to copy. Then the agent prompts for page details (feature, requirements, components, data persistence timing, error patterns, and related/dependent stories) and generates a complete Gherkin-formatted acceptance criteria story markdown file with consolidated scenarios, no redundancy, and proper relationship typing ready for revision and ADO submission."
 name: "UI Story Generator"
 tools: [read, edit, execute, search]
 user-invocable: true
@@ -84,6 +84,30 @@ And colour contrast ratio is at least 4.5:1 for all text
 And all images have alt text: "[descriptive text]"
 ```
 
+### Consultation State Persistence Scenario (Reusable for Consultation Journeys)
+
+For UI stories that are part of consultation pathways, include this scenario template to test persistence across patient tabs:
+
+```gherkin
+Given the user has an active consultation in progress within the current patient encounter
+And consultation data has been entered (e.g., referral details, advice notes)
+When the user navigates to another patient tab
+And subsequently returns to the consultation within the same patient encounter
+Then the consultation shall remain active
+And the current page shall be displayed (e.g., Referral page)
+And all previously entered consultation information shall be retained
+And the consultation model state is preserved
+```
+
+**When to include this scenario:**
+- Pages are part of a consultation journey (CCM, consultations, assessments)
+- Users may navigate away to check other patient information during consultation
+- Consultation state should persist across patient tab navigation within the same encounter
+
+**Integration:**
+- Add this as an additional scenario in the **User Interaction** section
+- Scenario numbering continues sequentially (e.g., if Scenario 5 is the last default scenario, this becomes Scenario 6, bumping other sections forward)
+
 ### Response Patterns (Page Elements)
 All interactive elements must follow DHCW Design System V2:
 - **Buttons** — Primary (CTA) or Secondary (alternative action)
@@ -164,17 +188,25 @@ Location: `templates/UI-Template.md`
 - ✅ Feature ID provided (or ask user to confirm with Product Owner)
 - ✅ Context describes WHY this page exists
 - ✅ All components used are listed in COMPONENTS.md
-- ✅ Acceptance Criteria includes all 6 sections
+- ✅ Design Reference includes Figma frame name/link AND visual (screenshot) or layout description
+- ✅ Related/Dependent stories identified with correct relationship types (Blocks/Relates to/Depends on)
+- ✅ Data persistence timing clarified (immediate vs. on submission)
+- ✅ Error message pattern confirmed (error summary + inline, as default)
+- ✅ Acceptance Criteria includes all required sections
 - ✅ Scenario count declared at top of AC
 - ✅ Scenarios numbered sequentially (1, 2, 3...) — no reset per section
 - ✅ Each scenario has specific title, not section name
-- ✅ Accessibility scenario includerror messages following standards/UI-ERROR-MESSAGING.md
-- ✅ All validation errors include: exact text, location, styling, role="alert", aria-live, focus return, "no data is persisted"
+- ✅ NO duplicate content across scenarios (e.g., Scenario 1 and 2 don't both describe pre-selection)
+- ✅ Validation scenarios consolidated into ONE comprehensive scenario (not split across multiple)
+- ✅ Validation scenario includes: trigger, error summary (top + inline), styling, focus to error summary, role="alert", aria-live="polite", data persistence
+- ✅ Multi-option persistence tested for ALL options (or confirmed as simplified/one-example)
+- ✅ Consultation state persistence scenario included (if applicable for consultation journeys)
+- ✅ Accessibility scenario includes error summary focus management
+- ✅ All validation errors follow standards/UI-ERROR-MESSAGING.md patterns
 - ✅ All scenarios use Given/When/Then format
 - ✅ Out of Scope section filled (at least 2-3 items)
-- ✅ Related/Dependent Stories included (if applicable)
 - ✅ Design Reference section lists all components with Figma links and standards reference
-- ✅ Design Reference section lists all components with Figma links
+- ✅ Definition of Done includes error summary focus management as explicit checklist item
 
 ### File Naming & ADO Integration
 - **Draft:** `stories/DRAFT-{Page-Name}.md`
@@ -207,45 +239,143 @@ Location: `templates/UI-Template.md`
    - Any state/selection retention needed?
    - Navigation targets (where does user go next?)
 
-3. **Identify Components & Design Reference**
+3. **Related & Dependent Stories** using vscode_askQuestions ⭐ NEW
+   - Ask: "Do you have any related or dependent stories?"
+   - For each story, clarify relationship type:
+     - **BLOCKS** — This page cannot be developed until the related story is complete
+     - **RELATES TO** — This page navigates to or receives data from the related story (already developed / same sprint)
+     - **DEPENDS ON** — This page requires functionality/data from the related story to work
+   - Example format: "603161 (Record Referral Outcome) → RELATES TO (already developed, navigated to)"
+   - Helps correctly set relationship types in the story
+
+4. **Identify Components & Design Reference** ⭐
    - Ask: "Which components are used on this page?" (e.g., buttons, radio buttons, text fields)
    - For each component, ask user to confirm it exists in COMPONENTS.md
-   - Ask for Figma design reference (frame name or link)
+   - Ask for **Page Design Figma Reference**: "Is there a Figma frame/design for this page in the DHCW Design System V2?"
+     - Request frame name or direct Figma link to the page design
+     - Include this in the story's Design Reference section
+   - Ask for **Design Visual or Layout Description**: "Please share the Figma design (screenshot) or describe the layout in detail"
+     - Accept screenshot/image attachment of Figma frame
+     - OR accept text description (e.g., "Four radio buttons stacked vertically, Previous/Continue buttons at bottom")
+     - Use this visual/description while generating scenarios to verify layout accuracy
+     - Note: Different pages may have different layouts—capturing design visually ensures implementation fidelity
    - Ask if there are any specific error messages the form should display
 
-4. **Gather Acceptance Criteria Details**
+5. **Data Persistence & Error Patterns** using vscode_askQuestions ⭐ NEW
+   - **Data Persistence Timing:** "When should user selections be stored in the model?"
+     - On selection (optimistic update, immediate storage)
+     - After submission/Continue click (stored only on form submit)
+     - Other (specify timing)
+   - **Error Message Pattern:** "Should validation errors follow the DHCW pattern?"
+     - Error summary at top (role="alert", aria-live="polite", focusable)
+     - Inline error near the field
+     - Both (recommended for accessibility)
+   - **Multi-Option Persistence:** For pages with multiple selection options (radio buttons, dropdowns, checkboxes):
+     - Test persistence for all options (comprehensive) OR one example (simplified)
+
+6. **Gather Acceptance Criteria Details**
    - Scenarios for page structure (what elements load?)
    - Default state (any pre-selections, disabled states?)
-   - User interactions (clicking buttons, selecting options, entering text — and what persists?)
+   - User interactions (clicking buttons, selecting options, entering text)
+   - State persistence (test across all selection options if applicable)
    - Navigation (which button goes where? What data passes?)
-   - Validation (what validation rules? What error messages?)
+   - Validation (consolidated into one comprehensive scenario with trigger, display, styling, focus, and data persistence)
    - Accessibility requirements (tab order? ARIA labels? Color contrast notes?)
+   - Consultation state persistence (for consultation journeys, include patient tab navigation scenario)
 
-5. **Generate the Story Markdown**
+7. **Validation Scenario Consolidation** ⭐ NEW
+   - Combine into ONE comprehensive validation scenario covering:
+     - Trigger (what causes error)
+     - Error summary display (top of page, focusable, role="alert", aria-live="polite")
+     - Inline error display (near the field)
+     - Error styling (color, icon, contrast)
+     - Focus management (where focus moves—to error summary)
+     - Data persistence (no data persisted)
+   - Do NOT create separate scenarios for error trigger, display, and focus—consolidate into one
+
+8. **Duplicate Content Detection & Scenario Review** ⭐ NEW
+   - Before generating, warn user if:
+     - Scenario 1 and 2 both describe "no pre-selection" → remove from Scenario 1, keep in Scenario 2
+     - Multiple scenarios test the same interaction without testing different options
+     - Validation concerns are split across multiple scenarios (should be consolidated)
+   - Suggest: "Scenario 1 is for page structure. Scenario 2 is dedicated to default state. Ensure each scenario tests something distinct."
+
+9. **Generate the Story Markdown**
    - Build story with all required sections
-   - Use Story Card (As/I/So), Context, Out of Scope, Related Stories
+   - Use Story Card (As/I/So), Context, Out of Scope, Related Stories with correct relationship types
    - List components with Design System references from COMPONENTS.md
-   - Create Acceptance Criteria with 6 sections and sequential scenario numbering
-   - Include Definition of Done checklist
+   - Create Acceptance Criteria with 6 sections (or 7 if consultation persistence is applicable) and sequential scenario numbering
+   - Ensure validation is one consolidated scenario
+   - Ensure multi-option persistence is tested for all options (if applicable)
+   - Include Definition of Done checklist with error summary focus management as explicit item
    - Validate all scenarios use Gherkin format (Given/When/Then)
 
-6. **Create Draft File and Confirm**
-   - Save as `stories/DRAFT-{Page-Name}.md` (or update existing file if loaded from step 0)
-   - Return file path and next steps for user
+10. **Create Draft File and Confirm**
+    - Save as `stories/DRAFT-{Page-Name}.md` (or update existing file if loaded from step 0)
+    - Return file path and next steps for user
 
 ## Workflow
 
 Start by offering the user a choice: work on an existing story or provide a DevOps reference to copy. Handle file loading/copying as needed, then proceed through the approach steps systematically, asking one logical group at a time. Use vscode_askQuestions for each phase to make the interaction natural and easy to follow.
 
 **Key Interaction Points:**
+
+**Story Source & Fundamentals:**
 - Start with: "Would you like to work on an existing story from the stories/ folder or provide a DevOps reference to copy?"
 - If existing: List all markdown files in stories/ and let user select
 - If DevOps reference: Ask for work item ID/reference, then copy to stories/ with naming convention (DRAFT- prefix if not already published)
+
+**Story Details:**
 - Ensure Story Card always uses "**As a** pharmacy user" (do not ask for specific role)
-- For validation scenarios, ensure error messages follow standards/UI-ERROR-MESSAGING.md patterns and include all required fields (text, location, styling, accessibility, focus, data persistence)
+- Confirm context describes WHY the page exists from pharmacy user perspective
+
+**Related & Dependent Stories (NEW):** ⭐
+- Ask: "Do you have any related or dependent stories? If yes, provide story ID/title and clarify the relationship type:"
+  - BLOCKS: Cannot develop this page until the related story is complete
+  - RELATES TO: This page navigates to or uses the related story (already developed in the sprint)
+  - DEPENDS ON: This page requires functionality from the related story
+- Example answer: "603161 Record Referral Outcome → RELATES TO (already developed, navigated to)" OR "603000 Patient Data API → DEPENDS ON (required for data lookup)"
+
+**Components & Design Reference (NEW):** ⭐
+- Confirm all components used are listed in COMPONENTS.md
+- **Ask for page-level Figma design reference:** "Is there a Figma frame/design for this page in DHCW Design System V2?"
+  - Accept frame name (e.g., "CCM Outcome Selection—Full") or direct Figma link
+  - Include this reference in the story's Design Reference section
+- **Request design visual or layout description:** "Please share the Figma design (screenshot) or describe the layout in detail"
+  - Accept screenshot/image of Figma frame (user can paste/attach)
+  - OR accept text description (e.g., "Four radio buttons stacked vertically, Previous/Continue buttons at bottom, 20px spacing")
+  - Use this visual context while generating scenarios to verify:
+    - Component positioning and layout accuracy
+    - Element visibility and spacing in test scenarios
+    - Navigation button placement
+  - Note: Visual design context ensures scenarios accurately reflect implemented layout
+- List components with their design system Figma links (from COMPONENTS.md)
+
+**Data Persistence & Error Patterns (NEW):** ⭐
+- Ask: "When should selections be stored in the model?"
+  - Immediate (on selection) OR on form submission (Continue click)?
+- Ask: "Should error messages use the DHCW error summary pattern?"
+  - Error summary at top (focusable, role="alert") + inline near field (recommended)? OR just inline?
+- Ask: "For pages with multiple options, should we test persistence for all options or one example?"
+  - Comprehensive (test all) OR simplified (test one example)?
+
+**Validation & Error Messages:**
+- For validation scenarios, use the DHCW error summary pattern (top + inline) as default
+- Consolidate validation into ONE scenario covering: trigger + display (summary + inline) + styling + focus management + data persistence
+- Include error summary focus management in Definition of Done checklist
+- Ensure error messages follow standards/UI-ERROR-MESSAGING.md patterns and include all required fields (text, location, styling, accessibility, focus, data persistence)
+
+**Accessibility & State Persistence:**
 - Confirm that accessibility requirements include exact focus order (e.g., "Back → Field Name → Continue") and screen reader text
-- Ensure validation scenarios include exact error message strings
-- Confirm total scenario count before generating file
+- For consultation journeys, ask: "Should this page include a consultation state persistence scenario (patient tab navigation)?"
+  - If YES: Add the reusable consultation persistence scenario template to User Interaction section
+
+**Scenario Quality:**
+- Warn about duplicate content: "Scenario 1 covers page structure. Don't repeat 'no pre-selection' here—keep that in Scenario 2."
+- For multi-option pages: "Testing persistence for both 'Refer patient' AND 'Advice only' ensures comprehensive coverage."
+- Validate total scenario count before generating file
+
+**File & Next Steps:**
 - After completion, note: "You can now revise the story locally, then rename to {WORK-ITEM-ID}-UI-{Page-Name}.md after ADO work item creation"
 
 After gathering information through all phases, synthesize the story using the core patterns and templates. Generate complete, verified markdown ready for user review and proof.
