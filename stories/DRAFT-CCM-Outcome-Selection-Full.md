@@ -72,12 +72,14 @@ The selected outcome is stored in the consultation model and determines which pa
 
 ### Page Structure & Content
 
-**Scenario 1: Page displays with four consultation outcome options**
+**Scenario 1: Page displays with consultation journey context and outcome options**
 
 ```gherkin
 Given the user is on the CCM Outcome Selection (Full) page
 When the page loads
-Then a heading "What would you like to do?" is visible
+Then a high-level caption "Clinical Conditions Management" is displayed (consultation journey context)
+And a heading "Select outcome" is visible
+And a question prompt "How would you like to proceed?" is displayed
 And four mutually exclusive outcome options are displayed:
   - Supply
   - Supply & refer

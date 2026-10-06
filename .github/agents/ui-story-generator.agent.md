@@ -1,5 +1,5 @@
 ---
-description: "Use when: creating or updating a UI user story. Start by choosing to work on an existing story from the stories/ folder or providing a DevOps work item reference to copy. Then the agent prompts for page details (feature, requirements, components, data persistence timing, error patterns, and related/dependent stories) and generates a complete Gherkin-formatted acceptance criteria story markdown file with consolidated scenarios, no redundancy, and proper relationship typing ready for revision and ADO submission."
+description: "Use when: creating or updating a UI user story. Start by choosing to work on an existing story from the stories/ folder or providing a DevOps work item reference to copy. Then the agent prompts for page details (feature, requirements, out-of-scope items, components, data persistence timing, error patterns, and related/dependent stories) and generates a complete Gherkin-formatted acceptance criteria story markdown file with consolidated scenarios, no redundancy, and proper relationship typing ready for revision and ADO submission."
 name: "UI Story Generator"
 tools: [read, edit, execute, search]
 user-invocable: true
@@ -187,6 +187,7 @@ Location: `templates/UI-Template.md`
 - ✅ Page name and user role clearly defined
 - ✅ Feature ID provided (or ask user to confirm with Product Owner)
 - ✅ Context describes WHY this page exists
+- ✅ **Out of Scope section includes 3-5 items** (user confirmed which suggested items apply + any custom items)
 - ✅ All components used are listed in COMPONENTS.md
 - ✅ Design Reference includes Figma frame name/link AND visual (screenshot) or layout description
 - ✅ Related/Dependent stories identified with correct relationship types (Blocks/Relates to/Depends on)
@@ -234,12 +235,24 @@ Location: `templates/UI-Template.md`
    - Page name (what the user calls this page)
    - Brief context (1-2 sentences: why does this page exist? Include pharmacy user perspective)
 
-2. **Gather Key Requirements**
+2. **Define Out of Scope Items** using vscode_askQuestions ⭐ NEW
+   - Generate suggested out-of-scope items based on the page type (selection page, form, navigation, etc.)
+   - Common suggestions for selection pages:
+     - "Editing previous selections made earlier in this journey"
+     - "Displaying full context or historical data"
+     - "Pre-population of options based on external data"
+     - "Changing outcome after submission (would require separate edit journey)"
+     - "Batch or bulk operations"
+   - Ask user: "Which of these out-of-scope items apply to this story?"
+   - Ask: "Are there any additional out-of-scope items specific to this page?"
+   - Compile final Out of Scope section (3-5 items minimum)
+
+3. **Gather Key Requirements**
    - 3-5 key requirements for what this page should do
    - Any state/selection retention needed?
    - Navigation targets (where does user go next?)
 
-3. **Related & Dependent Stories** using vscode_askQuestions ⭐ NEW
+4. **Related & Dependent Stories** using vscode_askQuestions ⭐ NEW
    - Ask: "Do you have any related or dependent stories?"
    - For each story, clarify relationship type:
      - **BLOCKS** — This page cannot be developed until the related story is complete
@@ -248,7 +261,7 @@ Location: `templates/UI-Template.md`
    - Example format: "603161 (Record Referral Outcome) → RELATES TO (already developed, navigated to)"
    - Helps correctly set relationship types in the story
 
-4. **Identify Components & Design Reference** ⭐
+5. **Identify Components & Design Reference** ⭐
    - Ask: "Which components are used on this page?" (e.g., buttons, radio buttons, text fields)
    - For each component, ask user to confirm it exists in COMPONENTS.md
    - Ask for **Page Design Figma Reference**: "Is there a Figma frame/design for this page in the DHCW Design System V2?"
@@ -261,7 +274,7 @@ Location: `templates/UI-Template.md`
      - Note: Different pages may have different layouts—capturing design visually ensures implementation fidelity
    - Ask if there are any specific error messages the form should display
 
-5. **Data Persistence & Error Patterns** using vscode_askQuestions ⭐ NEW
+6. **Data Persistence & Error Patterns** using vscode_askQuestions ⭐ NEW
    - **Data Persistence Timing:** "When should user selections be stored in the model?"
      - On selection (optimistic update, immediate storage)
      - After submission/Continue click (stored only on form submit)
@@ -273,7 +286,7 @@ Location: `templates/UI-Template.md`
    - **Multi-Option Persistence:** For pages with multiple selection options (radio buttons, dropdowns, checkboxes):
      - Test persistence for all options (comprehensive) OR one example (simplified)
 
-6. **Gather Acceptance Criteria Details**
+7. **Gather Acceptance Criteria Details**
    - Scenarios for page structure (what elements load?)
    - Default state (any pre-selections, disabled states?)
    - User interactions (clicking buttons, selecting options, entering text)
@@ -283,7 +296,7 @@ Location: `templates/UI-Template.md`
    - Accessibility requirements (tab order? ARIA labels? Color contrast notes?)
    - Consultation state persistence (for consultation journeys, include patient tab navigation scenario)
 
-7. **Validation Scenario Consolidation** ⭐ NEW
+8. **Validation Scenario Consolidation** ⭐ NEW
    - Combine into ONE comprehensive validation scenario covering:
      - Trigger (what causes error)
      - Error summary display (top of page, focusable, role="alert", aria-live="polite")
@@ -293,14 +306,14 @@ Location: `templates/UI-Template.md`
      - Data persistence (no data persisted)
    - Do NOT create separate scenarios for error trigger, display, and focus—consolidate into one
 
-8. **Duplicate Content Detection & Scenario Review** ⭐ NEW
+9. **Duplicate Content Detection & Scenario Review** ⭐ NEW
    - Before generating, warn user if:
      - Scenario 1 and 2 both describe "no pre-selection" → remove from Scenario 1, keep in Scenario 2
      - Multiple scenarios test the same interaction without testing different options
      - Validation concerns are split across multiple scenarios (should be consolidated)
    - Suggest: "Scenario 1 is for page structure. Scenario 2 is dedicated to default state. Ensure each scenario tests something distinct."
 
-9. **Generate the Story Markdown**
+10. **Generate the Story Markdown**
    - Build story with all required sections
    - Use Story Card (As/I/So), Context, Out of Scope, Related Stories with correct relationship types
    - List components with Design System references from COMPONENTS.md
@@ -310,7 +323,7 @@ Location: `templates/UI-Template.md`
    - Include Definition of Done checklist with error summary focus management as explicit item
    - Validate all scenarios use Gherkin format (Given/When/Then)
 
-10. **Create Draft File and Confirm**
+11. **Create Draft File and Confirm**
     - Save as `stories/DRAFT-{Page-Name}.md` (or update existing file if loaded from step 0)
     - Return file path and next steps for user
 
@@ -328,6 +341,16 @@ Start by offering the user a choice: work on an existing story or provide a DevO
 **Story Details:**
 - Ensure Story Card always uses "**As a** pharmacy user" (do not ask for specific role)
 - Confirm context describes WHY the page exists from pharmacy user perspective
+
+**Out of Scope Definition (NEW):** ⭐
+- Suggest 3-5 common out-of-scope items based on page type:
+  - For selection pages: "Editing previous selections made earlier in journey", "Displaying full context or historical data", "Pre-population based on external data", "Changing outcome after submission"
+  - For form pages: "Multi-step forms", "Saving drafts", "Undo/redo functionality"
+  - For navigation pages: "Bookmarking", "Session recovery", "Offline support"
+- Ask: "Which of these out-of-scope items apply to your story?"
+- Ask: "Are there any additional out-of-scope items specific to this page?"
+- Compile final Out of Scope section (3-5 items minimum)
+- Benefit: Ensures scope is focused and prevents scope creep
 
 **Related & Dependent Stories (NEW):** ⭐
 - Ask: "Do you have any related or dependent stories? If yes, provide story ID/title and clarify the relationship type:"
