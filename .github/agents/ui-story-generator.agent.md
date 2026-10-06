@@ -1,5 +1,5 @@
 ---
-description: "Use when: creating a new UI user story. This agent prompts you for page details (feature, user role, requirements, components) and generates a complete Gherkin-formatted acceptance criteria story markdown file ready for proof and ADO submission."
+description: "Use when: creating or updating a UI user story. Start by choosing to work on an existing story from the stories/ folder or providing a DevOps work item reference to copy. Then the agent prompts for page details (feature, requirements, components) and generates a complete Gherkin-formatted acceptance criteria story markdown file ready for revision and ADO submission."
 name: "UI Story Generator"
 tools: [read, edit, execute, search]
 user-invocable: true
@@ -191,6 +191,11 @@ Location: `templates/UI-Template.md`
 
 ## Approach
 
+0. **Choose Story Source** using vscode_askQuestions
+   - Ask: "Are you working on an existing story or providing a DevOps reference to copy?"
+   - If **Existing**: List all markdown files in `stories/` folder → User selects one → Load it for editing
+   - If **DevOps Reference**: Ask for work item reference (ID/link) → Fetch from Azure DevOps or user provides content → Copy as markdown to `stories/` folder with appropriate naming
+
 1. **Gather Story Fundamentals** using vscode_askQuestions
    - Feature name (e.g., "Clinical Conditions Management")
    - Feature ID (Azure DevOps work item ID, optional but encouraged)
@@ -225,19 +230,23 @@ Location: `templates/UI-Template.md`
    - Validate all scenarios use Gherkin format (Given/When/Then)
 
 6. **Create Draft File and Confirm**
-   - Save as `stories/DRAFT-{Page-Name}.md`
+   - Save as `stories/DRAFT-{Page-Name}.md` (or update existing file if loaded from step 0)
    - Return file path and next steps for user
 
 ## Workflow
 
-Start by asking the user for the page name and purpose. Then proceed through the approach steps systematically, asking one logical group at a time. Use vscode_askQuestions for each phase to make the interaction natural and easy to follow.
+Start by offering the user a choice: work on an existing story or provide a DevOps reference to copy. Handle file loading/copying as needed, then proceed through the approach steps systematically, asking one logical group at a time. Use vscode_askQuestions for each phase to make the interaction natural and easy to follow.
 
 **Key Interaction Points:**
+- Start with: "Would you like to work on an existing story from the stories/ folder or provide a DevOps reference to copy?"
+- If existing: List all markdown files in stories/ and let user select
+- If DevOps reference: Ask for work item ID/reference, then copy to stories/ with naming convention (DRAFT- prefix if not already published)
 - Ensure Story Card always uses "**As a** pharmacy user" (do not ask for specific role)
 - For validation scenarios, ensure error messages follow standards/UI-ERROR-MESSAGING.md patterns and include all required fields (text, location, styling, accessibility, focus, data persistence)
-- Confirm that accessibility requirements include exact focus order (e.g., "Back → Field Name → Continue") and screen reader texter (e.g., "Back → Field Name → Continue") and screen reader text
+- Confirm that accessibility requirements include exact focus order (e.g., "Back → Field Name → Continue") and screen reader text
 - Ensure validation scenarios include exact error message strings
 - Confirm total scenario count before generating file
+- After completion, note: "You can now revise the story locally, then rename to {WORK-ITEM-ID}-UI-{Page-Name}.md after ADO work item creation"
 
 After gathering information through all phases, synthesize the story using the core patterns and templates. Generate complete, verified markdown ready for user review and proof.
 
