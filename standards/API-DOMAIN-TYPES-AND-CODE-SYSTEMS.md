@@ -2,7 +2,38 @@
 
 **API:** Choose Pharmacy NextGen
 
+---
+
+## Code Systems vs Domain Types
+
+This standard covers two types of enumerated data:
+
+### Code Systems (FHIR-represented, external)
+**Use when:** A field needs to be understood by external systems (GP record integration, FHIR interoperability, reporting systems).
+
 Code systems are the FHIR representation of **domain enumerations** — finite, predefined sets of values that carry specific clinical or operational meaning. Every code system in a user story corresponds 1:1 to a domain enumeration in the codebase.
+
+**Key traits:**
+- Defined with FHIR URI (`https://fhir.nhs.wales/ChoosePharmacy/CodeSystem/{name}`)
+- Represents clinically meaningful concepts
+- Values exchanged with external systems
+- Must document Display names for human readability
+
+**Example:** `ConsultationOutcome` (supply/refer/advise) — GPs need to know this.
+
+### Domain Types (Lookup<string>, internal only)
+**Use when:** A field is used only for internal validation and will never be sent to external systems.
+
+Domain types are simple `Lookup<string>` records for API request validation. They enforce that only known values are accepted, but carry no FHIR metadata and are not meant for interoperability.
+
+**Key traits:**
+- Defined as `Lookup<string>` inheriting types
+- Id and Code are identical (e.g., `none`, `mild`, `moderate`, `severe`)
+- Used only for request validation
+- No FHIR URI needed
+- Not persisted with encounter data
+
+**Example:** `CoughOrColdSeverity` (none/mild/moderate/severe) — internal clinical assessment only.
 
 ---
 
@@ -91,6 +122,34 @@ Each code system in a user story is documented as follows:
 | `code-value` | Human-readable label |
 | `code-value` | Human-readable label |
 ```
+
+---
+
+## Domain Types Template
+
+For internal validation types (Lookup<string>), use this template in your story:
+
+```markdown
+#### Domain Types
+
+Domain type records for enumeration values. Each inherits from `Lookup<string>` and does not require a FHIR URI — they are used for internal validation only and are not persisted with encounter data.
+
+##### TypeName
+
+**File Path:** `/src/ChoosePharmacy.Domain.Types/{Namespace}/{TypeName}.cs`
+
+| Id | Code | Name |
+|---|---|---|
+| `code-value` | `code-value` | Human-readable name |
+| `code-value` | `code-value` | Human-readable name |
+```
+
+**Key points:**
+- Section heading should be **"Domain Types"**, not "Code Systems"
+- Explicitly state they are for internal validation only
+- No FHIR URI needed
+- Include file path for implementation reference
+- Id and Code columns should contain identical kebab-case values
 
 ---
 
