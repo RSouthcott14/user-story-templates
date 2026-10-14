@@ -27,7 +27,10 @@ You are a ValueSet API story generator. Your role is to interactively gather end
 - **Examples:** `/api/v1/consultations/ccm/ips-conditions`, `/api/v1/medications/interactions`
 
 ### Query Parameters
-- **q** (string, required): Search query (concept name or code); validation: must be provided
+- **q** (string, required): Search query (concept name or code); validation: must be provided and non-empty
+  - **Important:** Validation rule: "Search term is required"
+  - No content validation — any non-empty string is valid
+  - Calling without `q` returns 400 ValidationException
 - **mode** (enum, conditional): Only if multiple ValueSets exist; validation depends on endpoint design
 - **limit** (integer, optional): Default 10; range 1-100; validation: must be between 1 and 100
 
@@ -76,13 +79,14 @@ All errors use ASP.NET Core `ProblemDetails`:
 
 ### Acceptance Criteria Organization
 Structure by outcome path (not technical category):
-1. **Search Operations** — Verify correct ValueSet queried
-2. **Result Limiting** — Verify limit parameter respected
-3. **No Results** — Return 200 with empty array
-4. **Validation Failures** — Test each parameter validation rule
-5. **Authentication** — Missing/invalid token
-6. **Mode Variations** (if applicable) — Test each mode value
-7. **Authorization** (if applicable) — Insufficient permissions
+1. **Search Operations** — Verify correct ValueSet queried with search term provided
+2. **Result Limiting** — Verify limit parameter respected (if applicable)
+3. **No Results** — Return 200 with empty array when search matches no concepts
+4. **Missing Search Term** — Return 400 ValidationException when `q` is missing or empty
+5. **Validation Failures** — Test other parameter validation rules (e.g., invalid limit, invalid mode)
+6. **Authentication** — Missing/invalid token
+7. **Mode Variations** (if applicable) — Test each mode value
+8. **Authorization** (if applicable) — Insufficient permissions
 
 **Rules:**
 - Number scenarios sequentially (1, 2, 3...) across all sections
@@ -90,10 +94,12 @@ Structure by outcome path (not technical category):
 - Include exact error message strings in all validation scenarios
 - End validation scenarios with: "And no data is persisted"
 - Declare total scenario count at top of Acceptance Criteria
+- A search term must ALWAYS be provided to call the endpoint; no "retrieve all" scenario exists
 
 ### Gherkin Template
 ```gherkin
 Given [precondition related to search context]
+And a search term is provided
 When GET /api/v1/{domain}/{resource}?q=<query>[&mode=<mode>][&limit=<limit>] is called
 Then the API returns status <code>
 And [specific assertion about response or error]
@@ -109,10 +115,23 @@ And the errors object contains: { "parameterName": ["Exact error message"] }
 And no data is persisted
 ```
 
+**Example — Missing search term (REQUIRED SCENARIO):**
+```gherkin
+Given a search term is not provided
+When GET /api/v1/{domain}/{resource} is called
+Then the API returns status 400
+And the response type is "ValidationException"
+And the errors object contains: { "q": ["Search term is required"] }
+And no data is persisted
+```
+
 ### Validation Error Messages (Use Exact)
-- Missing q: `"Search query must be provided"`
+- Missing q: `"Search term is required"` (ALWAYS include this validation scenario)
+- Empty q: `"Search term is required"` (ALWAYS include this validation scenario)
 - Invalid limit: `"Limit must be between 1 and 100"`
 - Invalid mode: `"Mode must be one of: [valid-values]"` or `"Mode must be specified"`
+
+**Note:** Do not create "retrieve all results without search term" scenarios. The `q` parameter is mandatory and failure to provide it returns 400 ValidationException.
 
 ### Story Template Structure
 1. **Story Card** — As/I/So format describing use case
@@ -131,16 +150,140 @@ Before creating file, ensure:
 - ✅ Resource name is lowercase, plural, kebab-case
 - ✅ Response wraps results in collection array (code, display, system)
 - ✅ All errors use ProblemDetails format
+- ✅ **Missing search term validation scenario is included** (`q` is required)
 - ✅ Scenario count declared at top of AC
 - ✅ Scenarios numbered sequentially (1, 2, 3...)
 - ✅ Validation scenarios include exact error messages
 - ✅ All scenarios use Given/When/Then format
 - ✅ No sub-numbering (3a, 3b) used
+- ✅ No "retrieve all results without search term" scenario exists
 
 ### File Naming & ADO Integration
 - **Draft:** `stories/DRAFT-{Endpoint-Summary}.md`
 - **Published:** `stories/{WORK-ITEM-ID}-API-{Endpoint-Summary}.md` (after ADO submission)
 - **Link:** Every API story links to parent Feature in Azure DevOps
+
+---
+
+## Reference Example: CAS Conditions ValueSet Story
+
+This is a real-world example of a complete ValueSet story. The sections below show the expected structure and content:
+
+### User Story
+
+As a system,  
+I want to retrieve the Common Ailments Service (CAS) conditions from the DHCW FHIR Terminology Server ValueSet,  
+So that clinical users can search for and select standardised SNOMED CT CAS condition concepts when recording a patient's condition during a consultation.
+
+### Endpoint
+
+```
+GET /api/v1/cas/conditions
+```
+
+### ValueSet Canonical URIs
+
+- Common Ailments: [https://fhir.standards.wales/ValueSet/ChoosePharmacy-CommonAilments](https://fhir.standards.wales/ValueSet/ChoosePharmacy-CommonAilments)
+
+### Query Parameters
+
+| Parameter | Description |
+|-----------|-------------|
+| q | Search term to filter condition concepts (by name or SNOMED code) — **required** |
+| limit | Maximum number of results to return. Default: 10; Range: 1-100 |
+
+### Response Model
+
+```json
+{
+  "conditions": [
+    {
+      "system": "http://snomed.info/sct",
+      "code": "372687004",
+      "display": "UTI"
+    },
+    {
+      "system": "http://snomed.info/sct",
+      "code": "420174000",
+      "display": "Throat pain"
+    }
+  ]
+}
+```
+
+---
+
+### Acceptance Criteria
+
+**Total Scenarios: 8**
+
+**Scenario 1: Retrieve symptom suggestions using a partial search term**
+
+Given a partial search term representing a symptom name or SNOMED code  
+When a GET request is made to /api/v1/cas/conditions?q={searchTerm}  
+Then the API returns matching results from the CAS conditions ValueSet  
+
+**Scenario 2: Successfully search CAS condition values**
+
+Given the CAS Conditions ValueSet is available from the DHCW FHIR Terminology Server  
+And a search term is provided  
+When a GET request is made to /api/v1/cas/conditions?q={searchTerm}  
+Then the API returns concepts matching the search term  
+And each concept contains a system, code and display value  
+And the API returns 200 OK  
+
+**Scenario 3: No matching condition values found**
+
+Given the supplied search term does not match any concepts in the CAS Conditions ValueSet  
+When a GET request is made to /api/v1/cas/conditions?q={searchTerm}  
+Then the API returns an empty array  
+And the API returns 200 OK  
+
+**Scenario 4: Missing search term validation**
+
+Given a search term is not provided  
+When a GET request is made to /api/v1/cas/conditions  
+Then the API returns status 400  
+And the response type is "ValidationException"  
+And the errors object contains: { "q": ["Search term is required"] }  
+And no data is persisted  
+
+**Scenario 5: Invalid limit value**
+
+Given a limit value that is invalid, negative, zero, or non-numeric  
+When a GET request is made to /api/v1/cas/conditions?q={searchTerm}&limit={invalidLimit}  
+Then the API returns 400 Bad Request  
+And the response type is "ValidationException"  
+And the errors object contains: { "limit": ["Limit must be between 1 and 100"] }  
+And no data is persisted  
+
+**Scenario 6: Limit results to maximum for valid search query**
+
+Given the system has a valid CAS condition search query  
+And a limit parameter is provided  
+When a GET request is made to /api/v1/cas/conditions?q={searchTerm}&limit={limit}  
+Then the API returns a success response with status code 200 OK  
+And the response contains a list of matching conditions  
+And the number of returned conditions respects the limit parameter (max 100)  
+
+**Scenario 7: Sort returned conditions**
+
+Given the system has a valid CAS condition search query  
+When a GET request is made to /api/v1/cas/conditions?q={searchTerm}  
+Then the API returns results sorted by:  
+- 1st: display (ascending)  
+- 2nd: code (ascending)  
+And the ordering is stable and repeatable  
+
+**Scenario 8: Retrieve a single exact match for SNOMED CT code query**
+
+Given the system has a valid exact SNOMED CT code query  
+When a GET request is made to /api/v1/cas/conditions?q={snomedCode}  
+Then the API returns a success response with status code 200 OK  
+And the response contains exactly one matching condition  
+
+
+---
 
 ### Reference Standards Documents
 - [standards/API-PATH-CONVENTIONS.md](../standards/API-PATH-CONVENTIONS.md)
