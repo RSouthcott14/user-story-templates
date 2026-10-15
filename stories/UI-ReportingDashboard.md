@@ -362,14 +362,14 @@ And the pharmacy summary and dashboard data update accordingly
 - [ ] Keyboard navigation tested end-to-end (including pharmacy selectors)
 - [ ] Screen reader testing completed (NVDA/JAWS on Windows, VoiceOver on macOS)
 - [ ] Performance: Page loads in under 2 seconds
-- [ ] Mock-up artifact (dashboard-mock.html) provided as reference
+- [ ] Mock-up artifact (`mock-designs/dashboard-mock.html`) provided as reference
 
 ---
 
 ## Notes
 
 ### Design Reference
-- Mock-up provided: `dashboard-mock.html` in the repository
+- Mock-up provided: `mock-designs/dashboard-mock.html` in the repository
 - DHCW Design System V2 Figma: https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2
 
 ### Data Considerations
