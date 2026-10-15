@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Pharmacy NextGen - Reporting Dashboard</title>
+    <link rel="stylesheet" href="https://design.nhsinfrastructure.uk/design-system/css/nhsuk.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #f3f3f3;
+            color: #212b36;
+            line-height: 1.5;
+        }
+
+        .nhsuk-header {
+            background-color: #005bba;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .nhsuk-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .nhsuk-header p {
+            font-size: 14px;
+            margin: 4px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+
+        .page-title {
+            margin-bottom: 32px;
+        }
+
+        .page-title h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #212b36;
+        }
+
+        .page-title p {
+            font-size: 16px;
+            color: #626a6f;
+        }
+
+        .dashboard-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            margin-bottom: 20px;
+            border-bottom: 3px solid #005bba;
+            padding-bottom: 12px;
+        }
+
+        .section-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #212b36;
+            margin: 0;
+        }
+
+        .filter-container {
+            background-color: white;
+            border: 1px solid #b1b4b6;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #212b36;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .radio-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-wrapper input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #005bba;
+        }
+
+        .radio-wrapper label {
+            font-size: 14px;
+            color: #212b36;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .filter-options {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .radio-wrapper {
+                gap: 10px;
+            }
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #b1b4b6;
+            border-radius: 4px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 150px;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #626a6f;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #005bba;
+            margin: 12px 0;
+            line-height: 1;
+        }
+
+        .card-meta {
+            font-size: 13px;
+            color: #626a6f;
+            margin-top: 8px;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            background-color: #e8f3ff;
+            color: #005bba;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .stat-badge.positive {
+            background-color: #e5f0e3;
+            color: #28a745;
+        }
+
+        .stat-badge.negative {
+            background-color: #ffe5e5;
+            color: #d32f2f;
+        }
+
+        .panel {
+            background-color: white;
+            border-left: 4px solid #005bba;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 2px;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #212b36;
+            margin-bottom: 8px;
+        }
+
+        .panel-content {
+            font-size: 14px;
+            color: #626a6f;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 16px;
+            }
+
+            .card-value {
+                font-size: 36px;
+            }
+
+            .page-title h2 {
+                font-size: 22px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+        }
+
+        .footer {
+            background-color: #f3f3f3;
+            border-top: 1px solid #b1b4b6;
+            padding: 32px 20px;
+            text-align: center;
+            color: #626a6f;
+            font-size: 14px;
+        }
+
+        /* Tabs Component */
+        .tabs-container {
+            background-color: white;
+            border-bottom: 2px solid #b1b4b6;
+            margin-bottom: 32px;
+            margin-left: -20px;
+            margin-right: -20px;
+            margin-top: -32px;
+            padding: 0 20px;
+        }
+
+        .tabs-list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0;
+        }
+
+        .tab-item {
+            margin: 0;
+            padding: 0;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            color: #626a6f;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 16px 20px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .tab-button:hover {
+            color: #005bba;
+            background-color: #f3f3f3;
+        }
+
+        .tab-button.active {
+            color: #005bba;
+            border-bottom-color: #005bba;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Reports Table */
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border: 1px solid #b1b4b6;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .reports-table thead {
+            background-color: #f3f3f3;
+            border-bottom: 2px solid #b1b4b6;
+        }
+
+        .reports-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            color: #212b36;
+            font-size: 14px;
+        }
+
+        .reports-table td {
+            padding: 16px;
+            border-bottom: 1px solid #b1b4b6;
+            font-size: 14px;
+            color: #212b36;
+        }
+
+        .reports-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .reports-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .report-name {
+            font-weight: 500;
+            color: #005bba;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .report-name:hover {
+            text-decoration: underline;
+        }
+
+        .report-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .report-status.available {
+            background-color: #e5f0e3;
+            color: #28a745;
+        }
+
+        .report-status.draft {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .report-status.draft {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .btn-secondary {
+            background-color: #f3f3f3;
+            color: #212b36;
+            border: 1px solid #b1b4b6;
+            padding: 8px 16px;
+            border-radius: 3px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #e8e8e8;
+            border-color: #626a6f;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Pharmacy Filter Section */
+        .pharmacy-filter-section {
+            background-color: white;
+            border: 1px solid #b1b4b6;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .pharmacy-filter-group {
+            margin-bottom: 16px;
+        }
+
+        .pharmacy-filter-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .pharmacy-filter-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #212b36;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .pharmacy-select {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 12px;
+            border: 1px solid #b1b4b6;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #212b36;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        .pharmacy-select:focus {
+            outline: 2px solid #005bba;
+            outline-offset: 2px;
+        }
+
+        .pharmacy-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .pharmacy-checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pharmacy-checkbox-wrapper input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #005bba;
+        }
+
+        .pharmacy-checkbox-wrapper label {
+            font-size: 14px;
+            color: #212b36;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pharmacy-summary {
+            background-color: #f3f3f3;
+            border-left: 4px solid #005bba;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 2px;
+            font-size: 13px;
+            color: #626a6f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="nhsuk-header">
+        <div>
+            <h1>Choose Pharmacy NextGen</h1>
+            <p>NHS Wales Digital - Reporting Dashboard</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <h2>Reporting Dashboard</h2>
+            <p>Overview of consultations and registrations across all services</p>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="tabs-container">
+            <ul class="tabs-list" role="tablist">
+                <li class="tab-item" role="presentation">
+                    <button class="tab-button active" role="tab" aria-selected="true" aria-controls="dashboard-tab" id="dashboard-button">
+                        Dashboard
+                    </button>
+                </li>
+                <li class="tab-item" role="presentation">
+                    <button class="tab-button" role="tab" aria-selected="false" aria-controls="reports-tab" id="reports-button">
+                        Reports
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Dashboard Tab Content -->
+        <div id="dashboard-tab" class="tab-content active" role="tabpanel" aria-labelledby="dashboard-button">
+
+            <!-- Pharmacy Selection Filter -->
+            <div class="pharmacy-filter-section">
+                <div class="pharmacy-filter-group">
+                    <label class="pharmacy-filter-label" for="pharmacy-select">Your Pharmacy</label>
+                    <select id="pharmacy-select" class="pharmacy-select" aria-label="Select your pharmacy location">
+                        <option value="pharmacy-001">Cardiff Pharmacy - Llanishen</option>
+                        <option value="pharmacy-002">Swansea Pharmacy - City Centre</option>
+                        <option value="pharmacy-003">Newport Pharmacy - High Street</option>
+                        <option value="pharmacy-004">Wrexham Pharmacy - Town Centre</option>
+                        <option value="pharmacy-005">Bangor Pharmacy - High Street</option>
+                    </select>
+                </div>
+
+                <div class="pharmacy-filter-group">
+                    <label class="pharmacy-filter-label">View data for multiple pharmacies</label>
+                    <div class="pharmacy-checkboxes" role="group" aria-labelledby="multi-pharmacy-label">
+                        <div class="pharmacy-checkbox-wrapper">
+                            <input type="checkbox" id="pharmacy-check-001" name="multi-pharmacies" value="pharmacy-001" checked disabled>
+                            <label for="pharmacy-check-001">Cardiff Pharmacy</label>
+                        </div>
+                        <div class="pharmacy-checkbox-wrapper">
+                            <input type="checkbox" id="pharmacy-check-002" name="multi-pharmacies" value="pharmacy-002">
+                            <label for="pharmacy-check-002">Swansea Pharmacy</label>
+                        </div>
+                        <div class="pharmacy-checkbox-wrapper">
+                            <input type="checkbox" id="pharmacy-check-003" name="multi-pharmacies" value="pharmacy-003">
+                            <label for="pharmacy-check-003">Newport Pharmacy</label>
+                        </div>
+                        <div class="pharmacy-checkbox-wrapper">
+                            <input type="checkbox" id="pharmacy-check-004" name="multi-pharmacies" value="pharmacy-004">
+                            <label for="pharmacy-check-004">Wrexham Pharmacy</label>
+                        </div>
+                        <div class="pharmacy-checkbox-wrapper">
+                            <input type="checkbox" id="pharmacy-check-005" name="multi-pharmacies" value="pharmacy-005">
+                            <label for="pharmacy-check-005">Bangor Pharmacy</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pharmacy-summary" role="status" aria-live="polite">
+                    <strong>Viewing data for:</strong> Cardiff Pharmacy - Llanishen
+                </div>
+            </div>
+
+        <!-- Consultations Section -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>Consultations</h3>
+            </div>
+
+            <!-- Date Range Filter -->
+            <div class="filter-container">
+                <label class="filter-label" for="date-range-group">Date Range</label>
+                <div class="filter-options" role="group" aria-labelledby="date-range-label">
+                    <div class="radio-wrapper">
+                        <input type="radio" id="last-week" name="date-range" value="last-week">
+                        <label for="last-week">Last week</label>
+                    </div>
+                    <div class="radio-wrapper">
+                        <input type="radio" id="last-month" name="date-range" value="last-month" checked>
+                        <label for="last-month">Last month</label>
+                    </div>
+                    <div class="radio-wrapper">
+                        <input type="radio" id="last-3-months" name="date-range" value="last-3-months">
+                        <label for="last-3-months">Last 3 months</label>
+                    </div>
+                    <div class="radio-wrapper">
+                        <input type="radio" id="last-12-months" name="date-range" value="last-12-months">
+                        <label for="last-12-months">Last 12 months</label>
+                    </div>
+                    <div class="radio-wrapper">
+                        <input type="radio" id="all-time" name="date-range" value="all">
+                        <label for="all-time">All</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Service Performance</div>
+                <div class="panel-content">
+                    Track consultation submissions and completion rates across all service types
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <!-- CAS Card -->
+                <div class="card" data-service="cas">
+                    <div class="card-title">CAS Consultations</div>
+                    <div class="card-value">1,247</div>
+                    <div class="card-meta">Last 30 days</div>
+                    <span class="stat-badge positive">↑ 12% increase</span>
+                </div>
+
+                <!-- IPS Card -->
+                <div class="card" data-service="ips">
+                    <div class="card-title">IPS Consultations</div>
+                    <div class="card-value">892</div>
+                    <div class="card-meta">Last 30 days</div>
+                    <span class="stat-badge">→ 0% change</span>
+                </div>
+
+                <!-- EMS Card -->
+                <div class="card" data-service="ems">
+                    <div class="card-title">EMS Consultations</div>
+                    <div class="card-value">456</div>
+                    <div class="card-meta">Last 30 days</div>
+                    <span class="stat-badge negative">↓ 5% decrease</span>
+                </div>
+
+                <!-- CS Card -->
+                <div class="card" data-service="cs">
+                    <div class="card-title">CS Consultations</div>
+                    <div class="card-value">734</div>
+                    <div class="card-meta">Last 30 days</div>
+                    <span class="stat-badge positive">↑ 8% increase</span>
+                </div>
+
+                <!-- DMR Card -->
+                <div class="card" data-service="dmr">
+                    <div class="card-title">DMR Consultations</div>
+                    <div class="card-value">623</div>
+                    <div class="card-meta">Last 30 days</div>
+                    <span class="stat-badge positive">↑ 3% increase</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registrations Section -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>Registrations</h3>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">Active Registrations</div>
+                <div class="panel-content">
+                    Number of active patient registrations with participating pharmacies
+                </div>
+            </div>
+
+            <div class="cards-grid">
+                <!-- CAS Registrations Card -->
+                <div class="card">
+                    <div class="card-title">CAS Registrations</div>
+                    <div class="card-value">8,392</div>
+                    <div class="card-meta">Active patients</div>
+                    <span class="stat-badge positive">↑ 2% increase</span>
+                </div>
+
+                <!-- DMR Registrations Card -->
+                <div class="card">
+                    <div class="card-title">DMR Registrations</div>
+                    <div class="card-value">6,158</div>
+                    <div class="card-meta">Active patients</div>
+                    <span class="stat-badge positive">↑ 4% increase</span>
+                </div>
+            </div>
+        </section>
+        </div>
+
+        <!-- Reports Tab Content -->
+        <div id="reports-tab" class="tab-content" role="tabpanel" aria-labelledby="reports-button">
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h3>Available Reports</h3>
+                </div>
+
+                <!-- Pharmacy Selection Filter -->
+                <div class="pharmacy-filter-section">
+                    <div class="pharmacy-filter-group">
+                        <label class="pharmacy-filter-label" for="reports-pharmacy-select">Your Pharmacy</label>
+                        <select id="reports-pharmacy-select" class="pharmacy-select" aria-label="Select your pharmacy location for reports">
+                            <option value="pharmacy-001">Cardiff Pharmacy - Llanishen</option>
+                            <option value="pharmacy-002">Swansea Pharmacy - City Centre</option>
+                            <option value="pharmacy-003">Newport Pharmacy - High Street</option>
+                            <option value="pharmacy-004">Wrexham Pharmacy - Town Centre</option>
+                            <option value="pharmacy-005">Bangor Pharmacy - High Street</option>
+                        </select>
+                    </div>
+
+                    <div class="pharmacy-filter-group">
+                        <label class="pharmacy-filter-label">View data for multiple pharmacies</label>
+                        <div class="pharmacy-checkboxes" role="group" aria-labelledby="multi-pharmacy-label">
+                            <div class="pharmacy-checkbox-wrapper">
+                                <input type="checkbox" id="reports-pharmacy-check-001" name="reports-multi-pharmacies" value="pharmacy-001" checked disabled>
+                                <label for="reports-pharmacy-check-001">Cardiff Pharmacy</label>
+                            </div>
+                            <div class="pharmacy-checkbox-wrapper">
+                                <input type="checkbox" id="reports-pharmacy-check-002" name="reports-multi-pharmacies" value="pharmacy-002">
+                                <label for="reports-pharmacy-check-002">Swansea Pharmacy</label>
+                            </div>
+                            <div class="pharmacy-checkbox-wrapper">
+                                <input type="checkbox" id="reports-pharmacy-check-003" name="reports-multi-pharmacies" value="pharmacy-003">
+                                <label for="reports-pharmacy-check-003">Newport Pharmacy</label>
+                            </div>
+                            <div class="pharmacy-checkbox-wrapper">
+                                <input type="checkbox" id="reports-pharmacy-check-004" name="reports-multi-pharmacies" value="pharmacy-004">
+                                <label for="reports-pharmacy-check-004">Wrexham Pharmacy</label>
+                            </div>
+                            <div class="pharmacy-checkbox-wrapper">
+                                <input type="checkbox" id="reports-pharmacy-check-005" name="reports-multi-pharmacies" value="pharmacy-005">
+                                <label for="reports-pharmacy-check-005">Bangor Pharmacy</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pharmacy-summary" role="status" aria-live="polite">
+                        <strong>Viewing data for:</strong> Cardiff Pharmacy - Llanishen
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="filter-container">
+                    <label class="filter-label" for="reports-date-range-group">Date Range</label>
+                    <div class="filter-options" role="group" aria-labelledby="reports-date-range-label">
+                        <div class="radio-wrapper">
+                            <input type="radio" id="reports-last-week" name="reports-date-range" value="last-week">
+                            <label for="reports-last-week">Last week</label>
+                        </div>
+                        <div class="radio-wrapper">
+                            <input type="radio" id="reports-last-month" name="reports-date-range" value="last-month" checked>
+                            <label for="reports-last-month">Last month</label>
+                        </div>
+                        <div class="radio-wrapper">
+                            <input type="radio" id="reports-last-3-months" name="reports-date-range" value="last-3-months">
+                            <label for="reports-last-3-months">Last 3 months</label>
+                        </div>
+                        <div class="radio-wrapper">
+                            <input type="radio" id="reports-last-12-months" name="reports-date-range" value="last-12-months">
+                            <label for="reports-last-12-months">Last 12 months</label>
+                        </div>
+                        <div class="radio-wrapper">
+                            <input type="radio" id="reports-all-time" name="reports-date-range" value="all">
+                            <label for="reports-all-time">All</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title">Report Library</div>
+                    <div class="panel-content">
+                        Access detailed reports on consultations, staff performance, medications, and service quality metrics
+                    </div>
+                </div>
+
+                <!-- Reports Table -->
+                <table class="reports-table" role="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Report Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#" class="report-name">Consultation per Staff Member</a></td>
+                            <td>Number of consultations completed by each individual staff member</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Consultations per Staff Group</a></td>
+                            <td>Aggregated consultation metrics by staff group or role</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Consultations per Condition</a></td>
+                            <td>Analysis of consultations segmented by condition or diagnosis</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Medications provided per Condition</a></td>
+                            <td>Medication supply metrics linked to specific conditions</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Consultations per Pharmacy (Multiples)</a></td>
+                            <td>Performance data for multi-site pharmacy operations</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Consultation Outcomes</a></td>
+                            <td>Summary of consultation results and patient outcomes</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Medications provided outside of Spec (IPS)</a></td>
+                            <td>Medications dispensed that fall outside specification guidelines for IPS</td>
+                            <td><span class="report-status draft">Draft</span></td>
+                            <td><button class="btn-secondary" disabled>View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Consultation Duration</a></td>
+                            <td>Analysis of consultation length and time-to-completion metrics</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Removed/Deleted Records</a></td>
+                            <td>Audit trail of records that have been removed or deleted from the system</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">High number of consultations</a></td>
+                            <td>Identification of staff members or pharmacies with unusually high consultation volumes</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="report-name">Incomplete Consultations</a></td>
+                            <td>Consultations that have not been fully completed or submitted</td>
+                            <td><span class="report-status available">Available</span></td>
+                            <td><button class="btn-secondary">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 NHS Wales Digital. Choose Pharmacy NextGen v1.0</p>
+    </footer>
+
+    <script>
+        // Mock data for different date ranges
+        const consultationData = {
+            'last-week': {
+                'cas': { value: 287, trend: 15, direction: 'up' },
+                'ips': { value: 198, trend: 2, direction: 'up' },
+                'ems': { value: 102, trend: -8, direction: 'down' },
+                'cs': { value: 165, trend: 12, direction: 'up' },
+                'dmr': { value: 142, trend: 5, direction: 'up' }
+            },
+            'last-month': {
+                'cas': { value: 1247, trend: 12, direction: 'up' },
+                'ips': { value: 892, trend: 0, direction: 'neutral' },
+                'ems': { value: 456, trend: -5, direction: 'down' },
+                'cs': { value: 734, trend: 8, direction: 'up' },
+                'dmr': { value: 623, trend: 3, direction: 'up' }
+            },
+            'last-3-months': {
+                'cas': { value: 3891, trend: 18, direction: 'up' },
+                'ips': { value: 2756, trend: 7, direction: 'up' },
+                'ems': { value: 1289, trend: -3, direction: 'down' },
+                'cs': { value: 2145, trend: 14, direction: 'up' },
+                'dmr': { value: 1834, trend: 9, direction: 'up' }
+            },
+            'last-12-months': {
+                'cas': { value: 15234, trend: 22, direction: 'up' },
+                'ips': { value: 10892, trend: 11, direction: 'up' },
+                'ems': { value: 5234, trend: 2, direction: 'up' },
+                'cs': { value: 8567, trend: 19, direction: 'up' },
+                'dmr': { value: 7123, trend: 15, direction: 'up' }
+            },
+            'all': {
+                'cas': { value: 42156, trend: 25, direction: 'up' },
+                'ips': { value: 31245, trend: 18, direction: 'up' },
+                'ems': { value: 14782, trend: 8, direction: 'up' },
+                'cs': { value: 24891, trend: 22, direction: 'up' },
+                'dmr': { value: 19734, trend: 20, direction: 'up' }
+            }
+        };
+
+        const serviceLabels = {
+            'cas': 'CAS',
+            'ips': 'IPS',
+            'ems': 'EMS',
+            'cs': 'CS',
+            'dmr': 'DMR'
+        };
+
+        function updateConsultationData(dateRange) {
+            const data = consultationData[dateRange];
+            
+            Object.keys(data).forEach(service => {
+                const cardValue = document.querySelector(`[data-service="${service}"] .card-value`);
+                const cardBadge = document.querySelector(`[data-service="${service}"] .stat-badge`);
+                const serviceMeta = document.querySelector(`[data-service="${service}"] .card-meta`);
+                
+                if (cardValue) {
+                    cardValue.textContent = data[service].value.toLocaleString();
+                }
+                
+                if (serviceMeta) {
+                    const timeLabel = getTimeLabelForRange(dateRange);
+                    serviceMeta.textContent = timeLabel;
+                }
+                
+                if (cardBadge) {
+                    const trend = data[service].trend;
+                    const direction = data[service].direction;
+                    let badgeClass = '';
+                    let symbol = '→';
+                    
+                    if (direction === 'up') {
+                        badgeClass = 'positive';
+                        symbol = '↑';
+                    } else if (direction === 'down') {
+                        badgeClass = 'negative';
+                        symbol = '↓';
+                    }
+                    
+                    cardBadge.textContent = `${symbol} ${Math.abs(trend)}% ${direction === 'neutral' ? 'change' : 'change'}`;
+                    cardBadge.className = `stat-badge ${badgeClass}`;
+                }
+            });
+        }
+
+        function getTimeLabelForRange(dateRange) {
+            const labels = {
+                'last-week': 'Last 7 days',
+                'last-month': 'Last 30 days',
+                'last-3-months': 'Last 90 days',
+                'last-12-months': 'Last 12 months',
+                'all': 'All time'
+            };
+            return labels[dateRange] || 'Last 30 days';
+        }
+
+        // Event listeners for radio buttons
+        document.querySelectorAll('input[name="date-range"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    updateConsultationData(this.value);
+                }
+            });
+        });
+
+        // Initialize with default (last-month)
+        updateConsultationData('last-month');
+
+        // Tab switching functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetTabId = this.getAttribute('aria-controls');
+
+                // Remove active class from all buttons and tabs
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-selected', 'false');
+                });
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Add active class to clicked button and corresponding tab
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+                document.getElementById(targetTabId).classList.add('active');
+            });
+        });
+
+        // Pharmacy selection functionality for Dashboard
+        const pharmacySelect = document.getElementById('pharmacy-select');
+        const multiPharmacyCheckboxes = document.querySelectorAll('input[name="multi-pharmacies"]');
+        const pharmacySummary = document.querySelector('#dashboard-tab .pharmacy-summary');
+
+        function updatePharmacySummary(section) {
+            const checkedBoxes = document.querySelectorAll(`input[name="${section}-multi-pharmacies"]:checked`);
+            const summary = section === 'multi-pharmacies' 
+                ? document.querySelector('#dashboard-tab .pharmacy-summary')
+                : document.querySelector('#reports-tab .pharmacy-summary');
+            
+            if (checkedBoxes.length === 1) {
+                const label = checkedBoxes[0].nextElementSibling.textContent;
+                summary.textContent = `Viewing data for: ${label}`;
+            } else if (checkedBoxes.length > 1) {
+                summary.innerHTML = `<strong>Viewing data for:</strong> ${checkedBoxes.length} pharmacies selected`;
+            }
+        }
+
+        // Dashboard pharmacy select change
+        pharmacySelect?.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex].text;
+            // Reset multi-select checkboxes to only current pharmacy
+            multiPharmacyCheckboxes.forEach((checkbox, index) => {
+                checkbox.checked = (index === 0);
+            });
+            updatePharmacySummary('multi-pharmacies');
+        });
+
+        // Dashboard multi-pharmacy checkboxes
+        multiPharmacyCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Ensure at least the first checkbox (current pharmacy) remains checked
+                const checkedCount = Array.from(multiPharmacyCheckboxes).filter(cb => cb.checked).length;
+                if (checkedCount === 0) {
+                    this.checked = true;
+                }
+                updatePharmacySummary('multi-pharmacies');
+            });
+        });
+
+        // Reports pharmacy select change
+        const reportsPharmacySelect = document.getElementById('reports-pharmacy-select');
+        const reportsMultiPharmacyCheckboxes = document.querySelectorAll('input[name="reports-multi-pharmacies"]');
+
+        reportsPharmacySelect?.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex].text;
+            // Reset multi-select checkboxes to only current pharmacy
+            reportsMultiPharmacyCheckboxes.forEach((checkbox, index) => {
+                checkbox.checked = (index === 0);
+            });
+            updateReportsPharmacySummary();
+        });
+
+        // Reports multi-pharmacy checkboxes
+        reportsMultiPharmacyCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Ensure at least the first checkbox (current pharmacy) remains checked
+                const checkedCount = Array.from(reportsMultiPharmacyCheckboxes).filter(cb => cb.checked).length;
+                if (checkedCount === 0) {
+                    this.checked = true;
+                }
+                updateReportsPharmacySummary();
+            });
+        });
+
+        function updateReportsPharmacySummary() {
+            const checkedBoxes = document.querySelectorAll('input[name="reports-multi-pharmacies"]:checked');
+            const summary = document.querySelector('#reports-tab .pharmacy-summary');
+            
+            if (checkedBoxes.length === 1) {
+                const label = checkedBoxes[0].nextElementSibling.textContent;
+                summary.textContent = `Viewing data for: ${label}`;
+            } else if (checkedBoxes.length > 1) {
+                summary.innerHTML = `<strong>Viewing data for:</strong> ${checkedBoxes.length} pharmacies selected`;
+            }
+        }
+    </script>
