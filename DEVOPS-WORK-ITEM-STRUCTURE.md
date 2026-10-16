@@ -49,11 +49,11 @@ Feature (Parent)
 
 ## 🏷️ Tagging Requirements
 
-**Every user story created by AI Copilot must have the tag: `AI Generated`**
+**Every user story created by AI Copilot must have the tag: `AL Generated`**
 
 - ✅ Tag applied automatically when creating stories via Copilot
-- ✅ Only tag applied to AI-generated stories is "AI Generated" (no other tags)
-- ✅ When updating an existing story with new AI-generated content, ensure "AI Generated" tag is present
+- ✅ Only tag applied to AI-generated stories is "AL Generated" (no other tags)
+- ✅ When updating an existing story with new AI-generated content, ensure "AL Generated" tag is present
 - ✅ Manually created stories should NOT have this tag
 
 ---
