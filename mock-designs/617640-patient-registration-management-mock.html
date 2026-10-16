@@ -144,6 +144,12 @@
             margin-bottom: 4px;
         }
 
+        .service-date {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
         .service-status-label {
             font-size: 13px;
             font-weight: 500;
@@ -389,33 +395,6 @@
             flex-shrink: 0;
         }
 
-        .at-a-glance {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .glance-card {
-            background: white;
-            padding: 15px;
-            border-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-
-        .glance-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #007dba;
-            margin-bottom: 4px;
-        }
-
-        .glance-label {
-            font-size: 13px;
-            color: #666;
-            font-weight: 500;
-        }
 
         @media (max-width: 768px) {
             .patient-info {
@@ -474,19 +453,8 @@
             </div>
         </div>
 
-        <!-- At a Glance Summary -->
-        <div class="at-a-glance">
-            <div class="glance-card">
-                <div class="glance-value">2</div>
-                <div class="glance-label">Services Registered</div>
-            </div>
-            <div class="glance-card">
-                <div class="glance-value">7</div>
-                <div class="glance-label">Registration Changes This Year</div>
-            </div>
-        </div>
-
-        <!-- Success Notification (example) -->
+        <!-- Service Registrations Section -->
+        <h2 class="section-title">Service Registrations</h2>
         <div class="notification success" id="successNotification" style="display: none;">
             <span class="notification-icon">✓</span>
             <span id="notificationMessage">Patient has been successfully registered for CAS</span>
@@ -509,6 +477,7 @@
                     <div class="service-info">
                         <h3>Common Ailments Service (CAS)</h3>
                         <span class="service-status-label registered">Registered</span>
+                        <div class="service-date">Registered: 12/08/2026</div>
                     </div>
                 </div>
                 <div class="service-controls">
@@ -564,6 +533,7 @@
                     <div class="service-info">
                         <h3>Discharge Medicines Review (DMR)</h3>
                         <span class="service-status-label not-registered">Not Registered</span>
+                        <div class="service-date">Last registered: 15/03/2024</div>
                     </div>
                 </div>
                 <div class="service-controls">

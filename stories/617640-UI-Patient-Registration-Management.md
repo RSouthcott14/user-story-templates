@@ -51,7 +51,7 @@ Within the Patient Management Hub, pharmacy users need visibility of a patient's
 
 ### Page Structure & Content
 
-**Scenario 1: Service Registration section displays available services with current status**
+**Scenario 1: Service Registration section displays available services with current status and registration date**
 
 ```gherkin
 Given the user navigates to the Patient Management Hub for a patient
@@ -63,6 +63,9 @@ Then the following Service Registrations section is displayed:
     - Service name (e.g., "Common Ailments Service" / "Discharge Medicines Review")
     - Current registration status (toggle switch showing On/Off state)
     - Registered status label: "Registered" or "Not Registered"
+  - Registration date or last registration date:
+    - If registered: "Registered: [Date in DD/MM/YYYY]"
+    - If not registered: "Last registered: [Date in DD/MM/YYYY]" (if applicable)
   - Visual indicator or badge showing current state (✅ On / ⬜ Off)
   - "View Details" or expand button to see full registration information
   - Inline note (if permissions restrict): "You do not have permission to manage registrations"
