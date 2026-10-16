@@ -12,7 +12,7 @@
 **So that** I can ensure patients are appropriately registered for pharmacy services and that registration status remains accurate and up to date
 
 ### Context
-Within the Patient Management Hub, pharmacy users need visibility of a patient's service registration status and the ability to register or deregister patients from supported services. This story covers the UI for managing CAS and DMR registrations with toggle-based controls, registration history, and confirmation flows.
+This story implements the Service Registrations section within the Patient Management Hub. The patient context (patient details, navigation, etc.) is provided by the master page layout and is not included in this story. The user needs visibility of a patient's service registration status and the ability to register or deregister patients from supported services. This story covers the UI for managing CAS and DMR registrations with toggle-based controls, registration history, and confirmation flows.
 
 **Related Journey Step**: Patient Management Hub → Service Registration Management → Registration History
 
@@ -54,11 +54,11 @@ Within the Patient Management Hub, pharmacy users need visibility of a patient's
 **Scenario 1: Service Registration section displays available services with current status and registration date**
 
 ```gherkin
-Given the user navigates to the Patient Management Hub for a patient
-When the page loads
-Then the following Service Registrations section is displayed:
+Given the user is viewing the Patient Management Hub (with patient context from master page)
+When the Service Registrations section loads
+Then the following is displayed:
   - Section heading: "Service Registrations"
-  - Service cards or list items for each available service (CAS and DMR)
+  - Service cards for each available service (CAS and DMR)
   - Each service displays:
     - Service name (e.g., "Common Ailments Service" / "Discharge Medicines Review")
     - Current registration status (toggle switch showing On/Off state)
@@ -67,7 +67,7 @@ Then the following Service Registrations section is displayed:
     - If registered: "Registered: [Date in DD/MM/YYYY]"
     - If not registered: "Last registered: [Date in DD/MM/YYYY]" (if applicable)
   - Visual indicator or badge showing current state (✅ On / ⬜ Off)
-  - "View Details" or expand button to see full registration information
+  - Expand button to see full registration information
   - Inline note (if permissions restrict): "You do not have permission to manage registrations"
 And the section is positioned within the patient management interface
 And the layout is responsive and accessible
