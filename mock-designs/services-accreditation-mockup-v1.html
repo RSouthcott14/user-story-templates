@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Services - Accreditation Redesign (v1)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 1rem 0;
+            color: #666;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            position: relative;
+            bottom: -2px;
+        }
+
+        .tab.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Accredited status */
+        .service-card.accredited {
+            border-left: 5px solid #4CAF50;
+        }
+
+        /* Not accredited status */
+        .service-card.not-accredited {
+            border-left: 5px solid #f44336;
+        }
+
+        .service-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            flex: 1;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0066cc;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .accreditation-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            min-height: 36px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .accreditation-badge.accredited {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 2px solid #4CAF50;
+        }
+
+        .accreditation-badge.not-accredited {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 2px solid #f44336;
+        }
+
+        .service-description {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .component-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 1rem 0;
+            margin: 0.5rem 0;
+            background-color: #fafafa;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .component-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .component-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #333;
+            flex: 1;
+        }
+
+        .service-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .status-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-label.accredited {
+            color: #2e7d32;
+        }
+
+        .status-label.not-accredited {
+            color: #c62828;
+        }
+
+        .nav-button {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .nav-button:hover {
+            background-color: #0052a3;
+        }
+
+        .info-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 4px;
+            color: #333;
+        }
+
+        .info-box p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab">Overview</div>
+            <div class="tab">Patient Details</div>
+            <div class="tab">Adverse Reactions</div>
+            <div class="tab">History</div>
+            <div class="tab active">Pharmacy Services</div>
+            <div class="tab">WGPR</div>
+        </div>
+
+        <h1>Pharmacy Services - Accreditation Status</h1>
+
+        <div class="info-box">
+            <p><strong>Legend:</strong> Green border & ✓ = Service accredited | Red border & ✗ = Service not accredited</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Accredited Service with Multiple Components -->
+            <div class="service-card accredited">
+                <div class="service-header">
+                    <div class="service-title">Clinical Conditions Management</div>
+                </div>
+                <div class="service-description">
+                    Treat under Common Ailments Service or prescribe via Independent Prescribers
+                </div>
+                <div class="component-section">
+                    <div class="component-item">
+                        <span class="component-name">Common Ailments Service (CAS)</span>
+                        <div class="accreditation-badge accredited">✓</div>
+                    </div>
+                    <div class="component-item">
+                        <span class="component-name">Independent Prescribers Service (IPS)</span>
+                        <div class="accreditation-badge not-accredited">✗</div>
+                    </div>
+                </div>
+                <div class="service-footer">
+                    <button class="nav-button">→</button>
+                </div>
+            </div>
+
+            <!-- Not Accredited Service -->
+            <div class="service-card not-accredited">
+                <div class="service-header">
+                    <div class="service-title">Emergency Medicine Supply</div>
+                    <div class="accreditation-badge not-accredited">✗</div>
+                </div>
+                <div class="service-description">
+                    Supply regular medications to patients in emergency situations
+                </div>
+                <div class="service-footer">
+                    <div class="status-label not-accredited">Not Accredited</div>
+                    <button class="nav-button">→</button>
+                </div>
+            </div>
+
+            <!-- Accredited Service -->
+            <div class="service-card accredited">
+                <div class="service-header">
+                    <div class="service-title">Contraception Service</div>
+                    <div class="accreditation-badge accredited">✓</div>
+                </div>
+                <div class="service-description">
+                    Provide emergency contraception, oral contraceptives and sexual health advice
+                </div>
+                <div class="service-footer">
+                    <div class="status-label accredited">Accredited</div>
+                    <button class="nav-button">→</button>
+                </div>
+            </div>
+
+            <!-- Not Accredited Service -->
+            <div class="service-card not-accredited">
+                <div class="service-header">
+                    <div class="service-title">Discharge Medicines Review</div>
+                    <div class="accreditation-badge not-accredited">✗</div>
+                </div>
+                <div class="service-description">
+                    Support patients after hospital discharge to understand medication changes
+                </div>
+                <div class="service-footer">
+                    <div class="status-label not-accredited">Not Accredited</div>
+                    <button class="nav-button">→</button>
+                </div>
+            </div>
+
+            <!-- Accredited Service -->
+            <div class="service-card accredited">
+                <div class="service-header">
+                    <div class="service-title">Vaccinations</div>
+                    <div class="accreditation-badge accredited">✓</div>
+                </div>
+                <div class="service-description">
+                    Administer seasonal flu vaccines and other routine immunisations
+                </div>
+                <div class="service-footer">
+                    <div class="status-label accredited">Accredited</div>
+                    <button class="nav-button">→</button>
+                </div>
+            </div>
+
+            <!-- Not Accredited Service -->
+            <div class="service-card not-accredited">
+                <div class="service-header">
+                    <div class="service-title">Blood Pressure Monitoring</div>
+                    <div class="accreditation-badge not-accredited">✗</div>
+                </div>
+                <div class="service-description">
+                    Monitor and record patient blood pressure readings over time
+                </div>
+                <div class="service-footer">
+                    <div class="status-label not-accredited">Not Accredited</div>
+                    <button class="nav-button">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
