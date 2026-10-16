@@ -47,12 +47,25 @@ Feature (Parent)
 
 ---
 
+## 🏷️ Tagging Requirements
+
+**Every user story created by AI Copilot must have the tag: `AI Generated`**
+
+- ✅ Tag applied automatically when creating stories via Copilot
+- ✅ Only tag applied to AI-generated stories is "AI Generated" (no other tags)
+- ✅ When updating an existing story with new AI-generated content, ensure "AI Generated" tag is present
+- ✅ Manually created stories should NOT have this tag
+
+---
+
 ## 🚫 What NOT to Do
 
 ❌ Create a user story with NO links to feature/epic  
 ❌ Create orphan stories with no parent/related work items  
 ❌ Create multiple parent links (Azure DevOps allows only 1 parent)  
-❌ Link a story to a story (link to feature/epic instead)
+❌ Link a story to a story (link to feature/epic instead)  
+❌ Create AI-generated stories without the "AI Generated" tag  
+❌ Add extra tags to AI-generated stories (use only "AI Generated")
 
 ---
 
@@ -225,7 +238,7 @@ When creating a user story in Azure DevOps, verify:
 - [ ] Story title correct
 - [ ] Description populated
 - [ ] Acceptance criteria complete
-- [ ] Tags assigned (UI, CCM, CAS, etc.)
+- [ ] **"AI Generated" tag applied** (required for Copilot-generated stories)
 - [ ] **Feature ID identified** (e.g., 577034)
 - [ ] Story linked to feature as **Parent** OR **Related**
 - [ ] Link visible in story's "Links" tab
