@@ -12,7 +12,11 @@
 **So that** I can ensure accurate patient records are transferred to the new pharmacy account and maintain a complete audit trail for compliance and operational accuracy
 
 ### Context
-When NWSSP (National Workforce Services Support Partnership) reports a pharmacy ownership change via support call, system administrators must migrate all patient registrations from the old pharmacy account to the new one. This page provides a centralized administrative interface for system administrators to:
+When NWSSP (NHS Wales Shared Services Partnership) reports a pharmacy ownership change via support call, system administrators must migrate all patient registrations from the old pharmacy account to the new one.
+
+**NWSSP Background:** See [`APPLICATION-CONTEXT.md`](../APPLICATION-CONTEXT.md#-nwssp-nhs-wales-shared-services-partnership) for detailed information about NHS Wales Shared Services Partnership and its role in managing pharmacy network changes.
+
+This page provides a centralized administrative interface for system administrators to:
 - Initiate new patient registration migrations by providing current (old) and new account details, along with the SP Call ID from NWSSP
 - View historical migration records with patient counts and operation status
 - Track audit trails for compliance and operational accountability

@@ -20,6 +20,38 @@ Choose Pharmacy NextGen is a comprehensive digital solution that enables communi
 
 ---
 
+## 🏛️ NWSSP (NHS Wales Shared Services Partnership)
+
+**Overview:**  
+NHS Wales Shared Services Partnership (NWSSP) delivers a wide range of high-quality, professional, technical, and administrative services to NHS Wales working with wider public services, including the Welsh Government.
+
+**Role:**  
+NWSSP is an integral part of the NHS Wales family, supporting:
+- Health Boards
+- Trusts
+- Special Health Authorities in Wales
+- GP practices
+- Dentists
+- Opticians
+- Community pharmacies
+
+**Relevance to Choose Pharmacy NextGen:**
+- NWSSP manages pharmacy network administration and support services
+- Notifies system administrators of changes in pharmacy ownership/management
+- Provides support calls and audit trails for pharmacy transitions
+- Coordinates with pharmacy systems for compliance and service continuity
+- May notify Choose Pharmacy system of registered pharmacy closures, mergers, or ownership changes
+
+**System Administrator Responsibility:**
+When NWSSP reports a pharmacy ownership change via support call, system administrators use the Patient Registration Migration feature to:
+1. Receive NWSSP support call with SP Call ID and ownership change details
+2. Initiate migration via the Patient Registration Migration page
+3. Document the NWSSP call ID in the system for audit trail
+4. Ensure patient registrations transfer from old to new pharmacy account
+5. Maintain compliance records for NHS Wales
+
+---
+
 ## 🏥 Services Provided
 
 ### 1. Common Ailments Service (CAS)
