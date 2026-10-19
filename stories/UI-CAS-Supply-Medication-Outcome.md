@@ -17,8 +17,9 @@ This story is part of the Clinical Conditions Management (CCM) journey when the 
 
 After the user selects "Supply" as the outcome, they are presented with a Supply page containing:
 - Formulary medications retrieved from the selected CAS condition (via API #605455)
-- Quantity supplied dropdown for each medication
-- Dosage free text field for each medication (required only when quantity > 0)
+- Quantity supplied (dose units) as free text numeric field for each medication (positive whole numbers only, no 0)
+- Dosage free text field (disabled until quantity > 0 is entered)
+- Backup supply question (only displayed if user enters quantity into antibiotic medication)
 - Optional advice to patient textarea with 2000-character limit
 
 The user records the medication details and can optionally add advice before continuing to the next step in the consultation workflow.
@@ -83,9 +84,15 @@ The user records the medication details and can optionally add advice before con
 
 ---
 
+## CAS Pathway Validation Rules
+1. **Formulary Only (Non-STTT/UTI):** At least one medication MUST be selected
+2. **Formulary + Antibiotics:** At least one from either category MUST be selected OR One antibiotic ONLY + Multiple formulary items
+
+---
+
 ## Acceptance Criteria
 
-**Total Scenarios: 27**
+**Total Scenarios: 30**
 
 ### Page Structure & Content
 
@@ -128,8 +135,8 @@ Then a row shall be displayed for each medication returned
 And each row displays:
   - Medication name (text)
   - Pack size (text)
-  - Quantity supplied (dropdown field)
-  - Dosage (text input field)
+  - Quantity supplied (free text numeric input field) — dose units
+  - Dosage (text input field, initially disabled)
 And the table is populated with data from API #605455
 ```
 
@@ -140,10 +147,12 @@ And the table is populated with data from API #605455
 ```gherkin
 Given formulary medications are displayed
 When the page is first loaded
-Then the Quantity supplied dropdown for each medication shall display: "0"
-And the Dosage field for each medication shall be blank
-And the Advice given to patient textarea shall be empty
-And the character counter displays: "You have 2000 characters remaining"
+Then:
+  - Quantity supplied field is empty
+  - Dosage field is disabled (grayed out)
+  - Advice textarea is empty
+  - Character counter displays: "You have 2000 characters remaining"
+  - Backup supply questions are hidden
 ```
 
 **Scenario 5: Previously saved supply details retained**
@@ -159,52 +168,71 @@ And the character counter displays: "You have [remaining] characters remaining"
 
 ### User Interaction
 
-**Scenario 6: Display quantity supplied dropdown options**
+**Scenario 6: Quantity supplied - positive whole numbers only**
 
 ```gherkin
 Given a formulary medication is displayed
-When the Quantity supplied dropdown is activated
-Then the dropdown displays available quantity options
-And the available values are populated from the formulary configuration for that medication returned by API #605455
-And the current value is highlighted/selected
+When the user enters a positive whole number (1, 5, 10, 100)
+Then the value is recorded
+And Dosage field is enabled
+
+When the user attempts to enter 0, negative, decimals, or non-numeric
+Then the field rejects input at field level
+
+When the user clears the quantity field
+Then Dosage field is disabled and cleared
 ```
 
-**Scenario 7: Quantity supplied options vary by medication**
+**Scenario 7: Dosage field disabled until quantity entered**
 
 ```gherkin
-Given multiple formulary medications are displayed
-When quantity supplied dropdown options are loaded
-Then each medication may display a different set of quantity supplied options
-And the values displayed match those configured for the medication in the formulary (via API #605455)
+Given Quantity supplied is empty
+When the page loads
+Then Dosage field is disabled (non-editable)
+
+When user enters quantity > 0
+Then Dosage field is immediately enabled
+
+When user removes quantity
+Then Dosage field is disabled and cleared
 ```
 
-**Scenario 8: Select quantity supplied**
+**Scenario 8: Record quantity and dosage for multiple medications**
 
 ```gherkin
-Given a formulary medication is displayed
-When the user selects a quantity supplied value from the dropdown
-Then the selected quantity supplied value is recorded against that medication
-And the value is displayed in the dropdown
-And the selection persists
+Given multiple medications are displayed
+When user records details for multiple medications
+Then information is retained separately
+And each medication's dosage field state is independent
+And data persists on navigation
 ```
 
-**Scenario 9: Record dosage for medication**
+**Scenario 9: Backup supply question for antibiotics only**
 
 ```gherkin
-Given a formulary medication is displayed
-When the user enters a dosage value in the Dosage field
-Then the dosage is recorded against that medication
-And the value is displayed in the field
-And the dosage is accepted as free text (no format validation)
+Given page contains formulary and antibiotic medications
+When page loads
+Then backup supply question is hidden for all
+
+When user enters quantity > 0 in antibiotic
+Then backup supply question displays below that medication
+With radio options: "Yes" and "No"
+
+When user clears antibiotic quantity
+Then backup supply question is hidden
+And selection is cleared
+
+When user enters quantity in formulary medication
+Then backup supply question does NOT appear
 ```
 
-**Scenario 10: Record supply details for multiple medications**
+**Scenario 10: Backup supply answer recorded**
 
 ```gherkin
-Given multiple formulary medications are displayed
-When the user records quantity supplied and dosage details for more than one medication
-Then the information entered for each medication is retained separately
-And when the user navigates within the page or returns to the page, all entered data persists
+Given backup supply question is displayed
+When user selects "Yes" or "No"
+Then selection is recorded
+And persists on navigation
 ```
 
 **Scenario 11: Display advice to patient field**
@@ -243,112 +271,115 @@ And subject to all other validation rules being met, the user can proceed
 
 ### Navigation
 
-**Scenario 14: Continue with valid supply information**
+**Scenario 11: Continue with valid supply information**
 
 ```gherkin
-Given the user has completed the required information on the page
-And at least one medication has quantity supplied > 0 with dosage entered
+Given the user has completed required information
 When the user selects Continue
-Then the medication supply details are saved against the consultation
-And the user is progressed to the next step in the consultation workflow
+Then the supply details are saved
+And the user progresses to the next step
 ```
 
-**Scenario 15: Navigate to previous page**
+**Scenario 12: Navigate to previous page**
 
 ```gherkin
 Given the user is on the Supply page
 When the user selects Previous
-Then the user is returned to the previous consultation page
-And any previously saved information is retained
-And when the user returns to the Supply page, all entered data is retained
+Then the user is returned to the previous page
+And all entered data is retained
 ```
 
-**Scenario 16: Cancel and exit consultation**
+**Scenario 13: Cancel and exit consultation**
 
 ```gherkin
 Given the user is on the Supply page
 When the user selects Cancel and exit
-Then the user is navigated to the patient overview page
+Then the user navigates to patient overview
 And no data is saved
-And the consultation is abandoned
 ```
 
 ### Consultation State Persistence
 
-**Scenario 17: Consultation state persistence within same patient encounter**
+**Scenario 14: Consultation state persistence within same encounter**
 
 ```gherkin
-Given the user has an active consultation in progress within the current patient encounter
-And supply information has been recorded
-When the user navigates to another tab within the patient record
-And subsequently returns to the consultation within the same patient encounter
-Then the consultation remains active
-And the user is returned to the Supply page if it was the last consultation page viewed
-And any previously entered information is retained
+Given a user has an active consultation
+When the user navigates between pages within the same encounter
+Then selected filters and data remain applied
+And the user sees previously filtered results when returning
+```
+
+**Scenario 15: Accessing same patient in new encounter**
+
+```gherkin
+Given a user has applied filters/data within a consultation
+When the user accesses the same patient in a new encounter
+Then previously applied data shall not be retained
+And default filters shall apply for the new encounter
 ```
 
 ### Validation
 
-**Scenario 18: At least one medication must be supplied**
+**Scenario 16: At least one medication must be supplied**
 
 ```gherkin
-Given the user is on the Supply page
-And all displayed medications have a quantity supplied value of "0"
+Given all medications have quantity = 0
 When the user selects Continue
-Then the user remains on the current page
-And an error summary displays at the top
-And the error message displays: "Supply at least one medication"
-And the error message has role="alert" with aria-live="polite"
-And focus moves to the error summary
-And no data is persisted
+Then an error displays: "Supply at least one medication"
+And the user remains on the page
 ```
 
-**Scenario 19: Dosage mandatory when medication supplied**
+**Scenario 17: CAS Pathway Validation - Formulary Only**
 
 ```gherkin
-Given a formulary medication has a quantity supplied greater than "0"
-And the Dosage field for that medication is blank
-When the user selects Continue
-Then the user remains on the current page
-And an error summary displays
-And the error message displays: "Enter dosage for [Medication Name]"
-And the corresponding medication row is highlighted with error styling
-And focus returns to the Dosage field
-And no data is persisted
+Given the CAS pathway is Formulary Only (Non-STTT/UTI)
+When validating supplied medications
+Then at least one medication MUST be selected
 ```
 
-**Scenario 20: Multiple supplied medications require dosage**
+**Scenario 18: CAS Pathway Validation - Formulary and Antibiotics (Option 1)**
 
 ```gherkin
-Given more than one medication has a quantity supplied greater than "0"
-And one or more corresponding Dosage fields are blank
-When the user selects Continue
-Then validation errors are displayed for each supplied medication without dosage
-And error messages display for each: "Enter dosage for [Medication Name]"
-And the user remains on the current page
-And the user is not permitted to continue until all supplied medications have dosage entered
-And no data is persisted
+Given the CAS pathway is Formulary + Antibiotics
+When validating supplied medications
+Then at least one medication from either category MUST be selected
+And the user can proceed with 1+ formulary OR 1+ antibiotics
+```
+
+**Scenario 19: CAS Pathway Validation - Formulary and Antibiotics (Option 2)**
+
+```gherkin
+Given the CAS pathway is Formulary + Antibiotics
+When validating supplied medications
+Then One antibiotic ONLY + Multiple formulary items is allowed
+```
+
+**Scenario 20: Dosage mandatory when medication supplied**
+
+```gherkin
+Given a medication has quantity > 0
+When user selects Continue without dosage
+Then an error displays: "Enter dosage for [Medication Name]"
+And the user remains on the page
 ```
 
 **Scenario 21: Advice field character limit enforcement**
 
 ```gherkin
-Given the user is entering information into the Advice given to patient field
+Given the user is entering information into the Advice field
 When the entered text reaches 2000 characters
-Then the user is not permitted to enter additional characters beyond the maximum limit
+Then no additional characters can be entered
 And the character counter displays: "You have 0 characters remaining"
 And the field stops accepting input
-And the 2000-character limit is enforced at input level (hard limit)
 ```
 
 **Scenario 22: Dosage captured as free text without format validation**
 
 ```gherkin
-Given the user enters a value into a Dosage field
+Given the user enters a dosage value
 When the value is entered (e.g., "15mg twice daily", "1-2 tablets", "as directed")
 Then the system accepts the value as free text
 And no dosage format validation is applied
-And the value is recorded and persisted as entered
 ```
 
 **Scenario 23: API retrieval failure handling**
@@ -357,69 +388,86 @@ And the value is recorded and persisted as entered
 Given the page loads
 When formulary medication information cannot be retrieved from API #605455
 Then an appropriate error message displays to the user
-And the error message provides guidance (e.g., "Unable to retrieve medications. Please try again or contact support.")
-And the medication table is not displayed or is empty
-And the error is logged in accordance with system standards
+And the medication table is not displayed
 And the user is unable to proceed until the issue is resolved
 ```
 
-**Scenario 24: Invalid quantity selection prevented**
+**Scenario 24: Quantity field accepts only positive whole numbers**
 
 ```gherkin
-Given quantity supplied options are configured for a medication
-When the user attempts to submit a value that is not available within the configured dropdown list
-Then the value is rejected
-And the system prevents submission with invalid quantity values
-And an appropriate error message may be displayed if the user attempts to circumvent validation
+Given the Quantity supplied field is displayed
+When user enters a positive whole number
+Then the value is accepted and recorded
+
+When user attempts 0, negative, decimal, or special characters
+Then the field rejects input at field level (no 0, no decimals, no non-numeric)
 ```
 
-**Scenario 25: Clear dosage when quantity supplied changed to zero**
+**Scenario 25: Dosage cleared and disabled when quantity removed**
 
 ```gherkin
-Given a formulary medication has a quantity supplied value greater than "0"
-And a dosage has been entered for that medication
-When the user changes the quantity supplied value to "0"
-Then the dosage value associated with that medication is automatically cleared
-And the dosage field is displayed as blank
-And when the user returns to the page, the cleared state persists
+Given a medication has quantity > 0 with dosage entered
+When user clears the quantity
+Then Dosage is auto-cleared and disabled
+And the state persists on return to the page
 ```
 
-**Scenario 26: Dosage no longer required when quantity supplied is zero**
+**Scenario 26: Dosage not required when quantity empty**
 
 ```gherkin
-Given a formulary medication has a quantity supplied value of "0"
-When the user selects Continue
-Then the medication does not require a dosage value
-And dosage validation is not applied to that medication
-And the user can proceed without entering dosage for that medication
+Given quantity is empty/0
+When user selects Continue
+Then dosage validation is not applied
+And the user can proceed
+```
+
+**Scenario 27: Multiple supplied medications require dosage**
+
+```gherkin
+Given more than one medication has quantity > 0
+When one or more corresponding Dosage fields are blank
+Then validation errors display for each medication without dosage
+And the user remains on the page
+And the user cannot continue until all supplied medications have dosage
+```
+
+**Scenario 28: Advice field is optional**
+
+```gherkin
+Given the user is on the Supply page
+When the Advice field is left blank
+Then the user is permitted to continue
+And no validation error is displayed
+```
+
+**Scenario 29: Record advice given to patient**
+
+```gherkin
+Given the Advice textarea is displayed
+When the user enters text
+Then the advice is recorded against the consultation
+And the character counter updates dynamically
+And the value persists on navigation
 ```
 
 ### Accessibility
 
-**Scenario 27: WCAG 2.1 AA compliance for keyboard and screen reader users**
+**Scenario 30: WCAG 2.1 AA compliance for keyboard and screen reader users**
 
 ```gherkin
 Given the page is rendered
 When a user navigates using Tab key
-Then focus order follows: Previous button → Medication table cells (qty/dosage fields in row order) → Advice textarea → Character counter → Continue button → Cancel and exit link
-And each Select (dropdown) announces: "[Field Name], dropdown, [current value]"
-And each Text Input announces: "[Field Name], text input"
-And the Textarea announces: "Advice given to patient, optional, textarea"
-And the character counter uses: role="status" + aria-live="polite"
-And error messages use: role="alert" + aria-live="polite"
-And medication table has proper header cells: <th>Medication</th>, <th>Pack size</th>, etc.
-And all form inputs have associated labels (not placeholder-only)
-And required fields are marked: aria-required="true"
-And focus indicators are visible with minimum 3:1 contrast and 2px width
-And colour contrast is at least 4.5:1 (text vs. background)
-And error text maintains 4.5:1 contrast ratio
+Then focus order follows: Previous → Quantity/Dosage fields → Advice → Continue → Cancel
+And screen readers announce field states correctly
+And focus indicators are visible with 3:1 contrast and 2px width
+And color contrast is at least 4.5:1 (text vs. background)
 ```
 
 ---
 
 ## Definition of Done
 
-- [ ] All 27 acceptance criteria met and validated by QA
+- [ ] All 30 acceptance criteria met and validated by QA
 - [ ] API #605455 completed and integrated
 - [ ] Code peer reviewed and approved
 - [ ] Unit tests written (80%+ coverage)
@@ -440,10 +488,12 @@ And error text maintains 4.5:1 contrast ratio
 ## Technical Notes
 
 - Medication list retrieved from API #605455 based on selected CAS condition
-- Quantity supplied: dropdown values populated by API (varies by medication)
-- Dosage: free text field, no validation on format
+- Quantity supplied: free text numeric input (positive whole numbers only, no 0, no decimals, no non-numeric)
+- Dosage: free text field, no validation on format (disabled until quantity > 0 entered)
 - Advice textarea: 2000-character hard limit enforced at input level
-- When quantity changed from >0 to 0, dosage field auto-clears
-- Validation applies: at least 1 qty > 0, and all qty > 0 require dosage
+- When quantity changed from >0 to 0, dosage field auto-clears and disables
+- Backup supply question: only displayed for antibiotic medications when quantity > 0; clears when quantity removed
+- CAS pathway validation: two distinct paths (Formulary Only vs. Formulary + Antibiotics)
+- Validation applies: at least 1 medication, and all qty > 0 require dosage
 - Character counter displays dynamically: "You have X characters remaining"
-- Data structure: {medicationId, quantitySupplied, dosage} for each selected medicine
+- Data structure: {medicationId, quantitySupplied, dosage, backupSupplyRequired} for each selected medicine
