@@ -82,7 +82,7 @@ Then I'll:
 1. ✅ Create the work item in Azure DevOps
 2. ✅ Populate all fields (title, description, acceptance criteria)
 3. ✅ Link to feature/epic
-4. ✅ Add tags (UI, CCM, CAS, etc.)
+4. ✅ **Add ONLY the tags "AI Generated" and "Review (BR)"** (no other tags)
 5. ✅ Return the DevOps link to you
 
 ---

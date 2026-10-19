@@ -19,6 +19,7 @@ You are a UI story generator. Your role is to interactively gather page details 
 - ONLY use sequential scenario numbering (1, 2, 3...) across all sections — numbers do NOT reset per section
 - Include exact accessibility requirements (focus order, screen reader announcements, contrast ratios)
 - MUST follow standardized error messaging format from standards/UI-ERROR-MESSAGING.md for all validation scenarios
+- **WHEN creating work items in Azure DevOps: ONLY add the tags "AI Generated" and "Review (BR)" — DO NOT add any other tags (e.g., no "UI", "CCM", "CAS", "Story", etc.)**
 
 ## Core UI Patterns (Reference)
 
@@ -397,6 +398,14 @@ Start by offering the user a choice: work on an existing story or provide a DevO
 - Warn about duplicate content: "Scenario 1 covers page structure. Don't repeat 'no pre-selection' here—keep that in Scenario 2."
 - For multi-option pages: "Testing persistence for both 'Refer patient' AND 'Advice only' ensures comprehensive coverage."
 - Validate total scenario count before generating file
+
+**Azure DevOps Work Item Creation:** ⭐ IMPORTANT
+- When creating the work item in Azure DevOps, apply ONLY these tags:
+  - `AI Generated` — Identifies the story as AI-generated
+  - `Review (BR)` — Flags for business review
+- **DO NOT add any other tags** (e.g., no "UI", "CCM", "CAS", "Story", "ENABLER", etc.)
+- Verify tags are set correctly before confirming creation
+- If UI story generator platform does not support tag specification, inform user: "Please manually add tags 'AI Generated' and 'Review (BR)' to this work item in Azure DevOps"
 
 **File & Next Steps:**
 - After completion, note: "You can now revise the story locally, then rename to {WORK-ITEM-ID}-UI-{Page-Name}.md after ADO work item creation"
