@@ -77,6 +77,28 @@ Refer to [standards/API-ERROR-HANDLING.md](../standards/API-ERROR-HANDLING.md) f
 
 Use [templates/UI-Template.md](../templates/UI-Template.md) for all UI stories.
 
+### Related and Dependent Stories
+
+UI stories must separate **Related Stories** and **Dependent Stories** into two distinct sections in the Description:
+
+**Related Stories** — Stories this story navigates to, interacts with, or relates to (already developed or developed in parallel):
+- Used for stories that are part of a workflow journey
+- Links to stories at the same level or already completed
+- Format: `[Story ID]: [Story Title] — relates to [brief description]`
+- Example: `603161: Record Referral Outcome — relates to: This page navigates to this story after user submission`
+
+**Dependent Stories** — Stories that cannot be developed until this story is complete (blockers):
+- Used when another story depends on this one being finished first
+- Links to stories that are blocked by this story
+- Format: `[Story ID]: [Story Title] — blocks [brief description]`
+- Example: `603162: Referral Confirmation Page — blocks: This page passes data to the confirmation page`
+
+**Rules:**
+- These sections are optional (if there are no related or dependent stories, both sections can be omitted)
+- A story may have only Related Stories, only Dependent Stories, or both
+- These sections must be kept separate in the description so they can be added independently to Azure DevOps work item links
+- Do NOT combine related and dependent stories into a single section
+
 ### Captions for Consultation Journey Stories
 
 **Required for:** UI stories that are part of multi-step consultation workflows (e.g., CCM, CAS, Vaccination consultations).

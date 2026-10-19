@@ -28,11 +28,12 @@ All UI stories MUST include:
 1. **Story Card** — As/I/So format describing user role and value
 2. **Context** — Why does this story matter? What problem does it solve?
 3. **Out of Scope** — What is explicitly NOT included
-4. **Related/Dependent Stories** — Links to upstream/downstream stories (with relationship type: blocks/depends on/relates to)
-5. **Design Reference** — DHCW Design System V2 Figma link + component list (validated against COMPONENTS.md)
-6. **Acceptance Criteria** — 6 sections with sequentially numbered scenarios
-7. **Definition of Done** — Checklist for completion (use provided template)
-8. **Notes** — Additional context, design links, known issues
+4. **Related Stories** (Optional) — Stories this story navigates to or interacts with (kept separate)
+5. **Dependent Stories** (Optional) — Stories that depend on this story being complete (kept separate)
+6. **Design Reference** — DHCW Design System V2 Figma link + component list (validated against COMPONENTS.md)
+7. **Acceptance Criteria** — 6 sections with sequentially numbered scenarios
+8. **Definition of Done** — Checklist for completion (use provided template)
+9. **Notes** — Additional context, design links, known issues
 
 ### Acceptance Criteria Organization
 Always use exactly **6 organizational sections**, each containing one or more sequentially-numbered scenarios:
@@ -191,7 +192,9 @@ Location: `templates/UI-Template.md`
 - ✅ **Out of Scope section includes 3-5 items** (user confirmed which suggested items apply + any custom items)
 - ✅ All components used are listed in COMPONENTS.md
 - ✅ Design Reference includes Figma frame name/link AND visual (screenshot) or layout description
-- ✅ Related/Dependent stories identified with correct relationship types (Blocks/Relates to/Depends on)
+- ✅ **Related Stories and Dependent Stories kept as separate sections** (not combined)
+- ✅ Related Stories identified (if applicable) with brief description of relationship
+- ✅ Dependent Stories identified (if applicable) with brief description of what they block
 - ✅ Data persistence timing clarified (immediate vs. on submission)
 - ✅ Error message pattern confirmed (error summary + inline, as default)
 - ✅ Acceptance Criteria includes all required sections
@@ -316,7 +319,9 @@ Location: `templates/UI-Template.md`
 
 10. **Generate the Story Markdown**
    - Build story with all required sections
-   - Use Story Card (As/I/So), Context, Out of Scope, Related Stories with correct relationship types
+   - Use Story Card (As/I/So), Context, Out of Scope
+   - **Add Related Stories section (if applicable)** with brief descriptions of relationships
+   - **Add Dependent Stories section (if applicable)** with brief descriptions of what they block
    - List components with Design System references from COMPONENTS.md
    - Create Acceptance Criteria with 6 sections (or 7 if consultation persistence is applicable) and sequential scenario numbering
    - Ensure validation is one consolidated scenario
@@ -353,12 +358,25 @@ Start by offering the user a choice: work on an existing story or provide a DevO
 - Compile final Out of Scope section (3-5 items minimum)
 - Benefit: Ensures scope is focused and prevents scope creep
 
-**Related & Dependent Stories (NEW):** ⭐
-- Ask: "Do you have any related or dependent stories? If yes, provide story ID/title and clarify the relationship type:"
-  - BLOCKS: Cannot develop this page until the related story is complete
-  - RELATES TO: This page navigates to or uses the related story (already developed in the sprint)
-  - DEPENDS ON: This page requires functionality from the related story
-- Example answer: "603161 Record Referral Outcome → RELATES TO (already developed, navigated to)" OR "603000 Patient Data API → DEPENDS ON (required for data lookup)"
+**Related Stories (Optional):** ⭐ UPDATED
+- Ask: "Does this story navigate to or interact with any other stories?"
+- If YES: "For each related story, provide:"
+  - Story ID and Title
+  - Brief description of how this story relates to it (e.g., "This page navigates to that story" or "That story passes data to this page")
+- Format: Store in separate "Related Stories" section
+- Example: `603161: Record Referral Outcome — relates to: This page navigates to this story after user submission`
+- These are stories at the same level or already developed that this story interacts with
+
+**Dependent Stories (Optional):** ⭐ UPDATED
+- Ask: "Are there any other stories that depend on this story being complete?"
+- If YES: "For each dependent story, provide:"
+  - Story ID and Title
+  - Brief description of what this story blocks (e.g., "This story blocks the confirmation page development")
+- Format: Store in separate "Dependent Stories" section
+- Example: `603162: Referral Confirmation Page — blocks: This page passes data to the confirmation page`
+- These are stories that cannot be developed until this one is complete
+
+**IMPORTANT:** Keep Related and Dependent Stories in SEPARATE sections so they can be added independently to Azure DevOps work item links
 
 **Components & Design Reference (NEW):** ⭐
 - Confirm all components used are listed in COMPONENTS.md
