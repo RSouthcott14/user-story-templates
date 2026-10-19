@@ -65,11 +65,41 @@ Refer to [standards/API-ERROR-HANDLING.md](../standards/API-ERROR-HANDLING.md) f
 
 Use [templates/UI-Template.md](../templates/UI-Template.md) for all UI stories.
 
+### Captions for Consultation Journey Stories
+
+**Required for:** UI stories that are part of multi-step consultation workflows (e.g., CCM, CAS, Vaccination consultations).
+
+- Include **journey step caption** (e.g., "Clinical Conditions Management", "CAS Supply Pathway") to show workflow phase
+- Include **page caption** (e.g., "Outcome: Supply", "Select outcome") to show the specific step within that journey
+- Captions must be listed in the Description section under a "Captions" subsection
+- Captions must appear in **Scenario 1 (Page Structure & Content)** as displayed elements
+- Captions help users understand context and location within the consultation pathway
+
+**Format:**
+```markdown
+### Captions
+**Journey step:** [Workflow name]  
+**Page caption:** [Page/outcome name]
+```
+
 ### Components
 
 - Every UI component must appear in [COMPONENTS.md](../COMPONENTS.md) — do not introduce an unlisted component
 - Link each component to the DHCW Design System V2 reference listed beside it in `COMPONENTS.md`
 - Design System Figma: `https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2`
+
+### Textarea Fields
+
+**Required for:** Any UI story featuring textarea/multi-line text input fields.
+
+All textarea fields MUST follow [standards/UI-TEXTAREA-SPECIFICATIONS.md](../standards/UI-TEXTAREA-SPECIFICATIONS.md):
+
+- **Character limit:** 2000 characters (unless explicitly specified differently)
+- **Character counter:** Must display `"You have X characters remaining"` and update dynamically as user types
+- **Initial state:** Counter displays `"You have 2000 characters remaining"`
+- **Layout:** Textarea utilizes maximum available section width with equal left/right margins
+- **Expandable:** User can resize textarea; scroll function available for text exceeding field height when collapsed
+- **Validation:** Acceptance criteria must include scenarios covering character counter updates, expansion, scrolling, and validation rules
 
 ### Acceptance Criteria
 

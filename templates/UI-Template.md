@@ -22,6 +22,25 @@
 - [Story ID]: [Story Title] — [relationship: blocks/depends on/relates to]
 - [Story ID]: [Story Title]
 
+### Captions (Consultation Journey Stories Only)
+**Required for:** Stories part of a multi-step consultation pathway (e.g., CCM, CAS, Vaccination journeys).
+
+**Purpose:** High-level contextual captions orient users to their position in the consultation journey.
+
+**Format:**
+- **Journey step caption:** The workflow phase (e.g., "Clinical Conditions Management", "CAS Supply Pathway")
+- **Page caption:** The specific page/outcome within that step (e.g., "Outcome: Supply", "Select outcome", "Record assessment")
+
+**Example:**
+```
+Journey step: Clinical Conditions Management
+Page caption: Outcome: Supply
+```
+
+**In Acceptance Criteria:** Include captions in Scenario 1 (Page Structure & Content) as displayed elements, e.g., `Then the page displays: Journey context: "Clinical Conditions Management" And page heading: "Outcome: Supply"`
+
+---
+
 ### Design Reference
 **Design system:** [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
 

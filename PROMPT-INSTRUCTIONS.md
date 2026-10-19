@@ -41,6 +41,12 @@ Use the structure in [`templates/UI-Template.md`](templates/UI-Template.md), val
 - All validation scenarios MUST use exact error messages following [`standards/UI-ERROR-MESSAGING.md`](standards/UI-ERROR-MESSAGING.md)
 - Error messages must include: exact text, location, styling (red + icon), accessibility (role="alert", aria-live="polite"), focus return, and "no data is persisted"
 - Never use vague error messages; be specific about what failed and how to fix it
+
+**IMPORTANT: Textarea Specifications**
+- All textarea fields MUST follow [`standards/UI-TEXTAREA-SPECIFICATIONS.md`](standards/UI-TEXTAREA-SPECIFICATIONS.md)
+- Character limit: 2000 characters (unless explicitly different)
+- Must include dynamic character counter: `"You have X characters remaining"`
+- Include acceptance criteria covering: counter updates, field expansion, scrolling, and validation
 ```
 
 **Example:**

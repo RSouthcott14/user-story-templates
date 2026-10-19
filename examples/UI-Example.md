@@ -16,6 +16,10 @@ This story is part of the Clinical Conditions Management (CCM) journey. After th
 
 **Related Journey Step**: Clinical Assessment → Tool Selection → Assessment Completion
 
+### Captions
+**Journey step:** Clinical Conditions Management  
+**Page caption:** Select Assessment Tool
+
 ### Out of Scope
 - Custom tool creation
 - Tool configuration or setup
@@ -41,6 +45,7 @@ This story is part of the Clinical Conditions Management (CCM) journey. After th
 Given the user has selected a clinical condition
 When they navigate to the tool selection page
 Then the following elements are displayed:
+  - Journey context: "Clinical Conditions Management"
   - Page heading: "Select Assessment Tool"
   - Condition name confirmation: "[Selected Condition]"
   - Radio button group with all available tools
