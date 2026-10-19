@@ -167,16 +167,26 @@ And the character counter displays: "You have [remaining] characters remaining"
 
 ### User Interaction
 
-**Scenario 6: Enter quantity supplied (dose units) as free text numeric**
+**Scenario 6: Enter quantity supplied (dose units) - positive whole numbers only**
 
 ```gherkin
 Given a formulary medication is displayed
-When the user enters a numeric value into the Quantity supplied field
-Then the value is accepted as free text numeric input
-And the value is recorded against that medication
+When the user enters a positive whole number into the Quantity supplied field (e.g., 1, 5, 10, 100)
+Then the value is recorded against that medication
 And the Dosage field for that medication is automatically enabled (becomes editable, no longer grayed out)
-And if the user clears the quantity field (removes all numeric input), the Dosage field is disabled and cleared
 And the selection persists
+
+When the user attempts to enter:
+  - Zero (0)
+  - Negative numbers
+  - Decimal numbers (e.g., 2.5)
+  - Non-numeric characters
+Then the field does not accept the input
+And the user is prevented from entering these values at field level
+And an appropriate field constraint applies (e.g., cannot type decimal point, negative sign, or 0 as first character if field is empty)
+
+When the user clears the quantity field (removes all numeric input, leaving it empty)
+Then the Dosage field is disabled and cleared
 ```
 
 **Scenario 7: Dosage field disabled until quantity entered**
@@ -420,14 +430,21 @@ And the error is logged in accordance with system standards
 And the user is unable to proceed until the issue is resolved
 ```
 
-**Scenario 24: Quantity field accepts numeric free text input**
+**Scenario 24: Quantity field accepts only positive whole numbers**
 
 ```gherkin
 Given a medication's Quantity supplied field is displayed
-When the user enters a numeric value (e.g., "5", "10", "2.5")
-Then the value is accepted as free text
-And no strict numeric validation is applied at input level
-And the value is recorded against that medication
+When the user enters a positive whole number (e.g., 1, 5, 10, 100, 999)
+Then the value is accepted and recorded against that medication
+
+When the user attempts to enter any of the following:
+  - Zero (0)
+  - Negative numbers
+  - Decimal numbers
+  - Special characters or non-numeric input
+Then the field rejects the input at field level
+And the user is prevented from entering these values
+And no error message is required (prevention at input level)
 ```
 
 **Scenario 25: Dosage field cleared and disabled when quantity removed**
@@ -506,8 +523,8 @@ And error text maintains 4.5:1 contrast ratio
 ## Technical Notes
 
 - Medication list retrieved from API #605455 based on selected CAS condition (formulary + optional antibiotic medications)
-- **Quantity supplied:** Free text numeric input field (dose units) — no dropdown
-- **Dosage field:** Enabled only when quantity > 0; auto-cleared and disabled when quantity is empty/removed
+- **Quantity supplied:** Positive whole numbers only (> 0). User cannot enter 0, negative numbers, decimals, or non-numeric characters
+- **Dosage field:** Enabled only when quantity > 0 entered; auto-cleared and disabled when quantity is removed
 - **Backup supply question:** Conditional display — only shown for antibiotic medications when quantity > 0
 - **Dosage:** Free text field, no validation on format (e.g., "15mg twice daily", "1-2 tablets")
 - **Advice textarea:** 2000-character hard limit enforced at input level
@@ -518,6 +535,6 @@ And error text maintains 4.5:1 contrast ratio
 - **Character counter:** Displays dynamically: "You have X characters remaining"
 - **Data structure:** {medicationId, quantity, dosage, backupSupply?} for each selected medicine
 - **Field dependencies:**
-  - Quantity (text input) → enables Dosage field
+  - Quantity (positive whole number) → enables Dosage field
   - Quantity (antibiotic) + qty > 0 → enables Backup Supply question
   - Dosage and Backup Supply auto-clear when quantity removed
