@@ -18,8 +18,14 @@
 - [What is explicitly NOT included in this story]
 - [Keep dev/QA aligned on boundaries]
 
-### Related/Dependent Stories
-- [Story ID]: [Story Title] — [relationship: blocks/depends on/relates to]
+### Related Stories
+Stories this story navigates to or interacts with (already developed or developed in parallel):
+- [Story ID]: [Story Title] — relates to [brief description of relationship]
+- [Story ID]: [Story Title]
+
+### Dependent Stories
+Stories that depend on this story being complete before development can start:
+- [Story ID]: [Story Title] — blocks [brief description of what it blocks]
 - [Story ID]: [Story Title]
 
 ### Captions (Consultation Journey Stories Only)
