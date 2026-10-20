@@ -149,6 +149,24 @@ And all images have alt text: "[description]"
 
 ---
 
+## Acceptance Criteria Formatting Guidelines
+
+To ensure consistent formatting across all UI stories:
+
+✅ **Scenario Titles:** Always in **bold** with sequential number and colon
+   - Example: `**Scenario 1: Display page on initial load**`
+
+✅ **Gherkin Code Blocks:** Use triple backticks with `gherkin` language identifier
+   - Opening: `` ```gherkin ``
+   - Closing: `` ``` ``
+   - No indentation within the block
+
+✅ **Multiple Conditions:** Use blank lines between separate Given/When/Then blocks within same scenario
+
+✅ **References:** See [`guides/GHERKIN-FORMAT.md`](../guides/GHERKIN-FORMAT.md) → "Markdown Formatting for Story Files" for detailed formatting rules
+
+---
+
 ## Definition of Done
 
 - [ ] All acceptance criteria met and validated by QA

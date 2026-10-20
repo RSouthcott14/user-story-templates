@@ -4,6 +4,19 @@
 
 ---
 
+## Formatting Standard
+
+This example demonstrates the **standard Gherkin formatting** required for all UI stories:
+
+✅ Scenario titles in **bold** with sequential number  
+✅ Gherkin code in triple backticks with `gherkin` language identifier  
+✅ No indentation within gherkin blocks  
+✅ Blank lines between separate Given/When/Then blocks  
+
+**Reference:** [`guides/GHERKIN-FORMAT.md`](../guides/GHERKIN-FORMAT.md) → "Markdown Formatting for Story Files"
+
+---
+
 ## Description
 
 ### Story Card

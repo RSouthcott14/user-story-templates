@@ -66,16 +66,51 @@ Refer to [standards/API-ERROR-HANDLING.md](../standards/API-ERROR-HANDLING.md) f
 ### Acceptance Criteria
 
 - Group by **outcome path** — not by technical category
-- Use **Gherkin format** (Given/When/Then/And) throughout
+- Use **Gherkin format** (Given/When/Then/And) throughout with proper markdown formatting:
+  - Scenario titles in **bold** with sequential number
+  - Gherkin code in triple backticks with `gherkin` language identifier
+  - No indentation within gherkin blocks
+  - Blank lines between separate Given/When/Then blocks
 - Include **exact error message strings** in all validation scenarios
 - End every validation scenario with: `And no data is persisted`
 - Include Patient Not Found and Organisation Not Found scenarios where applicable
+- See [`guides/GHERKIN-FORMAT.md`](../guides/GHERKIN-FORMAT.md) for formatting rules
 
 ---
 
 ## UI Stories
 
 Use [templates/UI-Template.md](../templates/UI-Template.md) for all UI stories.
+
+### Acceptance Criteria Formatting (STRICT)
+
+All UI story acceptance criteria must follow strict markdown formatting for consistency and tooling compatibility:
+
+**Scenario Title Format:**
+- Must be in **bold** with sequential number and colon
+- Example: `**Scenario 1: Display page on initial load**`
+
+**Gherkin Code Block Format:**
+- Use triple backticks with `gherkin` language identifier
+- Opening: `` ```gherkin ``
+- Closing: `` ``` ``
+- No indentation within the block
+- Blank lines between separate Given/When/Then blocks
+
+**Example:**
+
+```markdown
+**Scenario 2: User selects medication from search results**
+
+\`\`\`gherkin
+Given the user is on the medication search page
+When the user clicks a medication from search results
+Then the medication is added to the selection
+And the table displays the selected medication
+\`\`\`
+```
+
+**See:** [`guides/GHERKIN-FORMAT.md`](../guides/GHERKIN-FORMAT.md) → "Markdown Formatting for Story Files" for complete formatting rules.
 
 ### Related and Dependent Stories
 
