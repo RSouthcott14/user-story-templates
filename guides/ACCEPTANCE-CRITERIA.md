@@ -15,17 +15,87 @@
 
 ---
 
-## Structure: Given/When/Then Format
+## Structure: Given/When/Then Format with Markdown
 
 All acceptance criteria use **Gherkin** format (Given/When/Then) for consistency and automation compatibility.
 
-```gherkin
-Scenario: [What this scenario tests]
-  Given [precondition/context]
-  When [user action]
-  Then [expected result]
-  And [additional results]
+### Markdown Formatting
+
+In story files, format scenarios with:
+
+1. **Bold scenario title** with number and colon
+2. **Triple backticks** with `gherkin` language identifier
+3. **No indentation** within the code block
+4. **Blank lines** between separate Given/When/Then blocks
+
+```markdown
+**Scenario N: [Descriptive Title]**
+
+\`\`\`gherkin
+Given [precondition/context]
+When [user action]
+Then [expected result]
+And [additional results]
+\`\`\`
 ```
+
+### Complete Example
+
+**Scenario 1: Page displays required elements on load**
+
+```gherkin
+Given the user navigates to the Clinical Assessment page
+When the page loads
+Then the page displays:
+  - Page heading: "Assessment"
+  - Assessment tool selection (radio buttons)
+  - Continue button
+  - Previous button
+And the layout is vertically stacked
+```
+
+**Scenario 2: Default state has no selection**
+
+```gherkin
+Given the user navigates to the Assessment page for the first time
+When the page loads
+Then no radio button is pre-selected
+And the Continue button is enabled
+And the page shows the help text for tool selection
+```
+
+### Multiple Conditions in One Scenario
+
+When testing both success and error conditions, use blank lines to separate Given/When/Then blocks:
+
+**Scenario 5: Validation handles both valid and invalid input**
+
+```gherkin
+Given the user is on the form
+When the user enters a valid email address
+Then the email field accepts the input
+And validation passes
+
+Given the user is on the form
+When the user enters an invalid email (e.g., "user@")
+Then an error message displays: "Enter a valid email address"
+And the form data is preserved
+And the user remains on the current page
+And no data is persisted
+```
+
+---
+
+## Markdown Rendering & Tooling
+
+Proper markdown formatting ensures:
+
+✅ GitHub renders code blocks with syntax highlighting  
+✅ Story generation agents can parse scenarios programmatically  
+✅ Markdown linters validate file structure  
+✅ Tools can extract scenarios for test automation  
+
+**See:** [`guides/GHERKIN-FORMAT.md`](./GHERKIN-FORMAT.md) → "Markdown Formatting for Story Files" for detailed rules
 
 ---
 

@@ -254,15 +254,121 @@ These tools can execute Gherkin scenarios directly!
 
 ---
 
+## Markdown Formatting for Story Files
+
+When writing scenarios in user story Markdown files, use this **exact format** for consistency:
+
+### Scenario Title Format
+
+Scenario title must be **bold** with sequential number and colon:
+
+```
+**Scenario N: [Descriptive Title]**
+```
+
+**Examples:**
+```
+**Scenario 1: Display page on initial load**
+**Scenario 2: User selects medication from search results**
+**Scenario 15: Validation error for missing required field**
+```
+
+### Gherkin Code Block Format
+
+Use triple backticks with `gherkin` language identifier:
+
+```
+**Scenario 2: Display Antibiotics section only for STTT/UTI conditions**
+
+\`\`\`gherkin
+Given the user has selected a Non-STTT/UTI CAS condition (e.g., Sore throat)
+When the Supply page loads
+Then the Antibiotics section is NOT displayed
+
+Given the user has selected a STTT or UTI CAS condition
+When the Supply page loads
+Then the Antibiotics section is displayed after the Formulary section
+And the heading displays: "Select antibiotics from the formulary below"
+And the Antibiotics table has columns: Medicine, Pack size, Quantity supplied (dose units), Dosage
+\`\`\`
+```
+
+### Multiple Given/When/Then Blocks in One Scenario
+
+When a single scenario tests multiple conditions (e.g., happy path AND error path), separate blocks with a blank line:
+
+```
+**Scenario 5: Validate required fields**
+
+\`\`\`gherkin
+Given a medication has been added
+When the user clicks "Save and continue" without entering a quantity
+Then an error message displays: "Enter a quantity"
+And the user remains on the current page
+And no data is persisted
+
+Given a medication has been added
+When the user enters a negative number for quantity
+Then the value is not accepted
+And the field maintains its previous value
+\`\`\`
+```
+
+### Formatting Rules (STRICT)
+
+✅ **DO:**
+- Always put scenario title in **bold** with number: `**Scenario N: Title**`
+- Use triple backticks with language: `` \`\`\`gherkin ``
+- Start new line after opening backticks
+- No indentation inside gherkin block
+- Use blank line between separate Given/When/Then blocks
+- End with closing backticks: `` \`\`\` ``
+- Use And/But for continuation lines without repeating Given/When/Then
+
+❌ **DON'T:**
+- Use code blocks without `gherkin` language tag
+- Mix multiple Given/When/Then blocks without blank lines between them
+- Indent lines within the gherkin block
+- Use sub-numbering (Scenario 5a, 5b) — create separate scenarios instead
+- Put scenario title inside the code block
+
+### Complete Scenario Example
+
+```markdown
+**Scenario 3: User enters dosage instructions**
+
+\`\`\`gherkin
+Given a medication has been added
+And the Dosage field is displayed and enabled
+When the user enters dosage instructions (e.g., "Apply when needed")
+Then the dosage shall be recorded against that medication
+And the value shall be retained when navigating between fields
+And if multiple medications are added, dosage for each shall be retained independently
+\`\`\`
+```
+
+---
+
 ## Gherkin in This Repository
 
-All acceptance criteria in user stories (UI, BUG, ENABLER, SPIKE, API, ISSUE) use Gherkin format. This ensures:
+All acceptance criteria in user stories (UI, BUG, ENABLER, SPIKE, API, ISSUE) use Gherkin format with strict markdown formatting. This ensures:
 
 ✅ Consistency across all story types  
 ✅ Easy automation by QA team  
 ✅ Clear communication with stakeholders  
 ✅ Traceability from story → test case → executed test  
+✅ Parseable by story generation tools and linters  
+
+### Markdown Rendering
+
+Proper formatting ensures:
+- GitHub renders code blocks correctly
+- Story generation agents can parse scenarios programmatically
+- Markdown linters validate file structure
+- Tools can extract scenarios for test automation
 
 ---
 
 **Remember: Gherkin is for humans and testing tools, not for implementation details. Write scenarios that business stakeholders can understand!**
+
+**Format strictly: Consistent formatting = consistent tooling support!**
