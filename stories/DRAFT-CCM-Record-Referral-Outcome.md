@@ -184,10 +184,6 @@ And inline error messages appear near each failed field:
   - Near "Timescale for referral" radio button group: "Select timescale for referral"
   - Near "Referral information" textarea: "Enter why you have referred this patient"
 
-And each inline error is styled with:
-  - Red text color (DHCW error color)
-  - Warning icon or error indicator
-
 And the error summary box is focused (focus set to error summary heading)
 And the user remains on the current page (no navigation)
 And no data is persisted in the consultation model
