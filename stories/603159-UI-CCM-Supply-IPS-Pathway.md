@@ -123,7 +123,7 @@ Then the page displays:
   - Added medication section (heading: "Added medication under Independent Prescribers Service")
   - Advice to patient (optional) section with textarea
   - Previous button
-  - Continue button (labeled "Save and continue")
+  - Continue button
   - Cancel and exit link
 ```
 
@@ -182,8 +182,8 @@ And the medication search suggestions shall close
 Given a medication has been selected from DM+D
 When the medication is added
 Then the medication name shall be displayed in the Added Medication table
-And medication details (quantity, instructions) returned from DM+D shall be formatted for display
-And a Pack size field shall be displayed (if available from DM+D)
+And medication description returned from DM+D shall be displayed
+And a Pack size field dropdown shall be displayed 
 And a Quantity supplied (dose units) field shall be displayed and editable
 And a Dosage field shall be displayed and editable
 And a Remove link shall be displayed for the medication
@@ -206,8 +206,7 @@ And no data is persisted
 ```gherkin
 Given a medication has been added
 And pack size information is available from DM+D
-When the user enters a pack size value
-Then the pack size shall be recorded against that medication
+When the user selects a pack size from the dropdown
 And the value shall be retained when navigating between fields
 ```
 
