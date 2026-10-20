@@ -111,16 +111,19 @@ A minimum of one medication must be supplied before the consultation can progres
 Given the user has selected Outcome = Supply within an IPS consultation
 When the page loads
 Then the page displays:
-  - Journey context: "Clinical Conditions Management"
+  - High level caption: "Clinical Conditions Management"
   - Page heading: "Outcome: Supply"
+  - The text: "View the Common Ailments Service formulary to learn more about ailments, possible complications, when to refer to GP, treatments, and advice for patients"
+  - A hyperlink to "Common Ailments Service formulary" (https://casformulary.wales.nhs.uk/IndexAMG.aspx)
   - Section heading: "Supply medication under Independent Prescribers Service"
+  - Heading: "Search for medication"
   - Help text: "Only select a branded medication if there is a clinical need for it to be used (e.g., pharmacokinetic differences between brands)"
   - Medication search area with Generic/Branded toggle
   - Search medicine input field
-  - Added medication section
+  - Added medication section (heading: "Added medication under Independent Prescribers Service")
   - Advice to patient (optional) section with textarea
   - Previous button
-  - Continue button
+  - Continue button (labeled "Save and continue")
   - Cancel and exit link
 ```
 
@@ -138,7 +141,7 @@ And Branded shall be available for selection
 ```gherkin
 Given the user is on the IPS Supply page
 When the page loads
-Then a medication search field shall be displayed with placeholder text "Search medicine"
+Then a medication search field shall be displayed
 And a Generic radio button shall be displayed and selected
 And a Branded radio button shall be displayed and not selected
 ```
@@ -152,7 +155,6 @@ Given Generic search is selected
 When the user enters search criteria (e.g., "cap")
 Then matching generic medications shall be retrieved from DM+D
 And matching search suggestions shall be displayed in a dropdown list
-And the first matching result shall be highlighted (e.g., "Capsaicin 0.025% cream")
 ```
 
 **Scenario 5: Search for a branded medication**
@@ -368,38 +370,17 @@ And the error shall be logged in accordance with system standards
 And the user shall be able to continue filling other fields on the page
 ```
 
-### Accessibility
-
-**Scenario 25: WCAG 2.1 AA compliance**
-
-```gherkin
-Given the page is rendered
-When a user navigates using keyboard only
-Then all interactive elements are focusable in this order:
-  - Search medicine input → Generic radio → Branded radio → Medication suggestions (when visible)
-  - Quantity supplied field → Dosage field → Remove link (per medication row)
-  - Advice textarea → Previous button → Continue button → Cancel and exit link
-And screen reader announces the page structure: "Outcome Supply"
-And the Generic radio is announced as "Generic search selected"
-And the Branded radio is announced as "Branded search not selected"
-And the Advice textarea is announced with its 2000-character limit
-And the Remove link is announced as a destructive action
-And all text has a colour contrast ratio of at least 4.5:1
-And error messages are announced immediately via aria-live="polite"
-And form validation errors are grouped in an Error Summary with role="alert"
-```
-
 ---
 
 ## Definition of Done
 
-- [ ] All acceptance criteria met and validated by QA
+- [ ] All acceptance criteria (24 scenarios) met and validated by QA
 - [ ] Code peer reviewed and approved
 - [ ] Unit tests written (80%+ coverage)
 - [ ] Medication search component (EMS #586964) is available and integrated
 - [ ] Integration with DM+D search service is configured
-- [ ] Accessibility testing completed (WCAG 2.1 AA)
-- [ ] UI matches design mockup
+- [ ] UI matches design mockup (including hyperlink to CAS formulary)
+- [ ] "Save and continue" button text matches design
 - [ ] Browser compatibility verified (Chrome, Firefox, Safari, Edge)
 - [ ] Mobile responsiveness tested
 - [ ] Consultation state persistence verified
@@ -414,6 +395,9 @@ And form validation errors are grouped in an Error Summary with role="alert"
 
 - The medication search component is reused from the EMS journey (stories #586964 and #585673)
 - DM+D integration will be handled by a separate backend API
-- Pack size handling may differ from CAS pathway (optional vs. pre-populated)
-- Character counter for textarea must display in real-time as per UI-TEXTAREA-SPECIFICATIONS.md
-- This story differs from the CAS Supply outcome (603158) in that it uses medication search rather than a pre-populated formulary
+- Pack size is optional and handled based on DM+D data availability
+- Character counter for textarea must display in real-time as per UI-TEXTAREA-SPECIFICATIONS.md (2000 character limit)
+- Button label is "Save and continue" (not "Continue")
+- CAS formulary hyperlink: https://casformulary.wales.nhs.uk/IndexAMG.aspx
+- This story differs from the CAS Supply outcome in that it uses medication search rather than a pre-populated formulary
+- Referral section is handled in a separate story (out of scope for this story)
