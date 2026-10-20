@@ -92,10 +92,13 @@ A minimum of one medication must be supplied before the consultation can progres
 - The consultation outcome selected is **Supply**
 - Medication search is performed using the NHS **DM+D (Dictionary of Medicines and Devices)** service
 - Generic medications are searched by default
-- Dosage is captured as free text
+- Dosage is captured as free text and is ALWAYS enabled when a medication is added
 - Advice given to patient is optional
 - Consultation state persistence follows the standard Choose Pharmacy consultation behaviour
-- Pack size is optional and may be disabled/hidden based on DM+D data availability
+- **Pack size is a dropdown list** returned from DM+D and is **mandatory**
+- **Quantity supplied is mandatory** - accepts positive whole numbers only (no negatives, decimals, characters, or special characters)
+- Added medications table only displays after the first medication is selected
+- If the user removes the only medication, the table section is hidden
 
 ---
 
@@ -181,12 +184,30 @@ And the medication search suggestions shall close
 ```gherkin
 Given a medication has been selected from DM+D
 When the medication is added
-Then the medication name shall be displayed in the Added Medication table
-And medication details (quantity, instructions) returned from DM+D shall be formatted for display
-And a Pack size field shall be displayed (if available from DM+D)
+Then the Added medication section becomes visible
+And a table is displayed with columns: Medicine, Pack size, Quantity supplied (dose units), Dosage
+And the medication name shall be displayed in the table
+And medication details returned from DM+D shall be formatted for display
+And a Pack size dropdown field shall be displayed (populated from DM+D data)
 And a Quantity supplied (dose units) field shall be displayed and editable
-And a Dosage field shall be displayed and editable
+And a Dosage field shall be displayed and editable (always enabled, not conditional)
 And a Remove link shall be displayed for the medication
+```
+
+**Scenario 7b: Table visibility based on medications**
+
+```gherkin
+Given the user is on the IPS Supply page
+When no medications have been added
+Then the Added medication section is NOT displayed
+
+When the user adds the first medication
+Then the Added medication section becomes visible
+And the table displays the medication
+
+When the user removes the only medication in the table
+Then the Added medication section is hidden
+And the table is no longer displayed
 ```
 
 **Scenario 8: Prevent duplicate medication selection**
@@ -206,7 +227,7 @@ And no data is persisted
 ```gherkin
 Given a medication has been added
 And pack size information is available from DM+D
-When the user enters a pack size value
+When the user selects a pack size from the dropdown
 Then the pack size shall be recorded against that medication
 And the value shall be retained when navigating between fields
 ```
@@ -215,16 +236,22 @@ And the value shall be retained when navigating between fields
 
 ```gherkin
 Given a medication has been added
-When the user enters a quantity supplied value
+When the user enters a positive whole number in the quantity supplied field
 Then the quantity supplied (dose units) shall be recorded against that medication
 And the value shall be persisted
-And the Dosage field shall become enabled (if previously disabled)
+
+When the user attempts to enter a negative number, decimal, letter or special character
+Then the value is not accepted by the field
+And the field maintains its previous value or remains empty
 ```
 
 **Scenario 11: Record dosage**
 
 ```gherkin
 Given a medication has been added
+When the page loads
+Then the Dosage field shall be displayed and enabled for user input (not disabled)
+
 When the user enters dosage instructions (e.g., "Apply when needed")
 Then the dosage shall be recorded against that medication
 And the value shall be retained
@@ -280,12 +307,15 @@ And a character counter shall display "You have 0 characters remaining"
 
 ### Navigation
 
-**Scenario 17: Continue consultation**
+**Scenario 17: Continue consultation with valid data**
 
 ```gherkin
-Given all mandatory information has been completed
-  (At least one medication with Quantity supplied and Dosage recorded)
-When the user clicks Continue
+Given all mandatory information has been completed:
+  - At least one medication added
+  - Pack size selected for each medication
+  - Quantity supplied entered for each medication
+  - Dosage entered for each medication
+When the user clicks "Save and continue"
 Then the medication details and patient advice shall be saved against the consultation
 And the user shall progress to the next consultation page
 ```
@@ -327,60 +357,66 @@ And any previously entered medication details and patient advice shall be retain
 
 ```gherkin
 Given no medications have been added
-When the user clicks Continue
+When the user clicks "Save and continue"
 Then the user shall remain on the current page
-And an error message shall be displayed: "At least one medication must be supplied to proceed"
-And the error summary shall appear at the top of the page
-And focus shall be moved to the error message
+And an error summary shall appear at the top of the page with heading: "There is a problem"
+And an error message shall be displayed: "Select at least one medication"
+And focus shall be moved to the error summary
 And no data is persisted
 ```
 
-**Scenario 22: Quantity supplied mandatory**
+**Scenario 22: Pack size mandatory**
+
+```gherkin
+Given a medication has been added
+And Pack size has not been selected
+When the user clicks "Save and continue"
+Then the user shall remain on the page
+And an error message shall be displayed for that medication: "Select a pack size"
+And the error is highlighted near the Pack size dropdown
+And no data is persisted
+```
+
+**Scenario 23: Quantity supplied mandatory**
 
 ```gherkin
 Given a medication has been added
 And Quantity supplied has not been entered
-When the user clicks Continue
+When the user clicks "Save and continue"
 Then the user shall remain on the page
-And an error message shall be displayed for that medication: "Quantity supplied is required"
-And the error is highlighted in red near the Quantity supplied field
+And an error message shall be displayed for that medication: "Enter a quantity"
+And the error is highlighted near the Quantity supplied field
 And no data is persisted
 ```
 
-**Scenario 23: Dosage mandatory**
+**Scenario 24: Dosage mandatory**
 
 ```gherkin
 Given a medication has been added
 And Dosage has not been entered
-When the user clicks Continue
+When the user clicks "Save and continue"
 Then the user shall remain on the page
-And an error message shall be displayed for that medication: "Dosage is required"
-And the error is highlighted in red near the Dosage field
+And an error message shall be displayed for that medication: "Enter dosage"
+And the error is highlighted near the Dosage field
 And no data is persisted
-```
-
-**Scenario 24: DM+D search unavailable**
-
-```gherkin
-Given the DM+D search service is unavailable
-When the user performs a medication search
-Then an appropriate error message shall be displayed: "The medication search service is temporarily unavailable. Please try again."
-And medication search results shall not be returned
-And the error shall be logged in accordance with system standards
-And the user shall be able to continue filling other fields on the page
 ```
 
 ---
 
 ## Definition of Done
 
-- [ ] All acceptance criteria (24 scenarios) met and validated by QA
+- [ ] All acceptance criteria (25 scenarios) met and validated by QA
 - [ ] Code peer reviewed and approved
 - [ ] Unit tests written (80%+ coverage)
 - [ ] Medication search component (EMS #586964) is available and integrated
 - [ ] Integration with DM+D search service is configured
-- [ ] UI matches design mockup (including hyperlink to CAS formulary)
+- [ ] Pack size dropdown populated from DM+D data
+- [ ] Quantity supplied field validates: whole numbers only (no negatives, decimals, characters, special chars)
+- [ ] Dosage field is always enabled (never disabled conditionally)
+- [ ] Table visibility: hidden when no medications, visible after first medication added, hidden when all removed
+- [ ] UI matches design mockup (EMS Supply design from 618128)
 - [ ] "Save and continue" button text matches design
+- [ ] Error summary follows standards with "There is a problem" heading
 - [ ] Browser compatibility verified (Chrome, Firefox, Safari, Edge)
 - [ ] Mobile responsiveness tested
 - [ ] Consultation state persistence verified
@@ -395,9 +431,16 @@ And the user shall be able to continue filling other fields on the page
 
 - The medication search component is reused from the EMS journey (stories #586964 and #585673)
 - DM+D integration will be handled by a separate backend API
-- Pack size is optional and handled based on DM+D data availability
+- **Pack size is a mandatory dropdown** populated from DM+D data (differs from CAS where it may be pre-filled)
+- **Quantity supplied field validation** must prevent negative numbers, decimals, letters, and special characters at the field level (not just on submit)
+- **Dosage field is always enabled** when a medication is added (differs from CAS where it becomes enabled only after quantity is entered)
+- **Table visibility**: The "Added medication" section and table are hidden until the first medication is added, and hidden again if all medications are removed
 - Character counter for textarea must display in real-time as per UI-TEXTAREA-SPECIFICATIONS.md (2000 character limit)
-- Button label is "Save and continue" (not "Continue")
+- Button label is "Save and continue" (consistent with CAS pathway)
 - CAS formulary hyperlink: https://casformulary.wales.nhs.uk/IndexAMG.aspx
-- This story differs from the CAS Supply outcome in that it uses medication search rather than a pre-populated formulary
+- This story differs from the CAS Supply outcome (618128) in key ways:
+  - Uses medication search instead of pre-populated formulary
+  - Dosage always enabled (vs. conditional in CAS)
+  - Pack size is mandatory (vs. optional in CAS)
 - Referral section is handled in a separate story (out of scope for this story)
+- Based on design mockup from story 618128 (EMS Supply journey)
