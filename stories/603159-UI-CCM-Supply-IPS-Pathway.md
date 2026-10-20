@@ -43,6 +43,8 @@ A minimum of one medication must be supplied before the consultation can progres
 - **603157**: CCM – Select Outcome (upstream selection)
 - **586964**: EMS – Medication Search Component (component dependency)
 - **585673**: EMS – Medication Search Implementation (component implementation)
+- **592874**: API – GET DM+D Medicine Search (backend dependency)
+- **595522**: API – GET DM+D Medicine Packs (backend dependency)
 
 ### Dependent Stories
 - Future stories that consume IPS consultation data
@@ -123,7 +125,6 @@ Then the page displays:
   - Help text: "Only select a branded medication if there is a clinical need for it to be used (e.g., pharmacokinetic differences between brands)"
   - Medication search area with Generic/Branded toggle
   - Search medicine input field
-  - Added medication section (heading: "Added medication under Independent Prescribers Service")
   - Advice to patient (optional) section with textarea
   - Previous button
   - Continue button (labeled "Save and continue")
@@ -201,28 +202,19 @@ Given the user is on the IPS Supply page
 When no medications have been added
 Then the Added medication section is NOT displayed
 
-Given the user has medications in the table
-When the user adds the first medication
+Given the user has added the first medication to the consultation
+When the page refreshes or the user views the section
 Then the Added medication section becomes visible
+And displays a table with columns: Medication Name | Pack Size | Quantity | Dosage | Action
 
 When the user removes the only medication in the table
 Then the Added medication section is hidden
 And the table is no longer displayed
 ```
 
-**Scenario 9: Prevent duplicate medication selection**
-
-```gherkin
-Given a medication has already been added to the consultation
-When the user attempts to add the same medication again
-Then the medication shall not be added a second time
-And an appropriate validation message shall be displayed
-And no data is persisted
-```
-
 ### Recording Medication Supply
 
-**Scenario 10: Record pack size**
+**Scenario 9: Record pack size**
 
 ```gherkin
 Given a medication has been added
@@ -232,7 +224,7 @@ Then the pack size shall be recorded against that medication
 And the value shall be retained when navigating between fields
 ```
 
-**Scenario 11: Record quantity supplied**
+**Scenario 10: Record quantity supplied**
 
 ```gherkin
 Given a medication has been added
@@ -241,7 +233,7 @@ Then the quantity supplied (dose units) shall be recorded against that medicatio
 And the value shall be persisted
 ```
 
-**Scenario 12: Quantity field validation**
+**Scenario 11: Quantity field validation**
 
 ```gherkin
 Given a medication has been added with a quantity field
@@ -250,33 +242,21 @@ Then the value is not accepted by the field
 And the field maintains its previous value or remains empty
 ```
 
-**Scenario 13: Record dosage**
+**Scenario 12: Record and enter dosage for medication**
 
 ```gherkin
 Given a medication has been added
 When the page loads
-Then the Dosage field shall be displayed and enabled for user input (not disabled)
-```
-
-**Scenario 14: Enter dosage for medication**
-
-```gherkin
-Given a medication has been added with an enabled Dosage field
+Then the Dosage field shall be displayed and enabled for user input
+And the Dosage field shall be an expandable and scrollable textarea
 When the user enters dosage instructions (e.g., "Apply when needed")
 Then the dosage shall be recorded against that medication
 And the value shall be retained
+And if multiple medications are added, dosage recorded for each medication shall be retained independently
+And changes to one medication's dosage shall not affect others
 ```
 
-**Scenario 15: Record multiple medications**
-
-```gherkin
-Given multiple medications have been added
-When supply details are entered for each medication
-Then the quantity supplied and dosage recorded for each medication shall be retained independently
-And changes to one medication shall not affect others
-```
-
-**Scenario 16: Remove medication**
+**Scenario 13: Remove medication**
 
 ```gherkin
 Given a medication has been added
@@ -288,16 +268,17 @@ And the table shall update to show the remaining medications
 
 ### Advice to Patient
 
-**Scenario 17: Record patient advice**
+**Scenario 14: Record patient advice**
 
 ```gherkin
 Given the Advice given to patient textarea is displayed
 When the user enters advice
 Then the advice shall be recorded against the consultation
 And the character count shall be updated as the user types
+And the textarea shall be expandable and scrollable
 ```
 
-**Scenario 18: Advice is optional**
+**Scenario 15: Advice is optional**
 
 ```gherkin
 Given the user is completing the IPS Supply page
@@ -306,7 +287,7 @@ When the Advice given to patient field is left blank
 Then the user shall be permitted to continue subject to all other validation requirements being satisfied
 ```
 
-**Scenario 19: Advice field maximum length**
+**Scenario 16: Advice field maximum length**
 
 ```gherkin
 Given the user enters advice into the Advice given to patient textarea
@@ -317,7 +298,7 @@ And a character counter shall display "You have 0 characters remaining"
 
 ### Navigation
 
-**Scenario 20: Continue consultation with valid data**
+**Scenario 17: Continue consultation with valid data**
 
 ```gherkin
 Given all mandatory information has been completed:
@@ -327,10 +308,10 @@ Given all mandatory information has been completed:
   - Dosage entered for each medication
 When the user clicks "Save and continue"
 Then the medication details and patient advice shall be saved against the consultation
-And the user shall progress to the next consultation page
+And the user shall progress to the Sensitive health information page
 ```
 
-**Scenario 21: Navigate to previous page**
+**Scenario 18: Navigate to previous page**
 
 ```gherkin
 Given the user is on the IPS Supply page
@@ -339,7 +320,7 @@ Then the user shall be returned to the Outcome Selection page
 And all medication details entered shall be retained in consultation state
 ```
 
-**Scenario 22: Cancel and exit consultation**
+**Scenario 19: Cancel and exit consultation**
 
 ```gherkin
 Given the user is on the IPS Supply page
@@ -350,7 +331,7 @@ And no data is saved
 
 ### Consultation State Persistence
 
-**Scenario 23: Consultation state persistence within the same patient encounter**
+**Scenario 20: Consultation state persistence within the same patient encounter**
 
 ```gherkin
 Given the user has an active consultation within the current patient encounter
@@ -363,55 +344,37 @@ And any previously entered medication details and patient advice shall be retain
 
 ### Validation
 
-**Scenario 24: At least one medication required**
+**Scenario 21: Comprehensive validation**
 
 ```gherkin
-Given no medications have been added
-When the user clicks "Save and continue"
-Then the user shall remain on the current page
-And an error summary shall appear at the top of the page with heading: "There is a problem"
-And an error message shall be displayed: "Select at least one medication"
-And focus shall be moved to the error summary
+Given one or more of the following validation conditions apply:
+  - No medication has been supplied
+  - A supplied medication has a Quantity of 0
+  - A medication has been supplied and no dosage has been entered
+When the user selects "Save and continue"
+Then an error summary box appears at the top of the page
+And the error summary has a red border and alert icon
+And the heading displays: "There is a problem"
+And all validation errors are displayed as a numbered list
+And each error is displayed as a clickable link
+And selecting an error navigates focus to the associated field or section
+And focus moves to the error summary when it is displayed
+And an inline error is displayed against each affected field or section
+And the user remains on the Supply page
 And no data is persisted
+And validation is re-evaluated only when the user next selects "Save and continue"
 ```
 
-**Scenario 25: Pack size mandatory**
+### Validation Error Examples
 
-```gherkin
-Given a medication has been added
-And Pack size has not been selected
-When the user clicks "Save and continue"
-Then the user shall remain on the page
-And an error message shall be displayed for that medication: "Select a pack size"
-And the error is highlighted near the Pack size dropdown
-And no data is persisted
-```
+| Validation Condition | Error Message |
+| --- | --- |
+| No medication supplied | Select at least one medication |
+| Medication supplied with quantity 0 | Enter a quantity greater than zero |
+| Medication supplied without dosage | Enter dosage for selected medication |
+| Pack size not selected | Select a pack size |
 
-**Scenario 26: Quantity supplied mandatory**
-
-```gherkin
-Given a medication has been added
-And Quantity supplied has not been entered
-When the user clicks "Save and continue"
-Then the user shall remain on the page
-And an error message shall be displayed for that medication: "Enter a quantity"
-And the error is highlighted near the Quantity supplied field
-And no data is persisted
-```
-
-**Scenario 27: Dosage mandatory**
-
-```gherkin
-Given a medication has been added
-And Dosage has not been entered
-When the user clicks "Save and continue"
-Then the user shall remain on the page
-And an error message shall be displayed for that medication: "Enter dosage"
-And the error is highlighted near the Dosage field
-And no data is persisted
-```
-
-**Scenario 28: DM+D search unavailable**
+**Scenario 22: DM+D search unavailable**
 
 ```gherkin
 Given the DM+D search service is unavailable
@@ -426,7 +389,7 @@ And the user shall be able to continue filling other fields on the page
 
 ## Definition of Done
 
-- [ ] All acceptance criteria (28 scenarios) met and validated by QA
+- [ ] All acceptance criteria (22 scenarios) met and validated by QA
 - [ ] Code peer reviewed and approved
 - [ ] Unit tests written (80%+ coverage)
 - [ ] Medication search component (EMS #586964) is available and integrated
