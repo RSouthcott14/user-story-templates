@@ -22,6 +22,7 @@ The metrics dashboard displays:
 - **Responsive design** — Works seamlessly on desktop, tablet, and mobile devices
 
 ### Out of Scope
+
 - Real-time data updates or automatic refresh
 - Export functionality (CSV, Excel, PDF)
 - Chart/graph visualizations (cards only)
@@ -99,6 +100,8 @@ And the layout is responsive with grid cards stacking appropriately on mobile (b
 ### Default State
 
 **Scenario 2: Dashboard filters default to "Last month" and current pharmacy**
+
+```gherkin
 
 ```gherkin
 Given the user navigates to the Dashboard

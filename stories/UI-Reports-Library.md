@@ -22,6 +22,7 @@ The reports library displays:
 - **Status indicators** — Shows which reports are ready (Available) vs. in development (Draft)
 
 ### Out of Scope
+
 - Actual report data generation or viewing
 - Report export functionality (CSV, Excel, PDF)
 - Custom report builder or ad-hoc query tool
