@@ -91,18 +91,18 @@ The user records the referral details and can optionally add advice before conti
 **Scenario 1: Page loads with referral form fields and patient context displayed**
 
 ```
-<span style="color: #0066cc">Given</span> the user has selected "Refer patient" on the Outcome Selection page (#603150)
+<span style="color: #0066cc">Given</span> the user has selected <span style="color: #cc0000">"Refer patient"</span> on the Outcome Selection page (#603150)
 <span style="color: #0066cc">When</span> the page loads
 <span style="color: #0066cc">Then</span> the following elements are displayed:
-  - High level caption: "Clinical Conditions Management"
-  - Page heading: "Record Referral Outcome"
-  - Radio Button Group labeled "Referred to" with 6 options: GP, Dentist, Optometrist, Out of Hours, A&E, Other
-  - Radio Button Group labeled "Timescale for referral" with 5 options: Within 24 hours, Within 48 hours, Within 7 days, Within 14 days, Within 28 days
-  - Textarea labeled "Referral information: Why have you referred this patient?" with character counter showing "You have 2000 characters remaining"
-  - Textarea labeled "Advice to patient: Advice given to patient" (optional) with character counter showing "You have 2000 characters remaining"
-  - Secondary button labeled "Previous"
-  - Primary button labeled "Continue"
-  - Action link labeled "Cancel and exit"
+  - High level caption: <span style="color: #cc0000">"Clinical Conditions Management"</span>
+  - Page heading: <span style="color: #cc0000">"Record Referral Outcome"</span>
+  - Radio Button Group labeled <span style="color: #cc0000">"Referred to"</span> with 6 options: GP, Dentist, Optometrist, Out of Hours, A&E, Other
+  - Radio Button Group labeled <span style="color: #cc0000">"Timescale for referral"</span> with 5 options: Within 24 hours, Within 48 hours, Within 7 days, Within 14 days, Within 28 days
+  - Textarea labeled <span style="color: #cc0000">"Referral information: Why have you referred this patient?"</span> with character counter showing <span style="color: #cc0000">"You have 2000 characters remaining"</span>
+  - Textarea labeled <span style="color: #cc0000">"Advice to patient: Advice given to patient"</span> (optional) with character counter showing <span style="color: #cc0000">"You have 2000 characters remaining"</span>
+  - Secondary button labeled <span style="color: #cc0000">"Previous"</span>
+  - Primary button labeled <span style="color: #cc0000">"Continue"</span>
+  - Action link labeled <span style="color: #cc0000">"Cancel and exit"</span>
 <span style="color: #0066cc">And</span> the form layout uses maximum section width with equal margins
 ```
 
@@ -113,10 +113,10 @@ The user records the referral details and can optionally add advice before conti
 ```
 <span style="color: #0066cc">Given</span> the user navigates to the Record Referral Outcome page
 <span style="color: #0066cc">When</span> the page loads for the first time
-<span style="color: #0066cc">Then</span> no radio button option is selected in the "Referred to" group
-<span style="color: #0066cc">And</span> no radio button option is selected in the "Timescale for referral" group
+<span style="color: #0066cc">Then</span> no radio button option is selected in the <span style="color: #cc0000">"Referred to"</span> group
+<span style="color: #0066cc">And</span> no radio button option is selected in the <span style="color: #cc0000">"Timescale for referral"</span> group
 <span style="color: #0066cc">And</span> both Textarea fields are empty
-<span style="color: #0066cc">And</span> the "Continue" button is enabled and clickable
+<span style="color: #0066cc">And</span> the <span style="color: #cc0000">"Continue"</span> button is enabled and clickable
 <span style="color: #0066cc">And</span> the form is ready for user input
 ```
 
@@ -126,7 +126,7 @@ The user records the referral details and can optionally add advice before conti
 
 ```
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
-<span style="color: #0066cc">When</span> the user clicks a "Referred to" radio button option (e.g., GP)
+<span style="color: #0066cc">When</span> the user clicks a <span style="color: #cc0000">"Referred to"</span> radio button option (e.g., GP)
 <span style="color: #0066cc">Then</span> the selected option is immediately visible (radio button filled)
 <span style="color: #0066cc">And</span> any previously selected option in the same group is deselected
 <span style="color: #0066cc">And</span> the selection is visually highlighted with feedback
@@ -136,7 +136,7 @@ The user records the referral details and can optionally add advice before conti
 
 ```
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
-<span style="color: #0066cc">When</span> the user clicks a "Timescale for referral" radio button option (e.g., Within 24 hours)
+<span style="color: #0066cc">When</span> the user clicks a <span style="color: #cc0000">"Timescale for referral"</span> radio button option (e.g., Within 24 hours)
 <span style="color: #0066cc">Then</span> the selected option is immediately visible (radio button filled)
 <span style="color: #0066cc">And</span> any previously selected option in the same group is deselected
 <span style="color: #0066cc">And</span> the selection is visually highlighted with feedback
@@ -146,14 +146,14 @@ The user records the referral details and can optionally add advice before conti
 
 ```
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
-<span style="color: #0066cc">When</span> the user enters text in the "Referral information" textarea
+<span style="color: #0066cc">When</span> the user enters text in the <span style="color: #cc0000">"Referral information"</span> textarea
 <span style="color: #0066cc">Then</span> the text is recorded as the user types
-<span style="color: #0066cc">And</span> the character counter updates in real-time showing: "You have X characters remaining"
+<span style="color: #0066cc">And</span> the character counter updates in real-time showing: <span style="color: #cc0000">"You have X characters remaining"</span>
 <span style="color: #0066cc">And</span> the textarea text wraps automatically and scrolls if content exceeds visible area
 
-<span style="color: #0066cc">When</span> the user enters text in the "Advice to patient" textarea (optional)
+<span style="color: #0066cc">When</span> the user enters text in the <span style="color: #cc0000">"Advice to patient"</span> textarea (optional)
 <span style="color: #0066cc">Then</span> the text is recorded as the user types
-<span style="color: #0066cc">And</span> the character counter updates in real-time showing: "You have X characters remaining"
+<span style="color: #0066cc">And</span> the character counter updates in real-time showing: <span style="color: #cc0000">"You have X characters remaining"</span>
 ```
 
 **Scenario 6: Form data persists when user navigates to another patient tab and returns**
@@ -163,10 +163,10 @@ The user records the referral details and can optionally add advice before conti
 <span style="color: #0066cc">When</span> the user navigates to another patient tab
 <span style="color: #0066cc">And</span> subsequently returns to this consultation within the same patient encounter
 <span style="color: #0066cc">Then</span> all previously entered selections and text remain displayed:
-  - "Referred to" option still selected
-  - "Timescale for referral" option still selected
-  - "Referral information" textarea still contains the entered text
-  - "Advice to patient" textarea still contains the entered text
+  - <span style="color: #cc0000">"Referred to"</span> option still selected
+  - <span style="color: #cc0000">"Timescale for referral"</span> option still selected
+  - <span style="color: #cc0000">"Referral information"</span> textarea still contains the entered text
+  - <span style="color: #cc0000">"Advice to patient"</span> textarea still contains the entered text
 <span style="color: #0066cc">And</span> the character counters display the correct remaining character counts
 <span style="color: #0066cc">And</span> the consultation model retains all stored referral data
 ```
@@ -178,9 +178,9 @@ The user records the referral details and can optionally add advice before conti
 ```
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">And</span> has completed all mandatory fields:
-  - Selected a "Referred to" option
-  - Selected a "Timescale for referral" option
-  - Entered text in "Referral information" textarea
+  - Selected a <span style="color: #cc0000">"Referred to"</span> option
+  - Selected a <span style="color: #cc0000">"Timescale for referral"</span> option
+  - Entered text in <span style="color: #cc0000">"Referral information"</span> textarea
 <span style="color: #0066cc">When</span> the user clicks the Continue button
 <span style="color: #0066cc">Then</span> the form is submitted
 <span style="color: #0066cc">And</span> all referral data is persisted in the consultation model:
@@ -188,7 +188,7 @@ The user records the referral details and can optionally add advice before conti
   - Timescale for referral (selected option)
   - Referral information (textarea text)
   - Advice to patient (textarea text, or empty if not filled)
-<span style="color: #0066cc">And</span> the user navigates to the next page: "CCM Sensitive Health Information" (#603156)
+<span style="color: #0066cc">And</span> the user navigates to the next page: <span style="color: #cc0000">"CCM Sensitive Health Information"</span> (#603156)
 <span style="color: #0066cc">And</span> the referral data is accessible to the next page
 <span style="color: #0066cc">And</span> the navigation completes successfully
 ```
@@ -200,7 +200,7 @@ The user records the referral details and can optionally add advice before conti
 <span style="color: #0066cc">And</span> has entered referral information
 <span style="color: #0066cc">When</span> the user clicks the Previous button
 <span style="color: #0066cc">Then</span> the user is navigated back to the Outcome Selection page (#603150)
-<span style="color: #0066cc">And</span> the "Refer patient" outcome selection is still selected on that page
+<span style="color: #0066cc">And</span> the <span style="color: #cc0000">"Refer patient"</span> outcome selection is still selected on that page
 <span style="color: #0066cc">And</span> the consultation model retains the referral data entered on this page
 <span style="color: #0066cc">And</span> when the user navigates forward again to this page
 <span style="color: #0066cc">Then</span> all previously entered data is displayed
@@ -211,7 +211,7 @@ The user records the referral details and can optionally add advice before conti
 ```
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">And</span> has entered some referral information (but not yet submitted)
-<span style="color: #0066cc">When</span> the user clicks the "Cancel and exit" link
+<span style="color: #0066cc">When</span> the user clicks the <span style="color: #cc0000">"Cancel and exit"</span> link
 <span style="color: #0066cc">Then</span> the user is navigated to the Patient overview page
 <span style="color: #0066cc">And</span> no data entered on this page is persisted in the consultation model
 <span style="color: #0066cc">And</span> the consultation is not marked as saved
@@ -226,17 +226,17 @@ The user records the referral details and can optionally add advice before conti
 <span style="color: #0066cc">And</span> has not completed one or more mandatory fields
 <span style="color: #0066cc">When</span> the user clicks the Continue button
 <span style="color: #0066cc">Then</span> an error summary is displayed at the top of the page with:
-  - role="alert" for immediate screen reader announcement
-  - aria-live="polite" for dynamic updates
+  - role=<span style="color: #cc0000">"alert"</span> for immediate screen reader announcement
+  - aria-live=<span style="color: #cc0000">"polite"</span> for dynamic updates
   - List of all validation errors that occurred:
-    * "Select referred to"
-    * "Select timescale for referral"
-    * "Enter why you have referred this patient"
+    * <span style="color: #cc0000">"Select referred to"</span>
+    * <span style="color: #cc0000">"Select timescale for referral"</span>
+    * <span style="color: #cc0000">"Enter why you have referred this patient"</span>
 
 <span style="color: #0066cc">And</span> inline error messages appear near each failed field:
-  - Near "Referred to" radio button group: "Select referred to"
-  - Near "Timescale for referral" radio button group: "Select timescale for referral"
-  - Near "Referral information" textarea: "Enter why you have referred this patient"
+  - Near <span style="color: #cc0000">"Referred to"</span> radio button group: <span style="color: #cc0000">"Select referred to"</span>
+  - Near <span style="color: #cc0000">"Timescale for referral"</span> radio button group: <span style="color: #cc0000">"Select timescale for referral"</span>
+  - Near <span style="color: #cc0000">"Referral information"</span> textarea: <span style="color: #cc0000">"Enter why you have referred this patient"</span>
 
 <span style="color: #0066cc">And</span> the error summary is focusable and keyboard accessible
 <span style="color: #0066cc">And</span> focus is automatically moved to the error summary at the top of the page
@@ -250,15 +250,15 @@ The user records the referral details and can optionally add advice before conti
 
 ```
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
-<span style="color: #0066cc">When</span> the user enters text in either "Referral information" or "Advice to patient" textarea
+<span style="color: #0066cc">When</span> the user enters text in either <span style="color: #cc0000">"Referral information"</span> or <span style="color: #cc0000">"Advice to patient"</span> textarea
 <span style="color: #0066cc">And</span> the text approaches or exceeds 2000 characters
-<span style="color: #0066cc">Then</span> the character counter updates in real-time showing: "You have X characters remaining"
+<span style="color: #0066cc">Then</span> the character counter updates in real-time showing: <span style="color: #cc0000">"You have X characters remaining"</span>
 
 <span style="color: #0066cc">When</span> the user attempts to enter additional characters beyond 2000
 <span style="color: #0066cc">Then</span> the user is prevented from entering additional characters
-<span style="color: #0066cc">And</span> the character counter displays: "You have 0 characters remaining"
+<span style="color: #0066cc">And</span> the character counter displays: <span style="color: #cc0000">"You have 0 characters remaining"</span>
 <span style="color: #0066cc">And</span> if character limit is exceeded on submission attempt:
-  - An error summary displays at the top of page with role="alert"
+  - An error summary displays at the top of page with role=<span style="color: #cc0000">"alert"</span>
   - Inline error message displays near the field
   - Focus moves to the error summary
   - No data is persisted
@@ -274,18 +274,18 @@ The user records the referral details and can optionally add advice before conti
 <span style="color: #0066cc">When</span> a user navigates using keyboard and screen reader
 <span style="color: #0066cc">Then</span> all interactive elements are focusable via Tab key
 <span style="color: #0066cc">And</span> the tab order is logical and follows:
-  Previous → "Referred to" radio buttons (6 options) → "Timescale for referral" radio buttons (5 options) → "Referral information" textarea → "Advice to patient" textarea → Continue → Cancel and exit
+  Previous → <span style="color: #cc0000">"Referred to"</span> radio buttons (6 options) → <span style="color: #cc0000">"Timescale for referral"</span> radio buttons (5 options) → <span style="color: #cc0000">"Referral information"</span> textarea → <span style="color: #cc0000">"Advice to patient"</span> textarea → Continue → <span style="color: #cc0000">"Cancel and exit"</span>
 
-<span style="color: #0066cc">And</span> the page heading is announced as: "Record Referral Outcome" (heading level 2)
-<span style="color: #0066cc">And</span> the journey caption is announced as: "Clinical Conditions Management" (page context)
-<span style="color: #0066cc">And</span> the radio button group labels are announced as: "Referred to, group of radio buttons" and "Timescale for referral, group of radio buttons"
-<span style="color: #0066cc">And</span> each radio option is announced with its label and state: "GP, radio button, not checked" (or "checked")
+<span style="color: #0066cc">And</span> the page heading is announced as: <span style="color: #cc0000">"Record Referral Outcome"</span> (heading level 2)
+<span style="color: #0066cc">And</span> the journey caption is announced as: <span style="color: #cc0000">"Clinical Conditions Management"</span> (page context)
+<span style="color: #0066cc">And</span> the radio button group labels are announced as: <span style="color: #cc0000">"Referred to, group of radio buttons"</span> and <span style="color: #cc0000">"Timescale for referral, group of radio buttons"</span>
+<span style="color: #0066cc">And</span> each radio option is announced with its label and state: <span style="color: #cc0000">"GP, radio button, not checked"</span> (or <span style="color: #cc0000">"checked"</span>)
 <span style="color: #0066cc">And</span> the textarea labels are associated with their fields
-<span style="color: #0066cc">And</span> character counters are announced with aria-live="polite": "You have X characters remaining"
-<span style="color: #0066cc">And</span> error summary is announced with role="alert" when validation errors occur
-<span style="color: #0066cc">And</span> the Previous button is announced as: "Previous, button"
-<span style="color: #0066cc">And</span> the Continue button is announced as: "Continue, button"
-<span style="color: #0066cc">And</span> the Cancel and exit link is announced as: "Cancel and exit, link"
+<span style="color: #0066cc">And</span> character counters are announced with aria-live=<span style="color: #cc0000">"polite"</span>: <span style="color: #cc0000">"You have X characters remaining"</span>
+<span style="color: #0066cc">And</span> error summary is announced with role=<span style="color: #cc0000">"alert"</span> when validation errors occur
+<span style="color: #0066cc">And</span> the Previous button is announced as: <span style="color: #cc0000">"Previous, button"</span>
+<span style="color: #0066cc">And</span> the Continue button is announced as: <span style="color: #cc0000">"Continue, button"</span>
+<span style="color: #0066cc">And</span> the Cancel and exit link is announced as: <span style="color: #cc0000">"Cancel and exit, link"</span>
 
 <span style="color: #0066cc">And</span> color contrast ratio is at least 4.5:1 for all text (including buttons, labels, error messages)
 <span style="color: #0066cc">And</span> focus indicators are visible on all interactive elements
