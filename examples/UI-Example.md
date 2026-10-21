@@ -149,20 +149,6 @@ And all images/icons have alt text describing the tool
 
 ---
 
-## Definition of Done
-
-- [x] All 6 acceptance criteria met and validated by QA
-- [x] Code peer reviewed and approved
-- [x] Unit tests written (80%+ coverage)
-- [x] Accessibility testing completed (WCAG 2.1 AA)
-- [x] UI matches Figma design (link: [design link])
-- [x] Browser compatibility verified (Chrome, Firefox, Safari, Edge)
-- [x] Mobile responsiveness tested (portrait/landscape at 375px, 768px, 1024px)
-- [x] Documentation updated (UX patterns, accessibility note)
-- [x] Ready for UAT
-
----
-
 ## Design Reference
 [DHCW Design System V2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2)
 
