@@ -84,7 +84,7 @@ The user records the referral details and can optionally add advice before conti
 
 ## Acceptance Criteria
 
-**Total Scenarios: 11**
+**Total Scenarios: 12**
 
 ### Page Structure & Content
 
