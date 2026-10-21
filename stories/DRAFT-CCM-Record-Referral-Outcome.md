@@ -171,7 +171,7 @@ And the character counters display the correct remaining character counts
 And the consultation model retains all stored referral data
 ```
 
-### Navigation
+### Navigation & State Management
 
 **Scenario 7: User completes mandatory fields and clicks Continue - data stored and navigates to next page**
 
@@ -217,7 +217,7 @@ And no data entered on this page is persisted in the consultation model
 And the consultation is not marked as saved
 ```
 
-### Validation
+### Validation & Error Handling
 
 **Scenario 10: User attempts to continue without completing mandatory fields - validation errors display with focus management**
 
