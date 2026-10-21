@@ -90,7 +90,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 1: Page loads with referral form fields and patient context displayed**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user has selected <span style="color: #cc0000">"Refer patient"</span> on the Outcome Selection page (#603150)
 <span style="color: #0066cc">When</span> the page loads
 <span style="color: #0066cc">Then</span> the following elements are displayed:
@@ -110,7 +110,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 2: No selections or entries are pre-populated on initial page load**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user navigates to the Record Referral Outcome page
 <span style="color: #0066cc">When</span> the page loads for the first time
 <span style="color: #0066cc">Then</span> no radio button option is selected in the <span style="color: #cc0000">"Referred to"</span> group
@@ -124,7 +124,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 3: User selects referral destination option**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">When</span> the user clicks a <span style="color: #cc0000">"Referred to"</span> radio button option (e.g., GP)
 <span style="color: #0066cc">Then</span> the selected option is immediately visible (radio button filled)
@@ -134,7 +134,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 4: User selects referral timescale option**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">When</span> the user clicks a <span style="color: #cc0000">"Timescale for referral"</span> radio button option (e.g., Within 24 hours)
 <span style="color: #0066cc">Then</span> the selected option is immediately visible (radio button filled)
@@ -144,7 +144,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 5: User enters referral information and advice to patient**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">When</span> the user enters text in the <span style="color: #cc0000">"Referral information"</span> textarea
 <span style="color: #0066cc">Then</span> the text is recorded as the user types
@@ -158,7 +158,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 6: Form data persists when user navigates to another patient tab and returns**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user has entered referral information and selected options on this page
 <span style="color: #0066cc">When</span> the user navigates to another patient tab
 <span style="color: #0066cc">And</span> subsequently returns to this consultation within the same patient encounter
@@ -175,7 +175,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 7: User completes mandatory fields and clicks Continue - data stored and navigates to next page**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">And</span> has completed all mandatory fields:
   - Selected a <span style="color: #cc0000">"Referred to"</span> option
@@ -195,7 +195,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 8: User clicks Previous button - returns to Outcome Selection page with data retained**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">And</span> has entered referral information
 <span style="color: #0066cc">When</span> the user clicks the Previous button
@@ -208,7 +208,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 9: User clicks Cancel and exit link - exits consultation without saving**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">And</span> has entered some referral information (but not yet submitted)
 <span style="color: #0066cc">When</span> the user clicks the <span style="color: #cc0000">"Cancel and exit"</span> link
@@ -221,7 +221,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 10: User attempts to continue without completing mandatory fields - validation errors display with focus management**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">And</span> has not completed one or more mandatory fields
 <span style="color: #0066cc">When</span> the user clicks the Continue button
@@ -248,7 +248,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 11: User enters text exceeding 2000-character limit - character limit is enforced**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the user is on the Record Referral Outcome page
 <span style="color: #0066cc">When</span> the user enters text in either <span style="color: #cc0000">"Referral information"</span> or <span style="color: #cc0000">"Advice to patient"</span> textarea
 <span style="color: #0066cc">And</span> the text approaches or exceeds 2000 characters
@@ -269,7 +269,7 @@ The user records the referral details and can optionally add advice before conti
 
 **Scenario 12: Page meets WCAG 2.1 AA accessibility compliance standards**
 
-```
+```gherkin
 <span style="color: #0066cc">Given</span> the Record Referral Outcome page is rendered
 <span style="color: #0066cc">When</span> a user navigates using keyboard and screen reader
 <span style="color: #0066cc">Then</span> all interactive elements are focusable via Tab key
