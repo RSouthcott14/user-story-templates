@@ -167,19 +167,5 @@ To ensure consistent formatting across all UI stories:
 
 ---
 
-## Definition of Done
-
-- [ ] All acceptance criteria met and validated by QA
-- [ ] Code peer reviewed and approved
-- [ ] Unit tests written (80%+ coverage)
-- [ ] Accessibility testing completed (WCAG 2.1 AA)
-- [ ] UI matches DHCW Design System V2 (Figma/mock-up)
-- [ ] Browser compatibility verified (Chrome, Firefox, Safari, Edge)
-- [ ] Mobile responsiveness tested
-- [ ] Documentation updated (if applicable)
-- [ ] Ready for UAT
-
----
-
 ## Notes
 [Any additional context, design links, known issues, or technical considerations]

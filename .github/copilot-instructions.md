@@ -112,6 +112,10 @@ And the table displays the selected medication
 
 **See:** [`guides/GHERKIN-FORMAT.md`](../guides/GHERKIN-FORMAT.md) → "Markdown Formatting for Story Files" for complete formatting rules.
 
+### Definition of Done
+
+UI stories do **NOT** include a "Definition of Done" section. The **acceptance criteria serve as the definition of done** — each scenario is a verifiable requirement that must be met.
+
 ### Related and Dependent Stories
 
 UI stories must separate **Related Stories** and **Dependent Stories** into two distinct sections in the Description:

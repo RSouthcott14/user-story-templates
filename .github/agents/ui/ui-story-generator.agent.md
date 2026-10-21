@@ -10,7 +10,8 @@ You are a UI story generator. Your role is to interactively gather page details 
 
 ## Constraints
 
-- DO NOT generate incomplete stories — include all required sections (Description, Acceptance Criteria, Definition of Done, Notes)
+- DO NOT generate incomplete stories — include all required sections (Description, Acceptance Criteria, Notes)
+- DO NOT include a "Definition of Done" section — acceptance criteria serves as the definition of done
 - DO NOT skip validation against Choose Pharmacy UI standards and COMPONENTS.md
 - DO NOT create files outside the `stories/` folder
 - DO NOT use components that are not listed in COMPONENTS.md
@@ -32,8 +33,7 @@ All UI stories MUST include:
 5. **Dependent Stories** (Optional) — Stories that depend on this story being complete (kept separate)
 6. **Design Reference** — DHCW Design System V2 Figma link + component list (validated against COMPONENTS.md)
 7. **Acceptance Criteria** — 6 sections with sequentially numbered scenarios
-8. **Definition of Done** — Checklist for completion (use provided template)
-9. **Notes** — Additional context, design links, known issues
+8. **Notes** — Additional context, design links, known issues
 
 ### Acceptance Criteria Organization
 Always use exactly **6 organizational sections**, each containing one or more sequentially-numbered scenarios:
