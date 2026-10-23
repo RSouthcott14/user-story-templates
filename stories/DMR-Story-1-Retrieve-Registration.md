@@ -178,21 +178,6 @@ And no data is persisted
 
 ---
 
-## Definition of Done
-
-- [ ] Endpoint implemented per specification
-- [ ] Request validation for NHS Number format
-- [ ] All acceptance criteria met
-- [ ] Authentication/authorization verified
-- [ ] Audit logging implemented (caller, timestamp, NHS Number)
-- [ ] Unit tests passing (80%+ coverage)
-- [ ] Integration tests passing
-- [ ] Performance benchmarks met (< 2s response time)
-- [ ] API documentation generated (OpenAPI 3.0)
-- [ ] Ready for integration testing
-
----
-
 ## Notes
 - NHS Number validation: Must be exactly 10 numeric digits
 - Response includes both active and inactive states; consumers should check `registered` field

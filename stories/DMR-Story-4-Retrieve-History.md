@@ -284,26 +284,6 @@ And no data is persisted
 
 ---
 
-## Definition of Done
-
-- [ ] Endpoint implemented per specification
-- [ ] NHS Number validation (10 digits)
-- [ ] Pagination implemented (limit, skip)
-- [ ] Date range filtering implemented (from, to)
-- [ ] Sorting by timestamp implemented
-- [ ] Query parameter validation (limit 1-100, skip >= 0, dates ISO 8601)
-- [ ] All acceptance criteria met
-- [ ] Authentication/authorization verified
-- [ ] Audit logging implemented (access audit trail with correlation ID)
-- [ ] History queries optimized with database indexing
-- [ ] Unit tests passing (80%+ coverage)
-- [ ] Integration tests passing (including large result sets)
-- [ ] Performance benchmarks met (< 2s for 1000 records)
-- [ ] API documentation generated (OpenAPI 3.0)
-- [ ] Ready for integration testing
-
----
-
 ## Notes
 - History records are immutable; once created, they cannot be modified or deleted
 - Timestamps in ISO 8601 format with UTC timezone (Z suffix)

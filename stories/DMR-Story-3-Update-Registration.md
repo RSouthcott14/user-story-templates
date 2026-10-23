@@ -273,27 +273,6 @@ And no data is persisted
 
 ---
 
-## Definition of Done
-
-- [ ] Endpoint implemented per specification
-- [ ] NHS Number validation (10 digits)
-- [ ] Pharmacy ODS code validation format
-- [ ] Pharmacy reference data lookup implemented
-- [ ] Pharmacy active status validation
-- [ ] Pharmacy DMR accreditation validation
-- [ ] Optimistic concurrency control implemented (version check)
-- [ ] All acceptance criteria met
-- [ ] Authentication/authorization verified
-- [ ] Audit logging implemented (caller, NHS Number, previous values, new values, timestamp, action)
-- [ ] Transactional integrity verified
-- [ ] Unit tests passing (80%+ coverage)
-- [ ] Integration tests passing
-- [ ] Performance benchmarks met (< 2s response time)
-- [ ] API documentation generated (OpenAPI 3.0)
-- [ ] Ready for integration testing
-
----
-
 ## Notes
 - ODS code format: First character = letter, followed by 4 alphanumeric characters (e.g., W67890)
 - lastUpdated timestamp set automatically to current UTC timestamp on successful update
