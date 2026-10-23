@@ -28,11 +28,10 @@ This screen integrates the Messages tab shown in the Home dashboard, providing a
 - Integration with external messaging platforms
 
 ### Related Stories
-- [Story ID]: Home Dashboard — relates to: This screen is accessed via the Messages tab on the Home page
-- [Story ID]: Message Compose/Reply — relates to: Allows users to respond to messages from this screen
+- Home Dashboard — relates to: This screen is accessed via the Messages tab on the Home page
 
 ### Dependent Stories
-- [Story ID]: Message Composition Screen — blocks: Users need a compose interface to reply to messages viewed here
+- Message Composition Screen — blocks: Users need a compose interface to reply to messages viewed here
 
 ---
 
@@ -51,7 +50,7 @@ This screen integrates the Messages tab shown in the Home dashboard, providing a
 
 ## Acceptance Criteria
 
-**Total Scenarios: 8**
+**Total Scenarios: 11**
 
 ### Page Structure & Content
 
