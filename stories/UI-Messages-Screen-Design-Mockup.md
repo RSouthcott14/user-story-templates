@@ -11,26 +11,17 @@
 │                                                                  │
 │  LEFT SIDEBAR (200px)        MAIN CONTENT AREA                 │
 │  ┌──────────────────┐  ┌───────────────────────────────────┐   │
-│  │ FILTER PANEL     │  │ Messages              [4]          │   │
+│  │ FILTER PANEL     │  │ Messages              [2]          │   │
 │  │                  │  │                                   │   │
-│  │ ◉ All (4)        │  │ ┌─────────────────────────────┐   │   │
+│  │ ◉ All (2)        │  │ ┌─────────────────────────────┐   │   │
 │  │ ○ System (1)     │  │ │ 🔵 System Administrator      │   │   │
-│  │ ○ Patients (1)   │  │ │                              │   │   │
-│  │ ○ Alerts (2)     │  │ │ System Maintenance Scheduled │   │   │
-│  │ ○ Referrals (0)  │  │ │                              │   │   │
+│  │ ○ Alerts (1)     │  │ │                              │   │   │
+│  │                  │  │ │ System Maintenance Scheduled │   │   │
+│  │                  │  │ │                              │   │   │
 │  │                  │  │ │ Scheduled maintenance on     │   │   │
 │  │                  │  │ │ Nov 23, 2:00 AM              │   │   │
 │  │                  │  │ │                              │   │   │
 │  │                  │  │ │ 2 hours ago              ●   │   │   │
-│  │                  │  │ └─────────────────────────────┘   │   │
-│  │                  │  │                                   │   │
-│  │                  │  │ ┌─────────────────────────────┐   │   │
-│  │                  │  │ │ 🟢 Patient - James Smith    │   │   │
-│  │                  │  │ │                              │   │   │
-│  │                  │  │ │ Follow-up question about     │   │   │
-│  │                  │  │ │ medication dosage            │   │   │
-│  │                  │  │ │                              │   │   │
-│  │                  │  │ │ 4 hours ago              ●   │   │   │
 │  │                  │  │ └─────────────────────────────┘   │   │
 │  │                  │  │                                   │   │
 │  │                  │  │ ┌─────────────────────────────┐   │   │
@@ -43,16 +34,7 @@
 │  │                  │  │ │ 1 day ago                    │   │   │
 │  │                  │  │ └─────────────────────────────┘   │   │
 │  │                  │  │                                   │   │
-│  │                  │  │ ┌─────────────────────────────┐   │   │
-│  │                  │  │ │ 🟣 Referral - Dr. Sarah Jones│  │   │
-│  │                  │  │ │                              │   │   │
-│  │                  │  │ │ Specialist referral for CCM  │   │   │
-│  │                  │  │ │ patient follow-up            │   │   │
-│  │                  │  │ │                              │   │   │
-│  │                  │  │ │ 2 days ago                   │   │   │
-│  │                  │  │ └─────────────────────────────┘   │   │
-│  │                  │  │                                   │   │
-│  │                  │  │ Showing 1-4 of 4                 │   │
+│  │                  │  │ Showing 1-2 of 2                 │   │
 │  │                  │  │ ← Previous    Next →              │   │
 │  └──────────────────┘  └───────────────────────────────────┘   │
 │                                                                  │
@@ -85,30 +67,7 @@ from 2:00 AM to 3:30 AM. No services will be available during this time.
 
 ---
 
-### 2. Patient Message
-- **Icon:** 🟢 Green circle with person/chat icon
-- **Border/Accent:** Subtle green left border (3-4px)
-- **Background:** Light green tint or standard white
-- **Sender Label:** Patient first and last name (clickable to view patient record)
-- **Typography:** Standard body text, subject in semi-bold
-- **Patient Identifier:** Optional: Patient ID or NHS number in gray text
-
-**Example Content:**
-```
-🟢 Patient - James Smith
-NHS: 123 456 7890
-
-Follow-up question about medication dosage
-
-Hi, I'm taking the new medication but I'm unsure about the 
-correct dosage timing. Should I take it with food?
-
-4 hours ago
-```
-
----
-
-### 3. Alert Message
+### 2. Alert Message
 - **Icon:** 🔴 Red circle with exclamation mark
 - **Border/Accent:** Prominent red left border (4px) - more prominent than others
 - **Background:** Light red/warning background color to denote urgency
@@ -131,31 +90,6 @@ consultation #12847. Patient is taking:
 REQUIRES IMMEDIATE REVIEW
 
 1 day ago
-```
-
----
-
-### 4. Referral Message
-- **Icon:** 🟣 Purple circle with arrow or exchange icon
-- **Border/Accent:** Subtle purple left border (3-4px)
-- **Background:** Light purple tint or standard white
-- **Sender Label:** Healthcare provider name and organization
-- **Typography:** Standard body text, subject in semi-bold
-- **Referral Status:** Optional badge showing "Pending Response", "Accepted", etc.
-
-**Example Content:**
-```
-🟣 Referral - Dr. Sarah Jones
-Wales Community Health NHS Trust
-
-Specialist Referral for Clinical Conditions Management
-
-Patient James Smith has been referred for a CCM consultation 
-follow-up. Referral details and consultation notes are attached.
-
-Status: Pending Response
-
-2 days ago
 ```
 
 ---
@@ -201,21 +135,15 @@ Status: Pending Response
 - **Border:** Right border or subtle separation
 
 ### Filter Options
-1. **All** (shows count: e.g., "All (4)")
+1. **All** (shows count: e.g., "All (2)")
    - Selected by default
    - Radio button style
 
 2. **System** (shows count: e.g., "System (1)")
    - Only system administrator messages
 
-3. **Patients** (shows count: e.g., "Patients (1)")
-   - Only patient messages
-
-4. **Alerts** (shows count: e.g., "Alerts (2)")
+3. **Alerts** (shows count: e.g., "Alerts (1)")
    - Only alert messages (red/urgent)
-
-5. **Referrals** (shows count: e.g., "Referrals (0)")
-   - Only referral messages
 
 ### Styling
 - **Radio Button:** Standard DHCW radio control
@@ -299,9 +227,7 @@ When there are no messages:
 | Message Type | Color    | Icon       | Badge Color |
 |--------------|----------|-----------|-------------|
 | System       | Blue     | ⚙️ Gear   | #0066CC     |
-| Patient      | Green    | 👤 Person  | #28A745     |
 | Alert        | Red      | ⚠️ Warning | #DC3545     |
-| Referral     | Purple   | ↔️ Arrow   | #6F42C1     |
 
 ---
 

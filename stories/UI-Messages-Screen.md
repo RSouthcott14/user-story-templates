@@ -8,19 +8,19 @@
 
 ### Story Card
 **As a** pharmacy user  
-**I want** to view and manage messages from multiple sources (system administrators, patients, alerts, and referrals) in one unified inbox  
-**So that** I can quickly respond to critical notifications and patient inquiries without switching between multiple screens
+**I want** to view and manage messages from system administrators and alerts in one unified inbox  
+**So that** I can quickly access important system updates and respond to critical clinical alerts without switching screens
 
 ### Context
-The Messages screen is a central hub for all communications within the Choose Pharmacy system. Pharmacy staff receive various types of messages that require different handling:
+The Messages screen is a central hub for critical communications within the Choose Pharmacy system. Pharmacy staff receive two main types of messages requiring different handling:
 - **System Administrator Messages:** Important updates, maintenance notifications, and policy changes
-- **Patient Messages:** Consultation follow-ups, queries about medications, and appointment requests
 - **Alert Messages:** Time-sensitive warnings about medication safety, drug interactions, or prescription issues
-- **Referral Messages:** Referrals from other healthcare providers requiring clinical response or action
 
-This screen integrates the Messages tab shown in the Home dashboard, providing a clear visual hierarchy for different message priorities and types.
+This screen integrates the Messages tab shown in the Home dashboard, providing clear visual distinction between routine system messages and high-priority clinical alerts.
 
 ### Out of Scope
+- Patient messages and consultation follow-ups (future phase)
+- Referral management and responses (future phase)
 - Real-time message push notifications (handled by notification service)
 - Message composition/reply interface (handled in separate story)
 - Message search and advanced filtering (future enhancement)
@@ -50,7 +50,7 @@ This screen integrates the Messages tab shown in the Home dashboard, providing a
 
 ## Acceptance Criteria
 
-**Total Scenarios: 11**
+**Total Scenarios: 8**
 
 ### Page Structure & Content
 
@@ -61,12 +61,12 @@ Given the user navigates to the Messages screen
 When the page loads
 Then the following elements are displayed:
   - Page heading: "Messages"
-  - Unread message counter badge (e.g., "4 unread")
-  - Filter panel on the left sidebar with options: All, System, Patients, Alerts, Referrals
+  - Unread message counter badge (e.g., "3 unread")
+  - Filter panel on the left sidebar with options: All, System, Alerts
   - Message list area showing messages as individual cards
   - Each message card displays:
     - Message type icon (color-coded by type)
-    - Sender name and organization (if applicable)
+    - Sender information (System Administrator or Alert source)
     - Message subject/preview text
     - Timestamp (e.g., "2 hours ago")
     - Unread indicator (blue dot or highlight)
@@ -84,9 +84,7 @@ Given the user is on the Messages screen
 When the page loads for the first time
 Then the message list displays:
   - System Administrator Message (blue badge/icon): "System Maintenance Scheduled"
-  - Patient Message (green badge/icon): "Follow-up question from James Smith"
   - Alert Message (red badge/icon): "Drug interaction warning for patient consultation"
-  - Referral Message (purple badge/icon): "Referral received from Dr. Sarah Jones"
 And unread messages appear with a highlighted background
 And read messages appear in standard styling
 And messages are sorted by date received (most recent first)
@@ -247,23 +245,14 @@ And focus indicators are clearly visible (minimum 2px highlight)
 - **Priority:** Medium
 - **Examples:** Maintenance notifications, policy updates, system announcements
 
-### Patient Messages
-- **Icon/Badge:** Green circle with person or chat icon
-- **Styling:** Standard card, may include patient initials or avatar
-- **Priority:** Variable (high if urgent)
-- **Examples:** Consultation follow-ups, prescription questions, appointment requests
-
 ### Alert Messages
 - **Icon/Badge:** Red circle with exclamation mark or warning icon
-- **Styling:** Alert banner style with prominent background color (warning/red theme)
+- **Border/Accent:** Prominent red left border (4px) - more prominent than others
+- **Background:** Light red/warning background color to denote urgency
+- **Sender Label:** "System Alert" or "Clinical Alert"
+- **Typography:** Subject in bold or semi-bold to emphasize
 - **Priority:** High
 - **Examples:** Drug interaction warnings, medication safety alerts, clinical alerts
-
-### Referral Messages
-- **Icon/Badge:** Purple circle with arrow or exchange icon
-- **Styling:** Standard card with referral-specific styling
-- **Priority:** High
-- **Examples:** Referrals from other healthcare providers, clinical referral responses
 
 ---
 
