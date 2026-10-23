@@ -8,11 +8,13 @@
 
 ### Story Card
 **As a** Clinical System  
-**I want** to register a patient for the DMR (Designated Medicines Rota) service with a nominated pharmacy  
+**I want** to register a patient for the DMR (Discharge Medicines Review) service with a nominated pharmacy  
 **So that** the patient's medication supply can be managed consistently across the national system
 
 ### Background
 Authorised external NHS Wales systems need to create new DMR registrations for patients, specifying their nominated pharmacy. The API must validate pharmacy status and prevent duplicate registrations, ensuring data consistency.
+
+**DMR:** Discharge Medicines Review - a service providing pharmaceutical assessment and optimisation of medicines post-discharge.
 
 ### Objective
 Deliver a secure POST endpoint that creates a new DMR registration with comprehensive validation, audit logging, and error handling.

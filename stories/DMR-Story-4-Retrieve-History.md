@@ -8,11 +8,13 @@
 
 ### Story Card
 **As a** Authorised System or Auditor  
-**I want** to retrieve the complete change history for a patient's DMR registration  
+**I want** to retrieve the complete change history for a patient's DMR (Discharge Medicines Review) registration  
 **So that** I can track registration changes for audit, compliance, and operational investigation purposes
 
 ### Background
 DMR registration changes must be traceable for audit and compliance purposes. The API must provide a complete history of all registration events (create, update, deregister, reactivate) with full context about what changed, when, who made the change, and which calling system initiated it.
+
+**DMR:** Discharge Medicines Review - a service providing pharmaceutical assessment and optimisation of medicines post-discharge.
 
 ### Objective
 Deliver a secure GET endpoint that returns paginated DMR registration history with detailed audit information, supporting flexible filtering and sorting.

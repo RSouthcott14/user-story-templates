@@ -8,11 +8,13 @@
 
 ### Story Card
 **As a** Clinical System  
-**I want** to update a patient's DMR registration (nominated pharmacy and/or status)  
+**I want** to update a patient's DMR (Discharge Medicines Review) registration (nominated pharmacy and/or status)  
 **So that** patients can change their nominated pharmacy or update their registration status without requiring manual intervention in Choose Pharmacy
 
 ### Background
 DMR registrations must be updatable when patients change their nominated pharmacy or when their registration status needs to be modified. The API must validate all changes against pharmacy reference data and maintain audit trails for compliance.
+
+**DMR:** Discharge Medicines Review - a service providing pharmaceutical assessment and optimisation of medicines post-discharge.
 
 ### Objective
 Deliver a secure PUT endpoint that updates existing DMR registration details with optimistic concurrency control, comprehensive validation, and full audit logging.

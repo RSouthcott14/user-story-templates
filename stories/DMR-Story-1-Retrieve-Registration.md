@@ -8,11 +8,13 @@
 
 ### Story Card
 **As a** Clinical System  
-**I want** to retrieve a patient's current DMR (Designated Medicines Rota) registration status  
+**I want** to retrieve a patient's current DMR (Discharge Medicines Review) registration status  
 **So that** I can determine their nominated pharmacy and active DMR status for clinical decision-making
 
 ### Background
 Authorised external NHS Wales systems need to query DMR registration status for patients to ensure consistent medication supply coordination across national services. This is the foundational read operation for the DMR Registration API.
+
+**DMR:** Discharge Medicines Review - a service providing pharmaceutical assessment and optimisation of medicines post-discharge.
 
 ### Objective
 Deliver a secure GET endpoint that returns the current DMR registration for a patient, including registration status, nominated pharmacy, and audit timestamps.
