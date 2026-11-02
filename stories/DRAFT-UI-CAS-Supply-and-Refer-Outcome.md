@@ -17,9 +17,11 @@ This page forms part of the **Clinical Conditions Management (CCM) pathway** and
 
 **Supply Section (CAS Pathway):**
 - Formulary medications retrieved from the selected CAS condition
+- Antibiotic medications also retrieved and displayed separately
 - Quantity supplied (dose units) as a dropdown with "0" as default
 - Dosage field that is disabled until quantity > 0 is selected
 - When quantity reverts to 0, dosage is cleared and disabled
+- Backup supply question for antibiotics only (displayed when antibiotic quantity > 0)
 - Optional advice to patient
 
 **Referral Section (Refer Pathway):**
@@ -39,11 +41,14 @@ Both sections are presented on a single page to streamline the consultation work
 - Medication interaction checking or clinical validation
 - Prescription generation or transmission
 - Editing selections after submission
-- Backup supply questions for antibiotics (out of scope for this combined story)
 - Bulk or repeat dispensing workflows
 - Referral form generation, PDF export, or printing
 - Integration with external referral systems or NHS e-Referral Service
 - Tracking referral status after submission
+
+### CAS Pathway Validation Rules
+1. **Formulary Only (Non-STTT/UTI):** At least one formulary medication MUST be supplied (quantity > 0)
+2. **Formulary + Antibiotics:** At least one medication from either category MUST be supplied (quantity > 0) OR One antibiotic ONLY + Multiple formulary medications supplied
 
 ### Related Stories
 - **#605455**: Retrieve CAS Formulary Medications (API dependency)
@@ -108,13 +113,14 @@ Both sections are presented on a single page to streamline the consultation work
 - **Referral information is mandatory** (why the patient is being referred)
 - Advice to patient is optional in both sections
 - Consultation state persistence follows standard Choose Pharmacy consultation behaviour
-- No backup supply questions are included in this combined story
+- Backup supply questions are displayed below antibiotic medications only when quantity > 0 is selected
+- Backup supply questions are hidden for formulary medications regardless of quantity
 
 ---
 
 ## Acceptance Criteria
 
-**Total Scenarios: 20**
+**Total Scenarios: 23**
 
 ### Page Structure & Content
 
@@ -139,14 +145,16 @@ Then the page displays:
   - Cancel and exit link
 ```
 
-**Scenario 2: Retrieve and display CAS formulary medications**
+**Scenario 2: Retrieve and display CAS formulary and antibiotic medications**
 ```gherkin
 Given the user has reached the Supply and Refer page
 And a CAS condition has been selected
 When the page loads
 Then the system shall retrieve formulary medications using API #605455
-And only medications returned by the API shall be displayed in the medication table
-And each row displays medication name, pack size, quantity dropdown, and dosage field
+And the system shall retrieve antibiotic medications for that condition
+And both formulary and antibiotic medications shall be displayed in the medication table
+And only medications returned by the API shall be displayed
+And if the API call fails, an error message is displayed
 ```
 
 **Scenario 3: Default state for quantity and dosage fields**
@@ -192,13 +200,41 @@ And any previously entered dosage text is cleared
 And the dosage field becomes non-editable again
 ```
 
-**Scenario 7: User interaction with multiple medications**
+**Scenario 7: User interaction with multiple medications (formulary and antibiotics)**
 ```gherkin
-Given multiple medications are displayed
+Given multiple medications (both formulary and antibiotic) are displayed
 When the user records different quantities and dosages for each medication
 Then each medication's quantity and dosage values are retained independently
 And enabling/disabling dosage for one medication does not affect others
 And data persists when user navigates between sections
+And backup supply question state for antibiotics is retained independently from dosage state
+```
+
+**Scenario 7b: Backup supply question for antibiotics only**
+```gherkin
+Given page contains formulary and antibiotic medications
+When page loads
+Then backup supply question is hidden for all medications
+
+When user enters quantity > 0 in an antibiotic medication
+Then backup supply question displays below that antibiotic medication
+With radio options: "Yes" and "No"
+
+When user clears antibiotic quantity (sets to 0)
+Then backup supply question is hidden for that antibiotic
+And selection is cleared
+
+When user enters quantity in formulary medication
+Then backup supply question does NOT appear for formulary medications
+```
+
+**Scenario 7c: Backup supply answer recorded**
+```gherkin
+Given backup supply question is displayed for an antibiotic medication
+When user selects "Yes" or "No"
+Then selection is recorded against that antibiotic medication
+And persists on navigation
+And is retained when user returns to the page
 ```
 
 ### Supply Section - Advice to Patient
@@ -426,7 +462,7 @@ And if the user switches to another medication and back, the field remains disab
 
 ## Definition of Done
 
-- [ ] All acceptance criteria (20 scenarios) met and validated by QA
+- [ ] All acceptance criteria (23 scenarios) met and validated by QA
 - [ ] Code peer reviewed and approved
 - [ ] Unit tests written (80%+ coverage)
 - [ ] CAS Formulary API (#605455) integration is configured
@@ -467,6 +503,8 @@ And if the user switches to another medication and back, the field remains disab
 - **Clearing dosage on revert**: When quantity changes from > 0 back to 0, the dosage must be cleared (not just disabled)
 - Formulary medications are retrieved from CAS API #605455
 - No backup supply questions are included in this combined story
+- Backup supply questions are displayed below antibiotic medications only when quantity > 0 is selected
+- Backup supply questions are hidden for formulary medications regardless of quantity
 - Character limit for supply advice is 2000 characters per UI-TEXTAREA-SPECIFICATIONS.md
 
 ### Referral Section Notes
