@@ -29,8 +29,6 @@ Choose Pharmacy NextGen provides five consultation services (CAS, IPS, EMS, CS, 
 
 ### Related Stories
 - UI: Dashboard - Date Range and Pharmacy Selection Filters (617495-part-2) — filters applied to this page
-- UI: Dashboard - Responsive Design (617495-part-3) — cross-device optimization of this page
-- UI: Dashboard - Accessibility (617495-part-4) — keyboard and screen reader support for this page
 
 ### Dependent Stories
 - None (this is the foundation story)

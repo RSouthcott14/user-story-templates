@@ -27,8 +27,6 @@ The dashboard displays key metrics, but administrators need flexibility to view 
 
 ### Related Stories
 - UI: Dashboard - Metrics Overview Page Structure (617495-part-1) — provides the baseline page structure
-- UI: Dashboard - Responsive Design (617495-part-3) — adapts filter controls to mobile/tablet
-- UI: Dashboard - Accessibility (617495-part-4) — keyboard and screen reader support for filters
 
 ### Dependent Stories
 - None (part-1 does not depend on this, but this story depends on part-1)
