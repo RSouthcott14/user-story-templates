@@ -122,6 +122,8 @@ Both sections are presented on a single page to streamline the consultation work
 
 **Total Scenarios: 23**
 
+*Note: Scenarios are numbered sequentially 1-23 across all sections. Numbers do not reset per section.*
+
 ### Page Structure & Content
 
 **Scenario 1: Display Supply and Refer outcome page with both sections**
@@ -200,7 +202,7 @@ And any previously entered dosage text is cleared
 And the dosage field becomes non-editable again
 ```
 
-**Scenario 7: User interaction with multiple medications (formulary and antibiotics)**
+**Scenario 8: User interaction with multiple medications (formulary and antibiotics)**
 ```gherkin
 Given multiple medications (both formulary and antibiotic) are displayed
 When the user records different quantities and dosages for each medication
@@ -210,7 +212,7 @@ And data persists when user navigates between sections
 And backup supply question state for antibiotics is retained independently from dosage state
 ```
 
-**Scenario 7b: Backup supply question for antibiotics only**
+**Scenario 9: Backup supply question for antibiotics only - display and hide behavior**
 ```gherkin
 Given page contains formulary and antibiotic medications
 When page loads
@@ -228,7 +230,7 @@ When user enters quantity in formulary medication
 Then backup supply question does NOT appear for formulary medications
 ```
 
-**Scenario 7c: Backup supply answer recorded**
+**Scenario 10: Record backup supply answer for antibiotics**
 ```gherkin
 Given backup supply question is displayed for an antibiotic medication
 When user selects "Yes" or "No"
@@ -239,7 +241,7 @@ And is retained when user returns to the page
 
 ### Supply Section - Advice to Patient
 
-**Scenario 8: Record advice to patient with character tracking**
+**Scenario 11: Record advice to patient with character tracking**
 ```gherkin
 Given the user is on the Supply and Refer outcome page
 When the user enters text in the "Advice to patient" textarea (optional, in Supply section)
@@ -254,7 +256,7 @@ And advice to patient is optional - user may leave blank and still continue subj
 
 ### Referral Section - User Interaction
 
-**Scenario 9: User selects referral destination option**
+**Scenario 12: User selects referral destination option**
 ```gherkin
 Given the user is on the Supply and Refer outcome page
 When the user clicks a "Referred to" radio button option (e.g., GP)
@@ -263,7 +265,7 @@ And any previously selected option in the same group is deselected
 And the selection is visually highlighted with feedback
 ```
 
-**Scenario 10: User selects referral timescale option**
+**Scenario 13: User selects referral timescale option**
 ```gherkin
 Given the user is on the Supply and Refer outcome page
 When the user clicks a "Timescale for referral" radio button option (e.g., Within 24 hours)
@@ -272,7 +274,7 @@ And any previously selected option in the same group is deselected
 And the selection is visually highlighted with feedback
 ```
 
-**Scenario 11: User enters referral information and optional advice with character tracking**
+**Scenario 14: User enters referral information and optional advice with character tracking**
 ```gherkin
 Given the user is on the Supply and Refer outcome page
 When the user enters text in the "Referral information" textarea (mandatory)
@@ -294,7 +296,7 @@ And advice to patient is optional - user may leave blank and still continue
 
 ### Validation - Comprehensive
 
-**Scenario 12: Comprehensive validation for all mandatory fields from both sections**
+**Scenario 15: Comprehensive validation for all mandatory fields from both sections**
 ```gherkin
 Given one or more of the following validation conditions apply from the Supply section:
   - No medication has quantity > 0 supplied
@@ -329,7 +331,7 @@ And validation is re-evaluated only when the user next selects "continue"
 
 ### Navigation & State Management
 
-**Scenario 13: Continue consultation with valid data from both sections**
+**Scenario 16: Continue consultation with valid data from both sections**
 ```gherkin
 Given all mandatory information has been completed:
   - At least one medication with quantity > 0 supplied
@@ -343,7 +345,7 @@ And the referral details and advice from Referral section shall be stored in the
 And the user shall progress to the next page in the CCM consultation pathway
 ```
 
-**Scenario 14: Navigate to previous page - return to Outcome Selection**
+**Scenario 17: Navigate to previous page - return to Outcome Selection**
 ```gherkin
 Given the user is on the Supply and Refer outcome page
 And has entered supply and referral information
@@ -356,7 +358,7 @@ And when the user navigates forward again to this page
 Then all previously entered data is displayed
 ```
 
-**Scenario 15: Cancel and exit consultation**
+**Scenario 18: Cancel and exit consultation**
 ```gherkin
 Given the user is on the Supply and Refer outcome page
 When the user clicks Cancel and exit
@@ -366,7 +368,7 @@ And no data is saved
 
 ### Consultation State Persistence
 
-**Scenario 16: Consultation state persistence within the same patient encounter**
+**Scenario 19: Consultation state persistence within the same patient encounter**
 ```gherkin
 Given the user has an active consultation within the current patient encounter
 And medication details and referral information have been entered
@@ -383,7 +385,7 @@ And all character counters display the correct remaining character counts
 
 ### API Error Handling
 
-**Scenario 17: CAS formulary medications API unavailable**
+**Scenario 20: CAS formulary medications API unavailable**
 ```gherkin
 Given the CAS formulary API (#605455) is unavailable or fails
 When the user accesses the Supply and Refer page
@@ -395,7 +397,7 @@ And the user shall be able to continue filling the Referral section
 
 ### Default State on Initial Load
 
-**Scenario 18: No selections or entries are pre-populated on initial page load**
+**Scenario 21: No selections or entries are pre-populated on initial page load**
 ```gherkin
 Given the user navigates to the Supply and Refer outcome page for the first time
 When the page loads
@@ -410,7 +412,7 @@ And the "Continue" button is enabled and clickable
 
 ### Data Persistence Across Navigation
 
-**Scenario 19: Supply and Referral data persists when user navigates to another patient tab and returns**
+**Scenario 22: Supply and Referral data persists when user navigates to another patient tab and returns**
 ```gherkin
 Given the user has entered supply and referral information
 When the user navigates to another patient tab
@@ -427,7 +429,7 @@ And the consultation model retains all stored supply and referral data
 
 ### Field State Management
 
-**Scenario 20: Dosage field state consistency across page interactions**
+**Scenario 23: Dosage field state consistency across page interactions**
 ```gherkin
 Given a medication has quantity > 0 with dosage entered and displayed
 When the user performs page interactions (scrolling, clicking other fields)
