@@ -27,7 +27,7 @@ On page load, the system will perform an API call to:
    - Remove the migrated orphaned legacy record to prevent duplicate registrations and maintain data integrity
 
 ### Captions
-**Journey step:** Discharge Medicines Review  
+**High-level caption:** Discharge Medicines Review  
 **Page caption:** View and manage DMR consultations
 
 ### Out of Scope
@@ -70,7 +70,7 @@ And the patient has an active DMR registration
 And the patient has historical DMR records
 When the page loads
 Then the following elements are displayed:
-  - Journey context: "Discharge Medicines Review"
+  - High-level caption: "Discharge Medicines Review"
   - Page heading: "Manage DMRs"
   - Primary button: "New DMR" with plus icon
   - Secondary button: "De-register patient from DMR service" (red outline style)
@@ -94,7 +94,7 @@ And the patient has an active DMR registration
 And the patient has no historical DMR records
 When the page loads
 Then the following elements are displayed:
-  - Journey context: "Discharge Medicines Review"
+  - High-level caption: "Discharge Medicines Review"
   - Page heading: "Manage DMRs"
   - Primary button: "New DMR" with plus icon
   - Secondary button: "De-register patient from DMR service"
@@ -141,6 +141,8 @@ Then the table displays all DMR records with:
   - DMR001 | 01/01/2026 | Completed (green badge)
   - DMR002 | 02/02/2026 | Completed (green badge)
   - DMR003 | 15/10/2025 | Completed (green badge)
+And the high-level caption: "Discharge Medicines Review" is displayed at the top
+And the page heading: "Manage DMRs" is displayed prominently
 And the records are displayed in reverse chronological order (most recent first)
 And each record row is visually distinct with appropriate spacing
 And all DMR reference links are underlined and in blue text
