@@ -99,9 +99,9 @@ Then the page displays:
     * Timescale for referral: [selected timescale]
     * Referral information: [entered text]
     * Advice to patient: [entered text or "Not provided"]
-  - Previous button (Secondary, left aligned)
-  - Complete consultation button (Primary, right aligned)
-  - Cancel and exit link (Action link)
+  - Secondary button labeled "Previous"
+  - Primary button labeled "Complete consultation"
+  - Action link labeled "Cancel and exit"
 And all data is displayed in read-only format (no edit controls on this page)
 And the form layout uses maximum section width with equal margins
 ```
@@ -123,7 +123,7 @@ Then the page displays:
 And all data is displayed in read-only format
 ```
 
-**Scenario 3: Review Consultation Summary page displays for CAS Supply pathway (Formulary only)**
+**Scenario 3: Review Consultation Summary page displays for CAS Supply pathway (Formulary only, Non-STTT/UTI)**
 
 ```gherkin
 Given a CAS consultation for a Non-STTT/UTI condition with Supply outcome
@@ -135,14 +135,14 @@ Then the page displays:
   - Patient information section (read-only)
   - CAS Condition section displaying: [selected condition name]
   - Medications supplied section displaying:
-    * Table with columns: Medicine, Pack size, Quantity supplied, Dosage
+    * Read-only table with columns: Medicine, Pack size, Quantity supplied, Dosage
     * Each formulary medication entered with its quantity and dosage
   - Advice to patient section: [entered advice or "Not provided"]
   - Previous, Complete consultation, and Cancel and exit buttons
 And all data is displayed in read-only format
 ```
 
-**Scenario 4: Review Consultation Summary page displays for CAS Supply pathway (Formulary + Antibiotic)**
+**Scenario 4: Review Consultation Summary page displays for CAS Supply pathway (Formulary + Antibiotic, STTT/UTI)**
 
 ```gherkin
 Given a CAS consultation for a STTT/UTI condition with Supply outcome
@@ -180,15 +180,15 @@ And all data is displayed in read-only format
 
 ```gherkin
 Given the user navigates to the Review Consultation Summary page
-When the page loads
+When the page loads for the first time
 Then all previously entered consultation data is displayed:
   - Referral details (if referral outcome), OR
   - Advice text (if advice outcome), OR
   - Medication supplies (if CAS supply outcome), OR
   - IPS service details (if IPS outcome)
-And patient information is displayed
+And patient information is displayed in read-only format
 And the Complete consultation button is enabled and clickable
-And the page is in read-only mode (no input fields)
+And the page is in read-only mode (no input fields or edit controls)
 ```
 
 **Scenario 7: Summary data persists when user navigates back and returns**
@@ -200,24 +200,26 @@ And makes changes or reviews the data
 And navigates forward again to the Review Consultation Summary page
 Then all updated data is displayed with the changes reflected
 And the summary is accurate to the current consultation model state
+And the Complete consultation button remains enabled
 ```
 
-### User Interaction - Review & Navigation
+### User Interaction
 
 **Scenario 8: User reviews referral destination and timescale on summary**
 
 ```gherkin
 Given the summary displays referral details
-When viewing the summary
+When viewing the summary for a Referral pathway consultation
 Then the referral destination (e.g., "GP", "Dentist", "A&E") is clearly displayed
 And the timescale (e.g., "Within 24 hours") is clearly displayed
 And both values are readable and match the consultation model
+And no edit controls appear inline
 ```
 
 **Scenario 9: User reviews antibiotic and backup supply status in CAS summary**
 
 ```gherkin
-Given the summary displays CAS Supply details with antibiotic
+Given the summary displays CAS Supply details with antibiotic (STTT/UTI pathway)
 When viewing the summary
 Then the selected antibiotic name, quantity, and dosage are displayed
 And the backup supply status ("Yes" or "No") is clearly indicated
@@ -225,15 +227,15 @@ And only one antibiotic is displayed (mutual exclusivity confirmed)
 And the display matches the consultation model exactly
 ```
 
-**Scenario 10: User reviews advice text with word count information**
+**Scenario 10: User reviews advice text on summary**
 
 ```gherkin
 Given the summary displays advice sections
 When viewing advice text
 Then the advice is displayed in full
 And if advice exceeds one line, scrolling is available
-And character count or length indicator may be displayed
 And empty advice fields display as "Not provided" or similar placeholder
+And the advice text is read-only (no textarea field)
 ```
 
 **Scenario 11: User clicks Previous button to return to outcome page**
@@ -244,7 +246,7 @@ When the user clicks the "Previous" button
 Then the user is navigated back to the last outcome page:
   - Referral Outcome page (if referral pathway), OR
   - Advice Outcome page (if advice pathway), OR
-  - Supply page (if CAS pathway), OR
+  - CAS Supply page (if CAS pathway), OR
   - IPS outcome page (if IPS pathway)
 And all previously entered data remains in the consultation model
 And when the user navigates forward again to Summary
@@ -262,7 +264,7 @@ And no data is saved in consultation completion state
 And the user can re-enter the consultation later to resume or complete
 ```
 
-### User Interaction - Consultation Completion
+### Navigation & State Management
 
 **Scenario 13: User completes consultation by clicking Complete consultation button**
 
@@ -270,13 +272,15 @@ And the user can re-enter the consultation later to resume or complete
 Given the user is on the Review Consultation Summary page
 And all required consultation data is displayed
 When the user clicks the "Complete consultation" button
-Then the consultation is marked as "Complete" in the consultation model
+Then the form is submitted
+And the consultation is marked as "Complete" in the consultation model
 And all consultation data is finalized and locked (no further edits permitted)
 And the user is navigated to a post-completion page:
   - Patient overview page, OR
   - Consultation confirmation page, OR
   - (Destination TBD in workflow specification)
 And a success message or confirmation is displayed to the user
+And the completion timestamp is recorded
 ```
 
 **Scenario 14: Complete consultation validates all mandatory fields are present**
@@ -286,29 +290,30 @@ Given the user is on the Review Consultation Summary page
 When the user clicks "Complete consultation"
 And one or more mandatory consultation fields are empty or missing
 Then the completion request is rejected
-And an error summary is displayed at the top of the page
+And an error summary is displayed at the top of the page with role="alert" and aria-live="polite"
 And inline error messages indicate which fields are missing:
-  - For Referral: "Referral destination missing", "Timescale missing", "Referral information missing"
-  - For Advice: "Advice to patient missing" (if required)
-  - For CAS Supply: "No medications supplied", "Dosage missing for [medication]"
-And the user remains on the Summary page and must return to outcome page to correct
+  - For Referral: "Referral destination is missing", "Timescale is missing", "Referral information is required"
+  - For Advice: "Advice to patient is required" (if mandatory)
+  - For CAS Supply: "No medications were supplied", "Dosage is missing for [medication name]"
+And the user remains on the Summary page
 And the consultation is not marked as complete
+And no data is persisted
 ```
 
 **Scenario 15: Complete consultation for CAS Supply validates antibiotic backup supply selection**
 
 ```gherkin
-Given the summary displays a CAS Supply outcome with antibiotic
+Given the summary displays a CAS Supply outcome with antibiotic selected
 When the user clicks "Complete consultation"
 And the backup supply question has not been answered
 Then an error displays: "Backup supply status not provided for [antibiotic name]"
-And the error summary appears at top of page
+And the error summary appears at top of page with role="alert"
 And inline error highlights the antibiotics section
 And the user must return to Supply page to select backup supply option
-And consultation is not marked as complete
+And the consultation is not marked as complete
 ```
 
-### Data Validation & Integrity
+### Validation & Error Handling
 
 **Scenario 16: Summary data matches consultation model state exactly**
 
@@ -321,24 +326,24 @@ Then all displayed data matches exactly what was entered:
   - CAS Supply: medication names, quantities, dosages, antibiotic backup status, advice
 And no values are truncated, reformatted, or altered on display
 And special characters and line breaks in text are preserved
+And numeric values (quantities, dosages) display with correct precision
 ```
 
 **Scenario 17: Summary correctly displays conditional sections based on pathway**
 
 ```gherkin
-Given a Referral pathway consultation
+Given a consultation with Referral outcome
 When viewing the summary
 Then Referral sections are displayed
 And CAS Supply sections are NOT displayed
 And IPS sections are NOT displayed
 
-Given a CAS Supply pathway consultation for Non-STTT/UTI condition
+Given a CAS Supply consultation for Non-STTT/UTI condition
 When viewing the summary
 Then Formulary medications section is displayed
 And Antibiotics section is NOT displayed
-And Backup supply questions are NOT displayed
 
-Given a CAS Supply pathway consultation for STTT/UTI condition
+Given a CAS Supply consultation for STTT/UTI condition
 When viewing the summary
 Then Formulary medications section (if entries exist) is displayed
 And Antibiotics section is displayed with selected antibiotic and backup status
@@ -353,9 +358,8 @@ Then all data is current and retrieved from the patient record
 And if patient demographics have changed during consultation session
 Then the Summary displays the current values
 And data is read-only (no edit capability on Summary page)
+And no data is persisted
 ```
-
-### State Management & Persistence
 
 **Scenario 19: Consultation data is persisted before completion button click**
 
@@ -363,6 +367,7 @@ And data is read-only (no edit capability on Summary page)
 Given a user has entered all consultation data and reached the Summary page
 When viewing the Summary
 Then all data has been previously saved to the consultation model
+And all sections contain the most recent data entered
 And if user navigates away and closes browser or loses connection
 And later re-opens the same patient consultation
 Then all entered data is still present and recoverable
@@ -375,22 +380,22 @@ Given a user has successfully clicked "Complete consultation"
 And the consultation has been marked as complete
 When the consultation is retrieved later
 Then the consultation status shows: "Completed"
-And a completion timestamp is recorded
-And the consultation can be viewed in consultation history/audit
-But cannot be edited further (completion lock in place)
+And a completion timestamp is recorded in ISO 8601 format
+And the consultation can be viewed in consultation history/audit log
+And the consultation cannot be edited further (completion lock in place)
+And no data is persisted after completion
 ```
-
-### Error Handling
 
 **Scenario 21: API failure retrieving summary data**
 
 ```gherkin
 Given the Review Consultation Summary page is loading
 When the system attempts to retrieve consultation data from the API
-And the API call fails (500 error, timeout, network issue)
+And the API call fails (500 error, timeout, network connectivity issue)
 Then an error message is displayed: "Unable to load consultation summary. Please try again."
-And a Retry button or Previous button is provided
+And a Retry button or Previous button is provided to the user
 And the page does not allow completion until data is successfully loaded
+And the user can attempt to retry the data load
 ```
 
 **Scenario 22: Missing consultation data when summary page loads**
@@ -403,7 +408,7 @@ Then the Summary page loads but displays:
   - Validation errors appear when user attempts to complete
   - Clear messaging about which fields are incomplete
 And user is directed back to outcome pages to complete missing data
-And completion is prevented until all mandatory fields are populated
+And the Complete consultation button is disabled until all mandatory fields are populated
 ```
 
 **Scenario 23: Concurrent consultation edits (conflict resolution)**
@@ -413,10 +418,11 @@ Given a user is viewing the Review Consultation Summary page
 And another user or session edits the same consultation simultaneously
 When the local Summary becomes out-of-sync with server data
 Then one of the following occurs:
-  - Page displays refresh notification: "Consultation has been updated. Refresh to see latest data."
+  - Page displays refresh notification: "Consultation has been updated. Please refresh to see the latest data."
   - Automatic refresh retrieves updated data
   - User is prevented from completing until refresh occurs
 And data conflicts are resolved (e.g., last-write-wins or user prompted to reload)
+And no data is persisted during conflict resolution
 ```
 
 ### Accessibility
@@ -434,7 +440,7 @@ And each consultation outcome section is clearly delimited
 And buttons are announced with purpose: "Previous, button", "Complete consultation, button", "Cancel and exit, link"
 And the tab order is logical: Previous → Complete consultation → Cancel and exit
 And all interactive elements are focusable via Tab key
-And focus indicators are visible on all buttons and links
+And focus indicators are visible and meet 3:1 contrast ratio
 ```
 
 **Scenario 25: Read-only data fields are announced correctly to screen readers**
@@ -447,6 +453,7 @@ And data labels and values are clearly associated
 And text content is readable in continuous flow
 And tables (if used for medication summaries) are marked up with proper header rows and data associations
 And complex data structures (e.g., medication details) have clear labels
+And aria-labels or aria-describedby attributes are used where needed
 ```
 
 **Scenario 26: Error messages and validation alerts are announced to screen readers**
@@ -456,9 +463,10 @@ Given the user clicks "Complete consultation" and validation fails
 When error summary displays
 Then error messages are announced with role="alert" and aria-live="polite"
 And each error message is descriptive and actionable
-And focus is moved to error summary for announcement
+And focus is moved to error summary for immediate announcement
 And inline error messages near affected sections are marked up for screen readers
-And error links (if clickable) are properly announced as links
+And error links (if clickable to navigate to errors) are properly announced as links
+And no data is persisted when errors occur
 ```
 
 **Scenario 27: Page supports zoom and responsive layout**
@@ -468,9 +476,10 @@ Given the Review Consultation Summary page is displayed
 When user zooms to 200% magnification
 Then all content remains readable and navigable
 And horizontal scrolling is minimal (single column layout preferred)
-And buttons remain accessible and clickable
+And buttons remain accessible and clickable at 200% zoom
 And summary sections maintain clear visual hierarchy
 And no content is hidden or truncated unexpectedly
+And text is not forced to single word per line
 ```
 
 **Scenario 28: High contrast color scheme for readability**
@@ -482,8 +491,9 @@ Then all text has color contrast ratio of at least 4.5:1 against background
 And buttons are clearly distinguished by color, shape, or icon
 And error messages use color + icon + text (not color alone for meaning)
 And patient information sections have visual separation (borders, spacing, or background)
-And links are identifiable (underline or other indicator beyond color)
+And links are identifiable (underline or other indicator beyond color alone)
 And read-only fields have distinct visual appearance from input fields
+And focus indicators have sufficient contrast (3:1 minimum)
 ```
 
 ---
