@@ -79,7 +79,7 @@ For IPS consultations:
 
 ## Acceptance Criteria
 
-**Total Scenarios: 28**
+**Total Scenarios: 32**
 
 ### Page Structure & Content
 
@@ -313,9 +313,72 @@ And the user must return to Supply page to select backup supply option
 And the consultation is not marked as complete
 ```
 
+**Scenario 14: User reaches Summary page without Clinical Assessment Notes via IPS pathway**
+
+```gherkin
+Given the user is identified as an Independent Prescriber
+And the user has navigated to the Review Consultation Summary page via IPS pathway
+And the Clinical Assessment field has not been completed
+When the consultation summary is displayed
+Then the page shall render without validation errors
+And the consultation shall remain editable
+And the user shall be able to view all entered data in read-only format
+And no error message shall be displayed at this stage
+And the Complete consultation button shall be enabled
+And no data is persisted
+```
+
+**Scenario 15: User attempts to finalise consultation without Clinical Assessment Notes via IPS pathway**
+
+```gherkin
+Given the user is identified as an Independent Prescriber
+And the user is on the Review Consultation Summary page
+And the Clinical Assessment field has not been completed
+When the user clicks the "Complete consultation" button
+Then the completion request is rejected
+And a validation summary is displayed at the top of the page with role="alert" and aria-live="polite"
+And focus is moved to the validation summary
+And the validation summary contains the error message: "Enter notes on clinical assessment"
+And the error message is presented as a link to navigate to the Clinical Assessment section
+And the Clinical Assessment field is visually identified as containing an error using standard validation styling
+And the consultation is not marked as complete
+And no data is persisted
+```
+
+**Scenario 16: User completes Clinical Assessment Notes following Summary validation via IPS pathway**
+
+```gherkin
+Given the user is identified as an Independent Prescriber
+And validation has been triggered on the Summary page due to missing Clinical Assessment Notes
+And the error message "Enter notes on clinical assessment" is displayed
+When the user navigates back to the Clinical Assessment section
+And enters Clinical Assessment Notes
+And navigates forward again to the Review Consultation Summary page
+And clicks "Complete consultation"
+Then the validation error shall be removed
+And the consultation shall be allowed to be finalised
+And the consultation is marked as "Complete"
+And a completion timestamp is recorded
+And the user is navigated to the post-completion page
+```
+
+**Scenario 17: Independent Prescriber can print prescription before Clinical Assessment Notes are completed**
+
+```gherkin
+Given the user is identified as an Independent Prescriber
+And the consultation contains prescription data
+And the Clinical Assessment field has not been completed
+And validation has not been triggered
+When the user reaches a consultation stage where prescription generation and printing is available
+Then prescription generation and printing shall be permitted
+And the deferred Clinical Assessment validation shall not prevent prescription generation or printing
+And the user can print the prescription without completing Clinical Assessment Notes
+And no data is persisted until final consultation completion
+```
+
 ### Validation & Error Handling
 
-**Scenario 16: Summary data matches consultation model state exactly**
+**Scenario 18: Summary data matches consultation model state exactly**
 
 ```gherkin
 Given a consultation with multiple data entries has been completed
@@ -329,7 +392,7 @@ And special characters and line breaks in text are preserved
 And numeric values (quantities, dosages) display with correct precision
 ```
 
-**Scenario 17: Summary correctly displays conditional sections based on pathway**
+**Scenario 19: Summary correctly displays conditional sections based on pathway**
 
 ```gherkin
 Given a consultation with Referral outcome
@@ -349,7 +412,7 @@ Then Formulary medications section (if entries exist) is displayed
 And Antibiotics section is displayed with selected antibiotic and backup status
 ```
 
-**Scenario 18: Patient information is current and accurate**
+**Scenario 20: Patient information is current and accurate**
 
 ```gherkin
 Given the Review Consultation Summary page loads
@@ -361,7 +424,7 @@ And data is read-only (no edit capability on Summary page)
 And no data is persisted
 ```
 
-**Scenario 19: Consultation data is persisted before completion button click**
+**Scenario 21: Consultation data is persisted before completion button click**
 
 ```gherkin
 Given a user has entered all consultation data and reached the Summary page
@@ -373,7 +436,7 @@ And later re-opens the same patient consultation
 Then all entered data is still present and recoverable
 ```
 
-**Scenario 20: Completed consultation status is recorded with timestamp**
+**Scenario 22: Completed consultation status is recorded with timestamp**
 
 ```gherkin
 Given a user has successfully clicked "Complete consultation"
@@ -386,7 +449,7 @@ And the consultation cannot be edited further (completion lock in place)
 And no data is persisted after completion
 ```
 
-**Scenario 21: API failure retrieving summary data**
+**Scenario 23: API failure retrieving summary data**
 
 ```gherkin
 Given the Review Consultation Summary page is loading
@@ -398,7 +461,7 @@ And the page does not allow completion until data is successfully loaded
 And the user can attempt to retry the data load
 ```
 
-**Scenario 22: Missing consultation data when summary page loads**
+**Scenario 24: Missing consultation data when summary page loads**
 
 ```gherkin
 Given the Review Consultation Summary page is loading
@@ -411,7 +474,7 @@ And user is directed back to outcome pages to complete missing data
 And the Complete consultation button is disabled until all mandatory fields are populated
 ```
 
-**Scenario 23: Concurrent consultation edits (conflict resolution)**
+**Scenario 25: Concurrent consultation edits (conflict resolution)**
 
 ```gherkin
 Given a user is viewing the Review Consultation Summary page
@@ -427,7 +490,7 @@ And no data is persisted during conflict resolution
 
 ### Accessibility
 
-**Scenario 24: Summary page meets WCAG 2.1 AA accessibility compliance**
+**Scenario 26: Summary page meets WCAG 2.1 AA accessibility compliance**
 
 ```gherkin
 Given the Review Consultation Summary page is rendered
@@ -443,7 +506,7 @@ And all interactive elements are focusable via Tab key
 And focus indicators are visible and meet 3:1 contrast ratio
 ```
 
-**Scenario 25: Read-only data fields are announced correctly to screen readers**
+**Scenario 27: Read-only data fields are announced correctly to screen readers**
 
 ```gherkin
 Given summary data is displayed in read-only format
@@ -456,7 +519,7 @@ And complex data structures (e.g., medication details) have clear labels
 And aria-labels or aria-describedby attributes are used where needed
 ```
 
-**Scenario 26: Error messages and validation alerts are announced to screen readers**
+**Scenario 28: Error messages and validation alerts are announced to screen readers**
 
 ```gherkin
 Given the user clicks "Complete consultation" and validation fails
@@ -469,7 +532,7 @@ And error links (if clickable to navigate to errors) are properly announced as l
 And no data is persisted when errors occur
 ```
 
-**Scenario 27: Page supports zoom and responsive layout**
+**Scenario 29: Page supports zoom and responsive layout**
 
 ```gherkin
 Given the Review Consultation Summary page is displayed
@@ -482,7 +545,7 @@ And no content is hidden or truncated unexpectedly
 And text is not forced to single word per line
 ```
 
-**Scenario 28: High contrast color scheme for readability**
+**Scenario 30: High contrast color scheme for readability**
 
 ```gherkin
 Given the Review Consultation Summary page is rendered
