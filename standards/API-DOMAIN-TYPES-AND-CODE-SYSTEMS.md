@@ -78,6 +78,17 @@ Code system names map directly to domain enumeration names. The name is identica
 
 [ChoosePharmacy.Domain.Types](https://dev.azure.com/NHS-Wales-Digital/Choose%20Pharmacy%20NextGen/_git/ChoosePharmacy.Api?path=/src/ChoosePharmacy.Domain.Types)
 
+**Always check the Domain.Types repo before documenting a code system in a story.** Use the Azure DevOps MCP `search_code` tool to search by enum name or a known value within the `ChoosePharmacy.Api` repository. Then label the code system heading accordingly:
+
+- If the enum **already exists** in Domain.Types, add `(Existing)` to the heading and include the file path directly beneath it — e.g.:
+  ```
+  ### ConsultationUndertaken (Existing)
+  **File:** `/src/ChoosePharmacy.Domain.Types/Consultation/ConsultationUndertaken.cs`
+  ```
+- If the enum **does not exist** yet, add `(New — verify with dev team)` to the heading — e.g. `### ConsultationMethod (New — verify with dev team)`
+
+This makes it immediately clear to the implementer which enumerations need creating and which are already available.
+
 ---
 
 ## URI Pattern
@@ -157,7 +168,7 @@ Domain type records for enumeration values. Each inherits from `Lookup<string>` 
 
 | Code System | URI | Domain Enum |
 |---|---|---|
-| `ConsultationUndertaken` | `.../consultation-undertaken` | `Domain.Types.Consultation.ConsultationUndertaken` |
+| `ConsultationUndertaken` | `.../consultation-undertaken` | `Domain.Types.Consultation.ConsultationUndertaken` | `face-to-face-pharmacy`, `telephone`, `video`, `face-to-face-other-location` |
 | `ReferredBy` | `.../referred-by` | `Domain.Types.Consultation.ReferredBy` |
 | `IneligibilityReason` | `.../ineligibility-reason` | `Domain.Types.Consultation.IneligibilityReason` |
 | `EmergencySupplyReason` | `.../emergency-supply-reason` | `Domain.Types.Consultation.EmergencySupplyReason` |

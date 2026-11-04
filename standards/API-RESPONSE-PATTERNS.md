@@ -181,14 +181,18 @@ GET /api/v1/consultations/ccm/conditions?searchTerm=xyz
 After successfully creating or updating a resource, return:
 
 **201 Created (POST):**
+
+Return only the ID of the created resource. The field name is the resource name in camelCase suffixed with `Id`:
+
 ```json
 {
-  "id": "550e8400-e29b-41d4-a716-446655440000",
-  "resourceType": "Consultation",
-  "status": "recorded",
-  "createdDateTime": "2026-09-29T12:15:00Z"
+  "consultationId": "b2f8f6d4-0f7c-4359-aafd-3ae02f317470"
 }
 ```
+
+Further examples:
+- `{ "patientId": "..." }` — patient creation
+- `{ "referralId": "..." }` — referral creation
 
 **200 OK (PUT):**
 ```json
