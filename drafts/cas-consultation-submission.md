@@ -494,7 +494,7 @@ The request body shape varies across 4 independent dimensions for the CAS route.
 
 ## Acceptance Criteria
 
-**Total Scenarios: 105**
+**Total Scenarios: 58**
 
 > **Note:** Scenario 35 (serviceRoute "ip" — 501 Not Implemented) has been removed. The IP route is now covered by a separate story: `drafts/ip-consultation-submission.md`.
 
@@ -683,93 +683,87 @@ And the detail message is "Organisation with ODS code {pharmacyCode} not found"
 And no data is persisted
 ```
 
-#### Request Structure
+#### Required Fields
 
-**Scenario 17: consultationDetails object omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the consultationDetails object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'consultationDetails' must not be empty."
-And no data is persisted
-```
-
-**Scenario 18: symptomsAndHistory object omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the symptomsAndHistory object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'symptomsAndHistory' must not be empty."
-And no data is persisted
-```
-
-**Scenario 19: condition object omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the condition object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'condition' must not be empty."
-And no data is persisted
-```
-
-**Scenario 20: clinicalAssessment object omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the clinicalAssessment object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'clinicalAssessment' must not be empty."
-And no data is persisted
-```
-
-**Scenario 21: outcome object omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the outcome object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'outcome' must not be empty."
-And no data is persisted
-```
-
-**Scenario 22: outcome selection omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the outcome object present but the selection field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'selection' must not be empty."
-And no data is persisted
-```
-
-**Scenario 23: isSensitive omitted**
+**Scenario 17: Required top-level and consultation fields missing**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with the isSensitive field null or omitted
+When a consultation is submitted with <field> null or omitted
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "'isSensitive' must not be empty."
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| field                                  | errorMessage                                            |
+| consultationDetails                    | "'consultationDetails' must not be empty."              |
+| symptomsAndHistory                     | "'symptomsAndHistory' must not be empty."               |
+| condition                              | "'condition' must not be empty."                        |
+| clinicalAssessment                     | "'clinicalAssessment' must not be empty."               |
+| outcome                                | "'outcome' must not be empty."                          |
+| outcome.selection                      | "'selection' must not be empty."                        |
+| isSensitive                            | "'isSensitive' must not be empty."                      |
+| consultationDetails.consultationDateTime | "'consultationDateTime' must not be empty."            |
+| consultationDetails.pharmacyCode       | "'pharmacyCode' must not be empty."                     |
+| consultationDetails.gphcNumber         | "'gphcNumber' must not be empty."                       |
+| consultationDetails.consultationUndertaken | "'consultationUndertaken' must not be empty."        |
+| consultationDetails.referredBy         | "'referredBy' must not be empty."                       |
+| consultationDetails.serviceRoute       | "'serviceRoute' must not be empty."                     |
+| clinicalAssessment.template            | "'template' must not be empty."                         |
+```
+
+**Scenario 18: Sore-throat assessment required fields missing**
+```gherkin
+Given a valid patient exists with patientId {patientId}
+And the dispensing organisation is registered and active
+When a sore-throat consultation is submitted with <field> null or omitted
+Then the API returns status 400
+And the response type is "ValidationException"
+And the detail message is <errorMessage>
+And no data is persisted
+
+Examples:
+| field                                  | errorMessage                                            |
+| clinicalAssessment.soreThroat.scoringTool | "Scoring tool is required for a sore throat assessment" |
+| clinicalAssessment.soreThroat.score    | "Score is required for a sore throat assessment"        |
+```
+
+**Scenario 19: Supply medicine required fields missing**
+```gherkin
+Given a valid patient exists with patientId {patientId}
+And the dispensing organisation is registered and active
+When a consultation is submitted with a supply outcome and a medicinesSupplied entry where <field> is null or omitted
+Then the API returns status 400
+And the response type is "ValidationException"
+And the detail message is <errorMessage>
+And no data is persisted
+
+Examples:
+| field        | errorMessage                                                |
+| medicineName | "Medicine name is required for each medicine supplied"      |
+| drugId       | "Drug identifier is required for each medicine supplied"    |
+```
+
+**Scenario 20: Referral required fields missing**
+```gherkin
+Given a valid patient exists with patientId {patientId}
+And the dispensing organisation is registered and active
+When a consultation is submitted with a referral object where <field> is null or omitted
+Then the API returns status 400
+And the response type is "ValidationException"
+And the detail message is <errorMessage>
+And no data is persisted
+
+Examples:
+| field       | errorMessage                           |
+| referredTo  | "'referredTo' must not be empty."      |
+| timescale   | "'timescale' must not be empty."       |
 ```
 
 #### Consultation Details
 
-**Scenario 24: consultationDateTime omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with the consultationDateTime field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'consultationDateTime' must not be empty."
-And no data is persisted
-```
-
-**Scenario 25: consultationDateTime is in the future**
+**Scenario 21: consultationDateTime is in the future**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -780,7 +774,7 @@ And the detail message is "Consultation date cannot be in the future"
 And no data is persisted
 ```
 
-**Scenario 26: consultationDateTime is more than one year in the past**
+**Scenario 22: consultationDateTime is more than one year in the past**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -791,18 +785,7 @@ And the detail message is "Consultation date cannot be over a year in the past"
 And no data is persisted
 ```
 
-**Scenario 27: pharmacyCode omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with the pharmacyCode field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'pharmacyCode' must not be empty."
-And no data is persisted
-```
-
-**Scenario 28: pharmacyCode fails format validation**
+**Scenario 23: pharmacyCode fails format validation**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 When a consultation is submitted with a pharmacyCode that does not conform to the pharmacy account number format (7 characters, starting with "6", ending with a letter)
@@ -812,75 +795,25 @@ And the detail message is "Enter a valid pharmacy location number"
 And no data is persisted
 ```
 
-**Scenario 29: gphcNumber omitted**
+**Scenario 24: GPhC number fails format validation**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with the gphcNumber field null or omitted
+When a consultation is submitted with a gphcNumber that violates <rule>
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "'gphcNumber' must not be empty."
+And the detail message is <errorMessage>
 And no data is persisted
-```
 
-**Scenario 30: GPhC number is not exactly 7 digits long**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a gphcNumber that is not exactly 7 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "GPhC number must be exactly 7 digits long"
-And no data is persisted
-```
-
-**Scenario 31: GPhC number contains non-numeric characters**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a gphcNumber containing letters, spaces, or special characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Enter a valid GPhC number"
-And no data is persisted
-```
-
-**Scenario 32: consultationUndertaken omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with the consultationUndertaken field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'consultationUndertaken' must not be empty."
-And no data is persisted
-```
-
-**Scenario 33: referredBy omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with the referredBy field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'referredBy' must not be empty."
-And no data is persisted
-```
-
-**Scenario 34: serviceRoute omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with the serviceRoute field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'serviceRoute' must not be empty."
-And no data is persisted
+Examples:
+| rule                                          | errorMessage                                |
+| not exactly 7 characters                      | "GPhC number must be exactly 7 digits long" |
+| contains letters, spaces, or special characters | "Enter a valid GPhC number"               |
 ```
 
 #### Condition
 
-**Scenario 36: presentingSymptoms submitted as empty array**
+**Scenario 25: presentingSymptoms submitted as empty array**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -891,7 +824,7 @@ And the detail message is "At least one presenting symptom must be provided for 
 And no data is persisted
 ```
 
-**Scenario 37: conditionNotFound false submitted without condition concept**
+**Scenario 26: conditionNotFound false submitted without condition concept**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -902,7 +835,7 @@ And the detail message is "Condition concept is required when the condition has 
 And no data is persisted
 ```
 
-**Scenario 38: conditionNotFound true submitted with condition concept also provided**
+**Scenario 27: conditionNotFound true submitted with condition concept also provided**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -913,29 +846,23 @@ And the detail message is "Condition concept must not be provided when condition
 And no data is persisted
 ```
 
-**Scenario 39: Supply outcome rejected when condition not found**
+**Scenario 28: Disallowed outcome when condition not found**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with conditionNotFound "true" and outcome "supply"
+When a consultation is submitted with conditionNotFound "true" and outcome <outcome>
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "Outcome 'supply' is not permitted when condition is not found. Valid outcomes are: refer, advice-only"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| outcome         | errorMessage                                                                                              |
+| supply          | "Outcome 'supply' is not permitted when condition is not found. Valid outcomes are: refer, advice-only"   |
+| supply-and-refer | "Outcome 'supply-and-refer' is not permitted when condition is not found. Valid outcomes are: refer, advice-only" |
 ```
 
-**Scenario 40: Supply-and-refer outcome rejected when condition not found**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with conditionNotFound "true" and outcome "supply-and-refer"
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Outcome 'supply-and-refer' is not permitted when condition is not found. Valid outcomes are: refer, advice-only"
-And no data is persisted
-```
-
-**Scenario 41: conditionNotFound true submitted with a sore-throat or UTI template**
+**Scenario 29: conditionNotFound true submitted with a sore-throat or UTI template**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -946,7 +873,7 @@ And the detail message is "Clinical template must be 'general' when condition is
 And no data is persisted
 ```
 
-**Scenario 42: Clinical template does not match the submitted condition**
+**Scenario 30: Clinical template does not match the submitted condition**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -959,173 +886,91 @@ And no data is persisted
 
 #### Clinical Assessment — Structure
 
-**Scenario 43: clinicalAssessment template omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-When a consultation is submitted with the clinicalAssessment object present but the template field null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'template' must not be empty."
-And no data is persisted
-```
-
-**Scenario 44: sore-throat template submitted without soreThroat object**
+**Scenario 31: Template submitted without required sub-object**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with template "sore-throat" and the soreThroat object omitted
+When a consultation is submitted with template <template> and the corresponding sub-object omitted
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "Sore throat assessment is required when template is sore-throat"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| template    | errorMessage                                                      |
+| sore-throat | "Sore throat assessment is required when template is sore-throat" |
+| uti         | "UTI assessment is required when template is uti"                 |
+| general     | "General assessment is required when template is general"         |
 ```
 
-**Scenario 45: UTI template submitted without uti object**
+**Scenario 32: Template submitted with incorrect sub-object present**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with template "uti" and the uti object omitted
+When a consultation is submitted with template <template> and an incorrect sub-object also provided
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "UTI assessment is required when template is uti"
+And the detail message is <errorMessage>
 And no data is persisted
-```
 
-**Scenario 46: general template submitted without general object**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with template "general" and the general object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "General assessment is required when template is general"
-And no data is persisted
-```
-
-**Scenario 47: sore-throat template submitted with uti or general sub-object present**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with template "sore-throat" and a uti or general sub-object also provided
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Only the sore-throat assessment must be provided when template is sore-throat"
-And no data is persisted
-```
-
-**Scenario 48: uti template submitted with soreThroat or general sub-object present**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with template "uti" and a soreThroat or general sub-object also provided
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Only the UTI assessment must be provided when template is uti"
-And no data is persisted
-```
-
-**Scenario 49: general template submitted with soreThroat or uti sub-object present**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with template "general" and a soreThroat or uti sub-object also provided
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Only the general assessment must be provided when template is general"
-And no data is persisted
+Examples:
+| template    | errorMessage                                                                   |
+| sore-throat | "Only the sore-throat assessment must be provided when template is sore-throat" |
+| uti         | "Only the UTI assessment must be provided when template is uti"                |
+| general     | "Only the general assessment must be provided when template is general"        |
 ```
 
 #### Sore-Throat Assessment
 
-**Scenario 50: sore-throat consultation submitted without a scoringTool**
+**Scenario 33: Scoring tool answers required but missing**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with the soreThroat object present but scoringTool null or omitted
+When a sore-throat consultation is submitted with scoringTool <tool> and the corresponding answers null
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "Scoring tool is required for a sore throat assessment"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| tool     | errorMessage                                                   |
+| FeverPAIN | "FeverPAIN answers are required when scoring tool is FeverPAIN" |
+| Centor   | "Centor answers are required when scoring tool is Centor"      |
 ```
 
-**Scenario 51: sore-throat consultation submitted without a score**
+**Scenario 34: Scoring tool answers must not be provided**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with the score field null or omitted
+When a sore-throat consultation is submitted with scoringTool <tool> and the opposing answers object populated
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "Score is required for a sore throat assessment"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| tool     | errorMessage                                                        |
+| FeverPAIN | "Centor answers must not be provided when scoring tool is FeverPAIN" |
+| Centor   | "FeverPAIN answers must not be provided when scoring tool is Centor" |
 ```
 
-**Scenario 52: FeverPAIN scoring tool submitted without feverpainAnswers**
+**Scenario 35: Score outside valid range**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with scoringTool "FeverPAIN" and feverpainAnswers null
+When a sore-throat consultation is submitted with scoringTool <tool> and a score value outside the valid range
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "FeverPAIN answers are required when scoring tool is FeverPAIN"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| tool     | errorMessage                              |
+| FeverPAIN | "FeverPAIN score must be between 0 and 5" |
+| Centor   | "Centor score must be between 0 and 4"   |
 ```
 
-**Scenario 53: Centor scoring tool submitted without centorAnswers**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with scoringTool "Centor" and centorAnswers null
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Centor answers are required when scoring tool is Centor"
-And no data is persisted
-```
-
-**Scenario 54: FeverPAIN scoring tool submitted with centorAnswers populated**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with scoringTool "FeverPAIN" and centorAnswers populated (not null)
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Centor answers must not be provided when scoring tool is FeverPAIN"
-And no data is persisted
-```
-
-**Scenario 55: Centor scoring tool submitted with feverpainAnswers populated**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with scoringTool "Centor" and feverpainAnswers populated (not null)
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "FeverPAIN answers must not be provided when scoring tool is Centor"
-And no data is persisted
-```
-
-**Scenario 56: FeverPAIN score outside valid range**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore throat consultation is submitted with scoringTool "FeverPAIN" and a score value outside 0–5
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "FeverPAIN score must be between 0 and 5"
-And no data is persisted
-```
-
-**Scenario 57: Centor score outside valid range**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore throat consultation is submitted with scoringTool "Centor" and a score value outside 0–4
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Centor score must be between 0 and 4"
-And no data is persisted
-```
-
-**Scenario 58: Submitted score does not match the score computed from the answers**
+**Scenario 36: Submitted score does not match the score computed from the answers**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1138,7 +983,7 @@ And no data is persisted
 
 #### UTI Assessment
 
-**Scenario 59: dipTestRequired true submitted without dipTest object**
+**Scenario 37: dipTestRequired true submitted without dipTest object**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1149,7 +994,7 @@ And the detail message is "Dip test results are required when dipTestRequired is
 And no data is persisted
 ```
 
-**Scenario 60: dipTestRequired false submitted with dipTest object present**
+**Scenario 38: dipTestRequired false submitted with dipTest object present**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1160,7 +1005,9 @@ And the detail message is "Dip test results must not be provided when dipTestReq
 And no data is persisted
 ```
 
-**Scenario 61: Temperature out of valid range**
+#### Clinical Assessment — Temperature
+
+**Scenario 39: Temperature out of valid range**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1173,117 +1020,87 @@ And no data is persisted
 
 #### Test Kit
 
-**Scenario 62: pointOfCareTest submitted with patientConsent false but test data present**
+**Scenario 40: Test kit consent false but test data present**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with pointOfCareTest.patientConsent "false" and test data (name, batchNumber, testResult) also populated
+When a consultation is submitted with <testKit>.patientConsent "false" and test data also populated
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "Point of care test data must not be provided when patient consent has not been given"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| testKit          | errorMessage                                                                              |
+| pointOfCareTest  | "Point of care test data must not be provided when patient consent has not been given"    |
+| dipTest          | "Dip test result data must not be provided when patient consent has not been given"       |
 ```
 
-**Scenario 63: pointOfCareTest submitted with patientConsent true but test data omitted**
+**Scenario 41: Test kit consent true but test data omitted**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with a pointOfCareTest where patientConsent is "true" and test data (name, batchNumber, testResult) is omitted
+When a consultation is submitted with <testKit>.consent "true" and test data omitted
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "Point of care test data is required when patient consent has been given"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| testKit          | errorMessage                                                                      |
+| pointOfCareTest  | "Point of care test data is required when patient consent has been given"         |
+| dipTest          | "Dip test result data is required when patient consent has been given"            |
 ```
 
-**Scenario 64: pointOfCareTest submitted with patientConsent true but name null**
+**Scenario 42: Test kit name field required when consent given**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with a pointOfCareTest where patientConsent is "true" and name is null
+When a consultation is submitted with <testKit>.consent "true" and the kit name field <field> null
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "'name' must not be empty."
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| testKit          | field    | errorMessage                      |
+| pointOfCareTest  | name     | "'name' must not be empty."       |
+| dipTest          | testName | "'testName' must not be empty."   |
 ```
 
-**Scenario 65: pointOfCareTest resultGivenToPatient false submitted without reasonNotGiven**
+**Scenario 43: Test kit resultGivenToPatient false without reasonNotGiven**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore throat consultation is submitted with a pointOfCareTest where resultGivenToPatient is "false" and reasonNotGiven is omitted
+When a consultation is submitted with <testKit>.resultGivenToPatient "false" and reasonNotGiven omitted
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "'reasonNotGiven' is required when the point of care test result was not given to the patient"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| testKit          | errorMessage                                                                                              |
+| pointOfCareTest  | "'reasonNotGiven' is required when the point of care test result was not given to the patient"            |
+| dipTest          | "'reasonNotGiven' is required when the dip test result was not given to the patient"                      |
 ```
 
-**Scenario 66: pointOfCareTest resultGivenToPatient true submitted with reasonNotGiven populated**
+**Scenario 44: Test kit resultGivenToPatient true with reasonNotGiven populated**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with a pointOfCareTest where resultGivenToPatient is "true" and reasonNotGiven is also populated
+When a consultation is submitted with <testKit>.resultGivenToPatient "true" and reasonNotGiven also populated
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "'reasonNotGiven' must not be provided when the point of care test result was given to the patient"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| testKit          | errorMessage                                                                                                      |
+| pointOfCareTest  | "'reasonNotGiven' must not be provided when the point of care test result was given to the patient"               |
+| dipTest          | "'reasonNotGiven' must not be provided when the dip test result was given to the patient"                         |
 ```
 
-**Scenario 67: dipTest submitted with consent false but test result data present**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with dipTest.consent "false" and test result data (nitrates, leukocytes, redBloodCells) also populated
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Dip test result data must not be provided when patient consent has not been given"
-And no data is persisted
-```
-
-**Scenario 68: dipTest submitted with consent true but test result data omitted**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with a dipTest where consent is "true" and test result data (nitrates, leukocytes, redBloodCells) is omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Dip test result data is required when patient consent has been given"
-And no data is persisted
-```
-
-**Scenario 69: dipTest submitted with consent true but testName null**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with a dipTest where consent is "true" and testName is null
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'testName' must not be empty."
-And no data is persisted
-```
-
-**Scenario 70: dipTest resultGivenToPatient false submitted without reasonNotGiven**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with a dipTest where resultGivenToPatient is "false" and reasonNotGiven is omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'reasonNotGiven' is required when the dip test result was not given to the patient"
-And no data is persisted
-```
-
-**Scenario 71: dipTest resultGivenToPatient true submitted with reasonNotGiven populated**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with a dipTest where resultGivenToPatient is "true" and reasonNotGiven is also populated
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'reasonNotGiven' must not be provided when the dip test result was given to the patient"
-And no data is persisted
-```
-
-**Scenario 72: pointOfCareTest or dipTest expiryDate is not a valid partial date format**
+**Scenario 45: Test kit expiryDate is not a valid partial date format**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1294,7 +1111,7 @@ And the detail message is "Enter a valid expiry date"
 And no data is persisted
 ```
 
-**Scenario 73: pointOfCareTest or dipTest submitted with an expiryDate in the past**
+**Scenario 46: Test kit expiryDate in the past**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1307,18 +1124,23 @@ And no data is persisted
 
 #### Outcome & Supply
 
-**Scenario 74: supply outcome submitted without supply object**
+**Scenario 47: Supply object required when outcome is supply or supply-and-refer**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with outcome "supply" and the supply object omitted
+When a consultation is submitted with outcome <outcome> and the supply object omitted
 Then the API returns status 400
 And the response type is "ValidationException"
 And the detail message is "Supply details are required when outcome is supply or supply-and-refer"
 And no data is persisted
+
+Examples:
+| outcome         |
+| supply          |
+| supply-and-refer |
 ```
 
-**Scenario 75: supply outcome submitted without casSupply object**
+**Scenario 48: casSupply object omitted**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1329,40 +1151,23 @@ And the detail message is "CAS supply details are required when outcome is suppl
 And no data is persisted
 ```
 
-**Scenario 76: supply outcome submitted with empty medicinesSupplied array**
+**Scenario 49: medicinesSupplied empty when outcome is supply or supply-and-refer**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with outcome "supply" and medicinesSupplied as an empty array
+When a consultation is submitted with outcome <outcome> and medicinesSupplied as an empty array
 Then the API returns status 400
 And the response type is "ValidationException"
 And the detail message is "At least one medicine must be supplied when outcome is supply or supply-and-refer"
 And no data is persisted
+
+Examples:
+| outcome         |
+| supply          |
+| supply-and-refer |
 ```
 
-**Scenario 77: medicinesSupplied entry submitted without medicineName**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a supply outcome and a medicinesSupplied entry where medicineName is null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Medicine name is required for each medicine supplied"
-And no data is persisted
-```
-
-**Scenario 78: medicinesSupplied entry submitted without drugId**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a supply outcome and a medicinesSupplied entry where drugId is null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Drug identifier is required for each medicine supplied"
-And no data is persisted
-```
-
-**Scenario 79: Supply outcome submitted with quantitySupplied of zero or less**
+**Scenario 50: quantitySupplied of zero or less**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1373,73 +1178,39 @@ And the detail message is "'quantitySupplied' must be greater than '0'."
 And no data is persisted
 ```
 
-**Scenario 80: isBackupSupply is null when isAntibiotic is true**
+**Scenario 51: isBackupSupply rules based on isAntibiotic**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with a supply outcome and a medicinesSupplied entry where isAntibiotic is "true" and isBackupSupply is null
+When a consultation is submitted with a supply outcome and a medicinesSupplied entry where isAntibiotic is <isAntibiotic> and isBackupSupply is <isBackupSupply>
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "'isBackupSupply' must not be null when the medicine is an antibiotic"
+And the detail message is <errorMessage>
 And no data is persisted
+
+Examples:
+| isAntibiotic | isBackupSupply | errorMessage                                                             |
+| true         | null           | "'isBackupSupply' must not be null when the medicine is an antibiotic"   |
+| false        | not null       | "'isBackupSupply' must be null when the medicine is not an antibiotic"   |
 ```
 
-**Scenario 81: isBackupSupply populated when isAntibiotic is false**
+**Scenario 52: Referral object required when outcome is refer or supply-and-refer**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with a supply outcome and a medicinesSupplied entry where isAntibiotic is "false" and isBackupSupply is not null
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'isBackupSupply' must be null when the medicine is not an antibiotic"
-And no data is persisted
-```
-
-**Scenario 82: supply-and-refer outcome submitted without supply object**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome "supply-and-refer" and the supply object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Supply details are required when outcome is supply or supply-and-refer"
-And no data is persisted
-```
-
-**Scenario 83: supply-and-refer outcome submitted with empty medicinesSupplied array**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome "supply-and-refer" and medicinesSupplied as an empty array
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "At least one medicine must be supplied when outcome is supply or supply-and-refer"
-And no data is persisted
-```
-
-**Scenario 84: refer outcome submitted without referral object**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome "refer" and the referral object omitted
+When a consultation is submitted with outcome <outcome> and the referral object omitted
 Then the API returns status 400
 And the response type is "ValidationException"
 And the detail message is "Referral details are required when outcome is refer or supply-and-refer"
 And no data is persisted
+
+Examples:
+| outcome         |
+| refer           |
+| supply-and-refer |
 ```
 
-**Scenario 85: supply-and-refer outcome submitted without referral object**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome "supply-and-refer" and the referral object omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "Referral details are required when outcome is refer or supply-and-refer"
-And no data is persisted
-```
-
-**Scenario 86: advice-only outcome submitted without advice object**
+**Scenario 53: advice-only outcome submitted without advice object**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1450,7 +1221,7 @@ And the detail message is "Advice details are required when outcome is advice-on
 And no data is persisted
 ```
 
-**Scenario 87: supply outcome submitted with referral object present**
+**Scenario 54: supply outcome submitted with referral object present**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1461,7 +1232,7 @@ And the detail message is "Referral details must not be provided when outcome is
 And no data is persisted
 ```
 
-**Scenario 88: refer outcome submitted with supply object present**
+**Scenario 55: refer outcome submitted with supply object present**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1472,7 +1243,7 @@ And the detail message is "Supply details must not be provided when outcome is r
 And no data is persisted
 ```
 
-**Scenario 89: advice-only outcome submitted with supply or referral object present**
+**Scenario 56: advice-only outcome submitted with supply or referral object present**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1483,189 +1254,39 @@ And the detail message is "Supply and referral details must not be provided when
 And no data is persisted
 ```
 
-#### Referral
-
-**Scenario 90: referral submitted without referredTo**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a referral object where the referredTo field is null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'referredTo' must not be empty."
-And no data is persisted
-```
-
-**Scenario 91: referral submitted without timescale**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a referral object where the timescale field is null or omitted
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "'timescale' must not be empty."
-And no data is persisted
-```
-
 #### String Length
 
 The error message format for all string length violations is: `"The length of '{field}' must be {n} characters or fewer. You entered {actual} characters."`
 
-**Scenario 92: referral information exceeds 2000 character limit**
+**Scenario 57: String field exceeds maximum character limit**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
-When a consultation is submitted with outcome.referral.information containing 2001 characters
+When a consultation is submitted with <field> containing <limit + 1> characters
 Then the API returns status 400
 And the response type is "ValidationException"
-And the detail message is "The length of 'information' must be 2000 characters or fewer. You entered 2001 characters."
+And the detail message is "The length of '<fieldName>' must be <limit> characters or fewer. You entered <limit + 1> characters."
 And no data is persisted
+
+Examples:
+| field                                                     | fieldName               | limit |
+| outcome.referral.information                              | information             | 2000  |
+| medicinesSupplied[].dosage                                | dosage                  | 500   |
+| symptomsAndHistory.medicalHistory                         | medicalHistory          | 2000  |
+| clinicalAssessment.soreThroat.assessmentNotes             | assessmentNotes         | 2000  |
+| clinicalAssessment.uti.clinicalAssessment.clinicalNotes   | clinicalNotes           | 2000  |
+| clinicalAssessment.general.clinicalAssessmentNotes        | clinicalAssessmentNotes | 2000  |
+| clinicalAssessment.general.examinationNotes               | examinationNotes        | 2000  |
+| clinicalAssessment.soreThroat.pointOfCareTest.notes       | notes                   | 500   |
+| clinicalAssessment.uti.dipTest.notes                      | notes                   | 500   |
+| pointOfCareTest.reasonNotGiven                            | reasonNotGiven          | 500   |
+| dipTest.reasonNotGiven                                    | reasonNotGiven          | 500   |
+| outcome.supply.adviceToPatient                            | adviceToPatient         | 2000  |
+| outcome.referral.adviceToPatient                          | adviceToPatient         | 2000  |
+| outcome.advice.adviceToPatient                            | adviceToPatient         | 2000  |
 ```
 
-**Scenario 93: dosage exceeds 500 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with a medicinesSupplied entry where dosage contains 501 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'dosage' must be 500 characters or fewer. You entered 501 characters."
-And no data is persisted
-```
-
-**Scenario 94: medicalHistory exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with symptomsAndHistory.medicalHistory containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'medicalHistory' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 95: soreThroat assessmentNotes exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with clinicalAssessment.soreThroat.assessmentNotes containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'assessmentNotes' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 96: UTI clinicalNotes exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with clinicalAssessment.uti.clinicalAssessment.clinicalNotes containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'clinicalNotes' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 97: general clinicalAssessmentNotes exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a general consultation is submitted with clinicalAssessment.general.clinicalAssessmentNotes containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'clinicalAssessmentNotes' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 98: general examinationNotes exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a general consultation is submitted with clinicalAssessment.general.examinationNotes containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'examinationNotes' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 99: pointOfCareTest notes exceeds 500 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with clinicalAssessment.soreThroat.pointOfCareTest.notes containing 501 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'notes' must be 500 characters or fewer. You entered 501 characters."
-And no data is persisted
-```
-
-**Scenario 100: dipTest notes exceeds 500 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with clinicalAssessment.uti.dipTest.notes containing 501 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'notes' must be 500 characters or fewer. You entered 501 characters."
-And no data is persisted
-```
-
-**Scenario 101: pointOfCareTest reasonNotGiven exceeds 500 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a sore-throat consultation is submitted with pointOfCareTest.reasonNotGiven containing 501 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'reasonNotGiven' must be 500 characters or fewer. You entered 501 characters."
-And no data is persisted
-```
-
-**Scenario 102: dipTest reasonNotGiven exceeds 500 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a UTI consultation is submitted with dipTest.reasonNotGiven containing 501 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'reasonNotGiven' must be 500 characters or fewer. You entered 501 characters."
-And no data is persisted
-```
-
-**Scenario 103: supply adviceToPatient exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome.supply.adviceToPatient containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'adviceToPatient' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 104: referral adviceToPatient exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome.referral.adviceToPatient containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'adviceToPatient' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 105: advice-only adviceToPatient exceeds 2000 character limit**
-```gherkin
-Given a valid patient exists with patientId {patientId}
-And the dispensing organisation is registered and active
-When a consultation is submitted with outcome.advice.adviceToPatient containing 2001 characters
-Then the API returns status 400
-And the response type is "ValidationException"
-And the detail message is "The length of 'adviceToPatient' must be 2000 characters or fewer. You entered 2001 characters."
-And no data is persisted
-```
-
-**Scenario 106: ipSupply block submitted on CAS route**
+**Scenario 58: ipSupply block submitted on CAS route**
 ```gherkin
 Given a valid patient exists with patientId {patientId}
 And the dispensing organisation is registered and active
@@ -1675,3 +1296,4 @@ And the response type is "ValidationException"
 And the detail message is "'ipSupply' must not be provided on the CAS service route"
 And no data is persisted
 ```
+
