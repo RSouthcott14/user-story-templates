@@ -148,10 +148,10 @@ Replace `clinicalAssessment` with the appropriate block for the template in use.
 **Centor scoring (path 2)**
 ```json
 "clinicalAssessment": {
-  "template": "sore-throat",
+  "template": "sore-throat",          // ClinicalTemplate
   "soreThroat": {
-    "scoringTool": "Centor",
-    "score": 3,
+    "scoringTool": "Centor",          // ScoringTool — FeverPAIN | Centor
+    "score": 3,                       // integer — computed by scoring endpoint
     "feverpainAnswers": null,
     "centorAnswers": {
       "exudateOrSwellingOnTonsils": true,
@@ -168,7 +168,7 @@ Replace `clinicalAssessment` with the appropriate block for the template in use.
 **UTI with dip test (path 3)**
 ```json
 "clinicalAssessment": {
-  "template": "uti",
+  "template": "uti",                  // ClinicalTemplate
   "uti": {
     "diagnosis": {
       "dysuria": true,
@@ -203,7 +203,7 @@ Replace `clinicalAssessment` with the appropriate block for the template in use.
 **UTI without dip test (path 4)** — `dipTestRequired: false`, `dipTest` omitted
 ```json
 "clinicalAssessment": {
-  "template": "uti",
+  "template": "uti",                  // ClinicalTemplate
   "uti": {
     "diagnosis": { },                   // same shape as above
     "clinicalAssessment": {
@@ -222,7 +222,7 @@ Replace `clinicalAssessment` with the appropriate block for the template in use.
 **General (path 5)**
 ```json
 "clinicalAssessment": {
-  "template": "general",
+  "template": "general",              // ClinicalTemplate
   "general": {
     "clinicalAssessmentNotes": "string",
     "examinationNotes": "string"
@@ -239,7 +239,7 @@ Replace `outcome` with the appropriate block for the selected outcome.
 **supply-and-refer**
 ```json
 "outcome": {
-  "selection": "supply-and-refer",
+  "selection": "supply-and-refer",    // ConsultationOutcome
   "supply": { },                        // same shape as baseline
   "referral": {
     "referredTo": "gp",                 // ReferralDestination
@@ -253,10 +253,10 @@ Replace `outcome` with the appropriate block for the selected outcome.
 **refer**
 ```json
 "outcome": {
-  "selection": "refer",
+  "selection": "refer",               // ConsultationOutcome
   "referral": {
-    "referredTo": "gp",
-    "timescale": "within-24-hours",
+    "referredTo": "gp",               // ReferralDestination
+    "timescale": "within-24-hours",   // ReferralTimescale
     "information": "string",
     "adviceToPatient": "string"
   }
@@ -266,7 +266,7 @@ Replace `outcome` with the appropriate block for the selected outcome.
 **advice-only**
 ```json
 "outcome": {
-  "selection": "advice-only",
+  "selection": "advice-only",         // ConsultationOutcome
   "advice": {
     "adviceToPatient": "string"
   }
@@ -285,10 +285,10 @@ Replace `condition` and `outcome` with:
 },
 
 "outcome": {
-  "selection": "refer",                 // refer | advice-only only
+  "selection": "refer",                 // ConsultationOutcome — refer | advice-only only
   "referral": {
-    "referredTo": "gp",
-    "timescale": "within-24-hours",
+    "referredTo": "gp",                 // ReferralDestination
+    "timescale": "within-24-hours",     // ReferralTimescale
     "information": "string",
     "adviceToPatient": "string"
   }
