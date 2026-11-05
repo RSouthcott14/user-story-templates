@@ -160,18 +160,48 @@ Then the page displays:
 And all data is displayed in read-only format
 ```
 
-**Scenario 5: Review Consultation Summary page displays for IPS pathway (placeholder structure)**
+**Scenario 5: Review Consultation Summary page displays for IPS pathway**
 
 ```gherkin
-Given an IPS consultation with service-specific data has been completed
+Given an IPS consultation has been completed
 When the user navigates to the Review Consultation Summary page
 Then the page displays:
-  - High level caption for IPS pathway
+  - High level caption: "Clinical Conditions Management"
   - Page heading: "Consultation summary"
-  - Patient information section (read-only)
-  - Service-specific details section (structure to be defined by IPS story)
-  - Previous, Complete consultation, and Cancel and exit buttons
-And all data is displayed in read-only format
+  - Patient information section (read-only): Name, NHS number, Date of birth, Gender, Adverse reactions
+  - Consultation details section with:
+    * GPhC number
+    * Date and time of consultation
+    * Consultation undertaken as: "Face to face consultation at pharmacy"
+    * Referred by: [source]
+  - Symptoms and history section with:
+    * Presenting symptoms: [entered symptoms]
+    * Relevant medical, social and/or family history: [entered details or empty if optional]
+  - Service and template section with:
+    * Service: "Independent Prescribers Service (IPS)"
+    * Template: [selected template name]
+  - General clinical assessment section with:
+    * Clinical assessment notes: [entered notes or "Not provided"]
+    * Examination notes: [entered notes or "Not provided"]
+  - Confirm working diagnosis section with:
+    * Working diagnosis selected: [diagnosis name]
+    * Service specification: [specification details]
+  - Consultation outcome section displaying: "Supply & Refer"
+  - Medication(s) section with:
+    * Read-only table: Medicine, Pack size, Quantity supplied, Dosage
+    * Print prescription button (enabled)
+    * Advice given to patient: [entered advice or "No advice recorded"]
+  - Referral information section with:
+    * Referred to: [destination]
+    * Timescale for referral: [timescale]
+    * Notes: [referral notes]
+  - Sensitive information section: Yes/No
+  - Send consultation summary section: Yes/No
+  - Previous button (Secondary, left aligned)
+  - Complete consultation button (Primary, right aligned)
+  - Cancel and exit link (Action link)
+And all data is displayed in read-only format (no edit controls on this page)
+And the form layout uses maximum section width with equal margins
 ```
 
 ### Default State
@@ -318,13 +348,18 @@ And the consultation is not marked as complete
 ```gherkin
 Given the user is identified as an Independent Prescriber
 And the user has navigated to the Review Consultation Summary page via IPS pathway
-And the Clinical Assessment field has not been completed
+And the General clinical assessment section is displayed
+And the Clinical assessment notes field has not been completed
+And the Examination notes field has not been completed
 When the consultation summary is displayed
 Then the page shall render without validation errors
+And the Clinical assessment notes field shall display: "Not provided"
+And the Examination notes field shall display: "Not provided"
 And the consultation shall remain editable
 And the user shall be able to view all entered data in read-only format
 And no error message shall be displayed at this stage
 And the Complete consultation button shall be enabled
+And the user can print the prescription from the Medication(s) section without completing Clinical Assessment Notes
 And no data is persisted
 ```
 
@@ -333,14 +368,15 @@ And no data is persisted
 ```gherkin
 Given the user is identified as an Independent Prescriber
 And the user is on the Review Consultation Summary page
-And the Clinical Assessment field has not been completed
+And the General clinical assessment section is displayed
+And both Clinical assessment notes and Examination notes fields are empty or show "Not provided"
 When the user clicks the "Complete consultation" button
 Then the completion request is rejected
 And a validation summary is displayed at the top of the page with role="alert" and aria-live="polite"
 And focus is moved to the validation summary
-And the validation summary contains the error message: "Enter notes on clinical assessment"
-And the error message is presented as a link to navigate to the Clinical Assessment section
-And the Clinical Assessment field is visually identified as containing an error using standard validation styling
+And the validation summary contains the error message: "Enter clinical assessment notes"
+And the error message is presented as a link to navigate to the General clinical assessment section
+And the General clinical assessment section is visually identified as containing an error using standard validation styling
 And the consultation is not marked as complete
 And no data is persisted
 ```
@@ -350,9 +386,10 @@ And no data is persisted
 ```gherkin
 Given the user is identified as an Independent Prescriber
 And validation has been triggered on the Summary page due to missing Clinical Assessment Notes
-And the error message "Enter notes on clinical assessment" is displayed
-When the user navigates back to the Clinical Assessment section
-And enters Clinical Assessment Notes
+And the error message "Enter clinical assessment notes" is displayed
+And the error links to the General clinical assessment section
+When the user navigates back to the General clinical assessment section
+And enters Clinical assessment notes (and optionally Examination notes)
 And navigates forward again to the Review Consultation Summary page
 And clicks "Complete consultation"
 Then the validation error shall be removed
@@ -366,13 +403,17 @@ And the user is navigated to the post-completion page
 
 ```gherkin
 Given the user is identified as an Independent Prescriber
-And the consultation contains prescription data
-And the Clinical Assessment field has not been completed
-And validation has not been triggered
-When the user reaches a consultation stage where prescription generation and printing is available
+And the consultation contains medication data in the Medication(s) section
+And the General clinical assessment section shows Clinical assessment notes as "Not provided"
+And the Examination notes field is empty or "Not provided"
+And validation has not been triggered (user has not attempted finalization)
+When the user is viewing the Review Consultation Summary page
+And the Print prescription button is displayed in the Medication(s) section
+And the user clicks the "Print prescription" button
 Then prescription generation and printing shall be permitted
 And the deferred Clinical Assessment validation shall not prevent prescription generation or printing
 And the user can print the prescription without completing Clinical Assessment Notes
+And the user can then navigate back using the Previous button to complete Clinical Assessment Notes before finalizing
 And no data is persisted until final consultation completion
 ```
 
