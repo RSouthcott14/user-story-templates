@@ -79,7 +79,7 @@ For IPS consultations:
 
 ## Acceptance Criteria
 
-**Total Scenarios: 32**
+**Total Scenarios: 35**
 
 ### Page Structure & Content
 
@@ -372,11 +372,15 @@ And the General clinical assessment section is displayed
 And both Clinical assessment notes and Examination notes fields are empty or show "Not provided"
 When the user clicks the "Complete consultation" button
 Then the completion request is rejected
-And a validation summary is displayed at the top of the page with role="alert" and aria-live="polite"
-And focus is moved to the validation summary
-And the validation summary contains the error message: "Enter clinical assessment notes"
+And a validation summary is displayed at the top of the page
+And the validation summary displays:
+  - "There is a problem" as the summary heading
+  - Error message in red: "Enter 'Clinical assessment notes'"
+And focus is moved to the validation summary with role="alert" and aria-live="polite"
 And the error message is presented as a link to navigate to the General clinical assessment section
-And the General clinical assessment section is visually identified as containing an error using standard validation styling
+And the General clinical assessment section is visually identified with a red left border
+And the Clinical assessment notes and Examination notes fields display inline warning messages:
+  - "You may print a prescription before completing the 'General clinical assessment'. But you must add clinical assessment notes before selecting 'Complete consultation'"
 And the consultation is not marked as complete
 And no data is persisted
 ```
@@ -386,13 +390,15 @@ And no data is persisted
 ```gherkin
 Given the user is identified as an Independent Prescriber
 And validation has been triggered on the Summary page due to missing Clinical Assessment Notes
-And the error message "Enter clinical assessment notes" is displayed
-And the error links to the General clinical assessment section
-When the user navigates back to the General clinical assessment section
-And enters Clinical assessment notes (and optionally Examination notes)
+And the error summary displays "There is a problem" with the message "Enter 'Clinical assessment notes'"
+And the error message links to the General clinical assessment section
+When the user clicks the error link or navigates back using Previous button
+And enters Clinical assessment notes in the Clinical assessment notes field
 And navigates forward again to the Review Consultation Summary page
 And clicks "Complete consultation"
-Then the validation error shall be removed
+Then the validation error summary is removed
+And the red left border on the General clinical assessment section is removed
+And the inline warning messages are cleared
 And the consultation shall be allowed to be finalised
 And the consultation is marked as "Complete"
 And a completion timestamp is recorded
@@ -404,8 +410,8 @@ And the user is navigated to the post-completion page
 ```gherkin
 Given the user is identified as an Independent Prescriber
 And the consultation contains medication data in the Medication(s) section
-And the General clinical assessment section shows Clinical assessment notes as "Not provided"
-And the Examination notes field is empty or "Not provided"
+And the General clinical assessment section shows Clinical assessment notes as "No notes recorded"
+And the Examination notes field shows "No notes recorded"
 And validation has not been triggered (user has not attempted finalization)
 When the user is viewing the Review Consultation Summary page
 And the Print prescription button is displayed in the Medication(s) section
@@ -413,8 +419,29 @@ And the user clicks the "Print prescription" button
 Then prescription generation and printing shall be permitted
 And the deferred Clinical Assessment validation shall not prevent prescription generation or printing
 And the user can print the prescription without completing Clinical Assessment Notes
-And the user can then navigate back using the Previous button to complete Clinical Assessment Notes before finalizing
+And the inline information message in the General clinical assessment section reminds:
+  - "You may print a prescription before completing the 'General clinical assessment'. But you must add clinical assessment notes before selecting 'Complete consultation'"
+And the user can then navigate back using Previous button to complete Clinical Assessment Notes before finalizing
 And no data is persisted until final consultation completion
+```
+
+**Scenario 18: Inline warning message guides Independent Prescriber on Clinical Assessment deferral**
+
+```gherkin
+Given the user is identified as an Independent Prescriber
+And the user is on the Review Consultation Summary page
+And the General clinical assessment section is displayed
+And both Clinical assessment notes and Examination notes fields show "No notes recorded" or are empty
+When the user views the General clinical assessment section
+Then an inline information message is displayed with a left border indicator:
+  - "You may print a prescription before completing the 'General clinical assessment'. But you must add clinical assessment notes before selecting 'Complete consultation'"
+And the message is visible and readable
+And the message appears above or adjacent to the Clinical assessment notes field
+And when the user clicks the Print prescription button
+Then the message confirms that prescription printing is permitted despite incomplete Clinical Assessment
+And when the user attempts to click Complete consultation
+Then the message context is linked to the validation error that appears
+And the message provides clear guidance on the deferral workflow
 ```
 
 ### Validation & Error Handling
