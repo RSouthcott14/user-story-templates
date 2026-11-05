@@ -1,4 +1,4 @@
-# UI: CCM - Review Consultation Summary and Complete Consultation (CAS & IPS)
+# UI: Review Consultation Summary – Complete Consultation (Generic)
 
 **Story Type:** UI  
 **Tags:** AI Generated, Review (BR)
@@ -10,40 +10,42 @@
 ### Story Card
 
 **As a** pharmacy user  
-**I want** to review all consultation details and mark the consultation as complete  
-**So that** I can verify the entire consultation pathway was completed correctly and close the consultation session
+**I want** to review all consultation details before completing the consultation  
+**So that** I can verify all data is correct and mark the consultation as complete
 
 ### Context
 
-This story defines the final step in Clinical Conditions Management (CCM) consultations for both Common Ailments Service (CAS) and Independent Pharmacy Services (IPS) pathways. After users complete outcome-specific pages (Referral, Advice, or Supply), they arrive at a Review Consultation Summary page to:
+This story defines the **Review Consultation Summary** page—the final verification step before consultation completion. It displays a read-only summary of all consultation data collected across the entire workflow, supporting multiple consultation types:
 
-1. **View a complete summary** of all consultation data entered
-2. **Verify all required information** was captured
-3. **Mark the consultation as complete** by clicking a button
-4. **Return to patient overview** or consultation history
+**Supported Consultation Types:**
+1. **CCM with Clinical Scoring Tools** – Sore Throat consultations using:
+   - Centor scoring (Exudate/swelling on tonsils, Tender/swollen anterior cervical lymph nodes, Temp >38°C, Cough: Yes/No)
+   - FeverPAIN scoring (Cough or sore throat, Fever last 24 hours, Onset <3 days, No runny nose, Inflamed tonsils)
+2. **CCM No-Template Consultations** – Dry Eye, Dry Eyes Disease, and similar conditions without predefined scoring
+3. **CAS Consultations** – Common Ailments Service with Supply & Refer outcomes
 
-The summary page displays:
-- Journey context and patient information
-- Conditional sections based on pathway and outcome type:
-  - **CCM Referral pathway:** Referral details (destination, timescale, information, advice)
-  - **CCM Advice pathway:** Advice details only
-  - **CAS Supply pathway:** Medications supplied (formulary + antibiotics if applicable), dosages, backup supply status, advice
-  - **IPS pathway:** Service-specific details (to be defined by IPS story)
-- Action buttons: Previous (to review/edit), Complete consultation, Cancel and exit
+### Key Features
 
-### CAS Supply Pathway Context
+All consultation types display:
+- **Consultation details** – GPhC number, date/time, consultation type, referred by
+- **Symptoms and history** – Presenting symptoms, relevant medical/family history
+- **Service, condition and tool** – Service type, condition name, scoring tool used (if applicable)
+- **Clinical scoring assessment** – Tool-specific criteria and calculated scores (varies by tool: Centor, FeverPAIN, or None)
+- **Point of Care test** – Test type, batch, expiry, result, if applicable
+- **Consultation outcome** – Selected outcome (Referral, Advice, Supply & Refer, etc.)
+- **Medications** – Formulary medicines, antibiotic selections, dosages, quantity, advice
+- **Referral information** – Destination, timescale, notes (if outcome includes referral)
+- **Sensitive information** – Whether consultation contains sensitive health data
+- **Send consultation summary** – Email to GP preference
+- **Action buttons:** Previous (to edit), Complete consultation, Cancel and exit
 
-For CAS consultations with Supply outcome:
-- Review all formulary medications with quantities and dosages
-- Review antibiotic selection (if STTT/UTI condition) with backup supply status
-- Display advice given to patient
-- Validate that all entered data matches consultation model
+### Design Coverage
 
-### IPS Pathway Context
-
-For IPS consultations:
-- Display service-specific information captured during consultation
-- (Details to be aligned with IPS workflow and story requirements)
+The page structure remains consistent across all consultation types. Conditional sections display based on:
+- **Consultation pathway** (CCM vs. CAS)
+- **Outcome type** (Referral, Advice, Supply & Refer, etc.)
+- **Scoring tool used** (Centor, FeverPAIN, None—each with different field sets)
+- **Services captured** (Medications, Point of Care test, Referral, etc.)
 
 ### Related Stories
 
@@ -57,8 +59,8 @@ For IPS consultations:
 
 ### Dependent Stories
 
-- **IPS service detail pages:** Stories that capture IPS pathway data must complete before this story
-- **Consultation model/state management:** Backend API contract for storing and retrieving complete consultation summaries
+- All outcome recording stories must complete before Review Consultation Summary is displayed
+- Consultation model/state management backend API
 
 ---
 
@@ -79,146 +81,120 @@ For IPS consultations:
 
 ## Acceptance Criteria
 
-**Total Scenarios: 35**
+**Total Scenarios: 32**
 
 ### Page Structure & Content
 
-**Scenario 1: Review Consultation Summary page displays for CCM Referral pathway**
+**Scenario 1: Review Consultation Summary page displays all consultation types and scoring tools**
 
 ```gherkin
-Given a consultation with "Refer patient" outcome has been completed
-And all referral data has been saved (destination, timescale, information, advice)
+Given a consultation has been completed (CCM or CAS pathway)
 When the user navigates to the Review Consultation Summary page
-Then the page displays:
-  - High level caption: "Clinical Conditions Management"
+Then the page displays consistently across all consultation types:
+  - High level caption: "Clinical Conditions Management" (or service name)
   - Page heading: "Consultation summary"
-  - Patient information section (read-only): Name, NHS number, Date of birth, Age, Adverse reactions
-  - Consultation outcome section displaying: "Outcome: Refer patient"
-  - Referral details section with:
-    * Referred to: [selected destination]
-    * Timescale for referral: [selected timescale]
-    * Referral information: [entered text]
-    * Advice to patient: [entered text or "Not provided"]
-  - Secondary button labeled "Previous"
-  - Primary button labeled "Complete consultation"
-  - Action link labeled "Cancel and exit"
-And all data is displayed in read-only format (no edit controls on this page)
-And the form layout uses maximum section width with equal margins
-```
-
-**Scenario 2: Review Consultation Summary page displays for CCM Advice pathway**
-
-```gherkin
-Given a consultation with "Advice only" outcome has been completed
-And advice text has been saved
-When the user navigates to the Review Consultation Summary page
-Then the page displays:
-  - High level caption: "Clinical Conditions Management"
-  - Page heading: "Consultation summary"
-  - Patient information section (read-only)
-  - Consultation outcome section displaying: "Outcome: Advice"
-  - Advice details section with:
-    * Advice given to patient: [entered text or "Not provided"]
-  - Previous, Complete consultation, and Cancel and exit buttons
-And all data is displayed in read-only format
-```
-
-**Scenario 3: Review Consultation Summary page displays for CAS Supply pathway (Formulary only, Non-STTT/UTI)**
-
-```gherkin
-Given a CAS consultation for a Non-STTT/UTI condition with Supply outcome
-And formulary medications have been entered (quantities and dosages)
-When the user navigates to the Review Consultation Summary page
-Then the page displays:
-  - High level caption: "Clinical Conditions Management" and "Common Ailments Service"
-  - Page heading: "Consultation summary"
-  - Patient information section (read-only)
-  - CAS Condition section displaying: [selected condition name]
-  - Medications supplied section displaying:
-    * Read-only table with columns: Medicine, Pack size, Quantity supplied, Dosage
-    * Each formulary medication entered with its quantity and dosage
-  - Advice to patient section: [entered advice or "Not provided"]
-  - Previous, Complete consultation, and Cancel and exit buttons
-And all data is displayed in read-only format
-```
-
-**Scenario 4: Review Consultation Summary page displays for CAS Supply pathway (Formulary + Antibiotic, STTT/UTI)**
-
-```gherkin
-Given a CAS consultation for a STTT/UTI condition with Supply outcome
-And formulary medications and one antibiotic have been entered with quantities, dosages, and backup supply answer
-When the user navigates to the Review Consultation Summary page
-Then the page displays:
-  - High level caption and headings as in Scenario 3
-  - Medications supplied section with:
-    * Formulary medications table (if any)
-    * Antibiotics section with:
-      - Selected antibiotic name, quantity, dosage
-      - Backup supply status: "Yes" or "No"
-  - Advice to patient section
-  - Previous, Complete consultation, and Cancel and exit buttons
-And all data is displayed in read-only format
-```
-
-**Scenario 5: Review Consultation Summary page displays for IPS pathway**
-
-```gherkin
-Given an IPS consultation has been completed
-When the user navigates to the Review Consultation Summary page
-Then the page displays:
-  - High level caption: "Clinical Conditions Management"
-  - Page heading: "Consultation summary"
-  - Patient information section (read-only): Name, NHS number, Date of birth, Gender, Adverse reactions
-  - Consultation details section with:
-    * GPhC number
-    * Date and time of consultation
-    * Consultation undertaken as: "Face to face consultation at pharmacy"
-    * Referred by: [source]
-  - Symptoms and history section with:
-    * Presenting symptoms: [entered symptoms]
-    * Relevant medical, social and/or family history: [entered details or empty if optional]
-  - Service and template section with:
-    * Service: "Independent Prescribers Service (IPS)"
-    * Template: [selected template name]
-  - General clinical assessment section with:
-    * Clinical assessment notes: [entered notes or "Not provided"]
-    * Examination notes: [entered notes or "Not provided"]
-  - Confirm working diagnosis section with:
-    * Working diagnosis selected: [diagnosis name]
-    * Service specification: [specification details]
-  - Consultation outcome section displaying: "Supply & Refer"
-  - Medication(s) section with:
-    * Read-only table: Medicine, Pack size, Quantity supplied, Dosage
-    * Print prescription button (enabled)
-    * Advice given to patient: [entered advice or "No advice recorded"]
-  - Referral information section with:
+  - Consultation details section (read-only):
+    * GPhC number: [value]
+    * Date and time of consultation: [date time]
+    * Consultation undertaken as: [type: Face to face, Remote, etc.]
+    * Referred by: [value]
+  - Symptoms and history section:
+    * Presenting symptoms: [value]
+    * Relevant medical, social and/or family history (optional): [value or "Not recorded"]
+  - Service, condition and tool section:
+    * Service: [value: Common Ailments Service, Clinical Conditions Management, Independent Prescribers Service]
+    * Condition: [value: Sore Throat, Dry Eye, etc.]
+    * Clinical scoring tool: [value: Centor, FeverPAIN, None]
+  - Clinical scoring assessment section (conditional, varies by tool):
+    * FOR CENTOR: Exudate/swelling on tonsils, Tender cervical lymph nodes, Temp >38°C, Cough (Yes/No), Centor score
+    * FOR FEVERPAIN: Cough or sore throat, Fever last 24 hours, Onset <3 days, No runny nose, Inflamed tonsils, FeverPAIN score
+    * FOR NO TOOL: "No clinical scoring tool used for this consultation"
+  - Point of Care test section (if applicable):
+    * Test type, batch, expiry, result: [values or "Not recorded"]
+  - Consultation outcome section:
+    * Outcome: [value: Refer patient, Advice only, Supply & Refer, etc.]
+  - Medication(s) section (if outcome includes supply):
+    * Read-only table: Medicine, Pack size, Quantity supplied, Dosage, Backup supply (if applicable)
+    * Advice given to patient: [value or "Not provided"]
+  - Referral information section (if outcome includes referral):
     * Referred to: [destination]
     * Timescale for referral: [timescale]
-    * Notes: [referral notes]
-  - Sensitive information section: Yes/No
-  - Send consultation summary section: Yes/No
-  - Previous button (Secondary, left aligned)
-  - Complete consultation button (Primary, right aligned)
-  - Cancel and exit link (Action link)
+    * Notes: [text or "No notes recorded"]
+  - Sensitive information section:
+    * Does this consultation contain sensitive health information? [Yes/No]
+  - Send consultation summary section:
+    * Send a summary letter electronically to GP? [Yes/No]
+  - Action buttons at bottom:
+    * Secondary button: "Previous" (navigate back to edit)
+    * Primary button: "Complete consultation" (finalize)
+    * Action link: "Cancel and exit" (discard)
 And all data is displayed in read-only format (no edit controls on this page)
-And the form layout uses maximum section width with equal margins
+And the page layout uses maximum section width with equal left/right margins
+And all sections are properly labeled and organized sequentially
 ```
 
-### Default State
-
-**Scenario 6: All consultation data is pre-populated on initial page load**
+**Scenario 2: Centor scoring tool displays accurate clinical assessment data**
 
 ```gherkin
-Given the user navigates to the Review Consultation Summary page
-When the page loads for the first time
-Then all previously entered consultation data is displayed:
-  - Referral details (if referral outcome), OR
-  - Advice text (if advice outcome), OR
-  - Medication supplies (if CAS supply outcome), OR
-  - IPS service details (if IPS outcome)
-And patient information is displayed in read-only format
-And the Complete consultation button is enabled and clickable
-And the page is in read-only mode (no input fields or edit controls)
+Given a CCM Sore Throat consultation using Centor scoring has been completed
+And Centor criteria were recorded: Exudate/swelling on tonsils (Yes/No), Tender anterior cervical lymph nodes (Yes/No), Temperature >38°C (Yes/No), Cough (Yes/No)
+And a Centor score was calculated based on the criteria
+When the user views the Review Consultation Summary page
+Then the Clinical scoring assessment section displays:
+  - Label: "Clinical scoring assessment"
+  - All Centor criteria fields with recorded Yes/No values
+  - Clinical scoring outcome: [text explaining management based on score]
+  - Centor score: [calculated score]
+  - Change link to navigate back to scoring section if needed
+And the data matches exactly what was entered during the Centor assessment page
+```
+
+**Scenario 3: FeverPAIN scoring tool displays accurate clinical assessment data**
+
+```gherkin
+Given a CCM Sore Throat consultation using FeverPAIN scoring has been completed
+And FeverPAIN criteria were recorded: Cough or sore throat, Fever last 24 hours (Yes/No), Onset <3 days (Yes/No), No runny nose (Yes/No), Inflamed tonsils (Yes/No)
+And a FeverPAIN score was calculated
+When the user views the Review Consultation Summary page
+Then the Clinical scoring assessment section displays:
+  - All FeverPAIN criteria fields with recorded Yes/No values
+  - Current temperature if recorded
+  - Clinical scoring outcome: [text explaining management based on score]
+  - FeverPAIN score: [calculated score]
+And the data matches exactly what was entered during the FeverPAIN assessment page
+```
+
+**Scenario 4: No-template consultation displays without clinical scoring section (CCM & IPS)**
+
+```gherkin
+Given a consultation without a predefined scoring template:
+  - CCM consultation: Dry Eye, Dry Eyes Disease, or similar condition, OR
+  - IPS consultation: "Continue consultation without a template" service type
+And no clinical scoring tool was used in the consultation
+When the user views the Review Consultation Summary page
+Then the Clinical scoring assessment section displays:
+  - Message: "No clinical scoring tool used for this consultation"
+  - For CCM: General clinical assessment notes (if entered): [text or "Not provided"]
+  - For IPS: 
+    * Clinical assessment notes: [entered notes or "Not provided"]
+    * Examination notes: [entered notes or "Not provided"]
+And no scoring criteria fields (Centor, FeverPAIN, etc.) are shown
+And no scoring outcome or score calculation is displayed
+And the General clinical assessment section includes Change link to edit if needed
+```
+
+**Scenario 5: CAS Supply pathway shows medications and antibiotic details**
+
+```gherkin
+Given a CAS consultation with Supply & Refer outcome has been completed
+When the user views the Review Consultation Summary page
+Then the Medication(s) and Antibiotic(s) section displays:
+  - Read-only table with columns: Medicine, Pack size, Quantity supplied (dose units), Dosage
+  - For formulary medications: Each medicine with its pack size, quantity, and dosage
+  - For antibiotics (if STTT/UTI): Antibiotic name, pack size, quantity, dosage, backup supply status
+  - Advice given to patient: [entered text or "No advice recorded"]
+  - Change link to edit medications if needed
+And all medication data matches what was entered during the medication entry page
 ```
 
 **Scenario 7: Summary data persists when user navigates back and returns**
