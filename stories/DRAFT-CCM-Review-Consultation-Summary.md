@@ -90,7 +90,7 @@ Given a consultation with "Refer patient" outcome has been completed
 And all referral data has been saved (destination, timescale, information, advice)
 When the user navigates to the Review Consultation Summary page
 Then the page displays:
-  - Journey caption: "Clinical Conditions Management"
+  - High level caption: "Clinical Conditions Management"
   - Page heading: "Consultation summary"
   - Patient information section (read-only): Name, NHS number, Date of birth, Age, Adverse reactions
   - Consultation outcome section displaying: "Outcome: Refer patient"
@@ -113,7 +113,7 @@ Given a consultation with "Advice only" outcome has been completed
 And advice text has been saved
 When the user navigates to the Review Consultation Summary page
 Then the page displays:
-  - Journey caption: "Clinical Conditions Management"
+  - High level caption: "Clinical Conditions Management"
   - Page heading: "Consultation summary"
   - Patient information section (read-only)
   - Consultation outcome section displaying: "Outcome: Advice"
@@ -130,7 +130,7 @@ Given a CAS consultation for a Non-STTT/UTI condition with Supply outcome
 And formulary medications have been entered (quantities and dosages)
 When the user navigates to the Review Consultation Summary page
 Then the page displays:
-  - Journey caption: "Clinical Conditions Management" and "Common Ailments Service"
+  - High level caption: "Clinical Conditions Management" and "Common Ailments Service"
   - Page heading: "Consultation summary"
   - Patient information section (read-only)
   - CAS Condition section displaying: [selected condition name]
@@ -149,7 +149,7 @@ Given a CAS consultation for a STTT/UTI condition with Supply outcome
 And formulary medications and one antibiotic have been entered with quantities, dosages, and backup supply answer
 When the user navigates to the Review Consultation Summary page
 Then the page displays:
-  - Journey caption and headings as in Scenario 3
+  - High level caption and headings as in Scenario 3
   - Medications supplied section with:
     * Formulary medications table (if any)
     * Antibiotics section with:
@@ -166,7 +166,7 @@ And all data is displayed in read-only format
 Given an IPS consultation with service-specific data has been completed
 When the user navigates to the Review Consultation Summary page
 Then the page displays:
-  - Journey caption for IPS pathway
+  - High level caption for IPS pathway
   - Page heading: "Consultation summary"
   - Patient information section (read-only)
   - Service-specific details section (structure to be defined by IPS story)
