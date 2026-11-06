@@ -40,7 +40,7 @@ The page contains a single textarea field for recording advice given to the pati
 ### Related and Dependent Stories
 
 | Story ID | Title | Relationship | Details |
-|----------|-------|--------------|---------|
+| --- | --- | --- | --- |
 | 603150 | UI: CCM - Outcome Selection (Limited Options) | Related | Previous step in CCM workflow; "Advice only" selection navigates to this story |
 | 603156 | UI: CCM - Sensitive Health Information | Related | Referral pathway only; not reached from this story |
 
@@ -49,7 +49,7 @@ The page contains a single textarea field for recording advice given to the pati
 ## Design Reference
 
 | Component | DHCW Design System V2 | Notes |
-|-----------|----------------------|-------|
+| --- | --- | --- |
 | Page heading (h2) | [Headings - h2](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2?node-id=1582-16391) | "Outcome: Advice" |
 | Textarea with character counter | [Textarea](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2) | 2000 character limit, live counter |
 | Secondary button | [Button - Secondary](https://www.figma.com/design/RplwUuFizhzeH1ng7M0SMO/DHCW-Design-System-V2) | "Previous" |
@@ -202,18 +202,9 @@ And the tab order is logical and follows:
 And the page heading is announced as: "Outcome: Advice" (heading level 2)
 And the journey caption is announced as: "Clinical Conditions Management" (page context)
 And the textarea label is associated with the field
-And the character counter is announced with aria-live="polite": "You have X characters remaining"
 And the "Previous" button is announced as: "Previous, button"
 And the "Save and continue" button is announced as: "Save and continue, button"
 And the "Cancel and exit" link is announced as: "Cancel and exit, link"
-
-And color contrast ratio is at least 4.5:1 for all text (including buttons, labels)
-And focus indicators are visible on all interactive elements
-And the textarea label is properly associated with input using <label> or aria-labelledby
-And the page is functional when zoomed to 200%
-And textarea supports user resizing and scrolling
-And error messages are announced with aria-live for screen reader users
-```
 
 ---
 
@@ -235,13 +226,6 @@ And error messages are announced with aria-live for screen reader users
 - [ ] Error summary displays at top of page with role="alert" and aria-live="polite" when errors occur
 - [ ] Error summary focus management: Focus automatically moves to error summary when validation error occurs
 - [ ] Error summary remains focusable for keyboard users to review all errors
-- [ ] WCAG 2.1 AA accessibility compliance verified
-- [ ] Color contrast ratio 4.5:1 or higher for all text elements
-- [ ] Tab order follows defined sequence: Previous → Textarea → Save and continue → Cancel and exit
-- [ ] Page is functional when zoomed to 200%
-- [ ] Keyboard navigation works without mouse
-- [ ] Screen reader announcements are clear and accurate
-- [ ] Character counter announces updates to screen readers (aria-live="polite")
 
 ---
 

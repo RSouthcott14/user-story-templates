@@ -81,7 +81,7 @@ The page structure remains consistent across all consultation types. Conditional
 
 ## Acceptance Criteria
 
-**Total Scenarios: 32**
+**Total Scenarios: 23**
 
 ### Page Structure & Content
 
@@ -505,109 +505,11 @@ And the page does not allow completion until data is successfully loaded
 And the user can attempt to retry the data load
 ```
 
-**Scenario 24: Missing consultation data when summary page loads**
-
-```gherkin
-Given the Review Consultation Summary page is loading
-When one or more required consultation fields are missing or null in the model
-Then the Summary page loads but displays:
-  - Missing sections or fields as empty or "Not provided"
-  - Validation errors appear when user attempts to complete
-  - Clear messaging about which fields are incomplete
-And user is directed back to outcome pages to complete missing data
-And the Complete consultation button is disabled until all mandatory fields are populated
-```
-
-**Scenario 25: Concurrent consultation edits (conflict resolution)**
-
-```gherkin
-Given a user is viewing the Review Consultation Summary page
-And another user or session edits the same consultation simultaneously
-When the local Summary becomes out-of-sync with server data
-Then one of the following occurs:
-  - Page displays refresh notification: "Consultation has been updated. Please refresh to see the latest data."
-  - Automatic refresh retrieves updated data
-  - User is prevented from completing until refresh occurs
-And data conflicts are resolved (e.g., last-write-wins or user prompted to reload)
-And no data is persisted during conflict resolution
-```
-
-### Accessibility
-
-**Scenario 26: Summary page meets WCAG 2.1 AA accessibility compliance**
-
-```gherkin
-Given the Review Consultation Summary page is rendered
-When a user navigates using keyboard and screen reader
-Then all content sections are properly structured with headings
-And summary data is organized in logical reading order
-And the page heading is announced as: "Consultation summary" (heading level 2)
-And patient information section is announced as a logical group
-And each consultation outcome section is clearly delimited
-And buttons are announced with purpose: "Previous, button", "Complete consultation, button", "Cancel and exit, link"
-And the tab order is logical: Previous → Complete consultation → Cancel and exit
-And all interactive elements are focusable via Tab key
-And focus indicators are visible and meet 3:1 contrast ratio
-```
-
-**Scenario 27: Read-only data fields are announced correctly to screen readers**
-
-```gherkin
-Given summary data is displayed in read-only format
-When a screen reader user navigates the page
-Then read-only fields are not treated as interactive
-And data labels and values are clearly associated
-And text content is readable in continuous flow
-And tables (if used for medication summaries) are marked up with proper header rows and data associations
-And complex data structures (e.g., medication details) have clear labels
-And aria-labels or aria-describedby attributes are used where needed
-```
-
-**Scenario 28: Error messages and validation alerts are announced to screen readers**
-
-```gherkin
-Given the user clicks "Complete consultation" and validation fails
-When error summary displays
-Then error messages are announced with role="alert" and aria-live="polite"
-And each error message is descriptive and actionable
-And focus is moved to error summary for immediate announcement
-And inline error messages near affected sections are marked up for screen readers
-And error links (if clickable to navigate to errors) are properly announced as links
-And no data is persisted when errors occur
-```
-
-**Scenario 29: Page supports zoom and responsive layout**
-
-```gherkin
-Given the Review Consultation Summary page is displayed
-When user zooms to 200% magnification
-Then all content remains readable and navigable
-And horizontal scrolling is minimal (single column layout preferred)
-And buttons remain accessible and clickable at 200% zoom
-And summary sections maintain clear visual hierarchy
-And no content is hidden or truncated unexpectedly
-And text is not forced to single word per line
-```
-
-**Scenario 30: High contrast color scheme for readability**
-
-```gherkin
-Given the Review Consultation Summary page is rendered
-When viewing patient information and summary data
-Then all text has color contrast ratio of at least 4.5:1 against background
-And buttons are clearly distinguished by color, shape, or icon
-And error messages use color + icon + text (not color alone for meaning)
-And patient information sections have visual separation (borders, spacing, or background)
-And links are identifiable (underline or other indicator beyond color alone)
-And read-only fields have distinct visual appearance from input fields
-And focus indicators have sufficient contrast (3:1 minimum)
-```
-
 ---
 
 ## Definition of Done
 
-- [ ] All 28 acceptance criteria scenarios pass (manual or automated testing)
+- [ ] All 23 acceptance criteria scenarios pass (manual or automated testing)
 - [ ] Page structure matches DHCW Design System V2 components exactly
 - [ ] All consultation data is displayed in read-only format with appropriate styling
 - [ ] Patient information section clearly displays name, NHS number, DOB, age, adverse reactions
@@ -632,12 +534,6 @@ And focus indicators have sufficient contrast (3:1 minimum)
 - [ ] API failure handling displays user-friendly error message with retry option
 - [ ] Missing data handling prevents completion and directs user back to outcome pages
 - [ ] Concurrent edit conflicts are detected and handled appropriately
-- [ ] WCAG 2.1 AA accessibility compliance verified
-- [ ] Color contrast ratio 4.5:1 or higher for all text elements
-- [ ] Tab order follows defined sequence: Previous → Complete consultation → Cancel and exit
-- [ ] Screen reader announces sections, labels, and error messages correctly
-- [ ] Page functional when zoomed to 200%
-- [ ] Keyboard navigation works without mouse
 
 ---
 
