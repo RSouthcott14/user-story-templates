@@ -281,19 +281,10 @@ And the journey caption is announced as: "Clinical Conditions Management" (page 
 And the radio button group labels are announced as: "Referred to, group of radio buttons" and "Timescale for referral, group of radio buttons"
 And each radio option is announced with its label and state: "GP, radio button, not checked" (or "checked")
 And the textarea labels are associated with their fields
-And character counters are announced with aria-live="polite": "You have X characters remaining"
 And error summary is announced with role="alert" when validation errors occur
 And the Previous button is announced as: "Previous, button"
 And the Continue button is announced as: "Continue, button"
 And the Cancel and exit link is announced as: "Cancel and exit, link"
-
-And color contrast ratio is at least 4.5:1 for all text (including buttons, labels, error messages)
-And focus indicators are visible on all interactive elements
-And all form labels are properly associated with inputs using <label> or aria-labelledby
-And the page is functional when zoomed to 200%
-And textareas support user resizing and scrolling
-And error messages are announced with aria-live for screen reader users
-```
 
 ---
 
@@ -329,15 +320,6 @@ And error messages are announced with aria-live for screen reader users
 - [ ] Navigation to next page (#603156) completes successfully with referral data passed
 - [ ] Previous button returns to Outcome Selection page (#603150) with state retained
 - [ ] Cancel and exit navigates to Patient overview page without persisting data
-- [ ] WCAG 2.1 AA accessibility compliance verified:
-  - All interactive elements keyboard accessible
-  - Tab order: Previous → Referred to (6 options) → Timescale (5 options) → Referral info → Advice → Continue → Cancel and exit
-  - Screen reader announcements match specified text
-  - Color contrast ratio at least 4.5:1
-  - Focus indicators visible on all elements
-  - Form labels properly associated with inputs
-  - Page functional when zoomed to 200%
-- [ ] Character counter aria-live="polite" announcements tested with screen reader
 - [ ] Error messaging styling consistent with standards/UI-ERROR-MESSAGING.md
 - [ ] Component styling verified on mobile, tablet, and desktop viewports
 - [ ] Browser compatibility verified (Chrome, Firefox, Safari, Edge)
