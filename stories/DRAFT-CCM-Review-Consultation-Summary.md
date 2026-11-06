@@ -81,56 +81,38 @@ The page structure remains consistent across all consultation types. Conditional
 
 ## Acceptance Criteria
 
-**Total Scenarios: 20**
+**Total Scenarios: 21**
 
 ### Page Structure & Content
 
-**Scenario 1: Review Consultation Summary page displays all consultation types and scoring tools**
+**Scenario 1: Review Consultation Summary page renders with consistent structure across all consultation types**
 
 ```gherkin
-Given a consultation has been completed (CCM or CAS pathway)
+Given a consultation has been completed (CAS or IPS pathway)
 When the user navigates to the Review Consultation Summary page
-Then the page displays consistently across all consultation types:
-  - High level caption: "Clinical Conditions Management" (or service name)
+Then the page structure displays consistently:
+  - High-level caption: "Clinical Conditions Management"
   - Page heading: "Consultation summary"
-  - Consultation details section (read-only):
-    * GPhC number: [value]
-    * Date and time of consultation: [date time]
-    * Consultation undertaken as: [type: Face to face, Remote, etc.]
-    * Referred by: [value]
-  - Symptoms and history section:
-    * Presenting symptoms: [value]
-    * Relevant medical, social and/or family history (optional): [value or "Not recorded"]
-  - Service, condition and tool section:
-    * Service: [value: Common Ailments Service, Clinical Conditions Management, Independent Prescribers Service]
-    * Condition: [value: Sore Throat, Dry Eye, etc.]
-    * Clinical scoring tool: [value: Centor, FeverPAIN, None]
-  - Clinical scoring assessment section (conditional, varies by tool):
-    * FOR CENTOR: Exudate/swelling on tonsils, Tender cervical lymph nodes, Temp >38°C, Cough (Yes/No), Centor score
-    * FOR FEVERPAIN: Cough or sore throat, Fever last 24 hours, Onset <3 days, No runny nose, Inflamed tonsils, FeverPAIN score
-    * FOR NO TOOL: "No clinical scoring tool used for this consultation"
-  - Point of Care test section (if applicable):
-    * Test type, batch, expiry, result: [values or "Not recorded"]
-  - Consultation outcome section:
-    * Outcome: [value: Refer patient, Advice only, Supply & Refer, etc.]
-  - Medication(s) section (if outcome includes supply):
-    * Read-only table: Medicine, Pack size, Quantity supplied, Dosage, Backup supply (if applicable)
-    * Advice given to patient: [value or "Not provided"]
-  - Referral information section (if outcome includes referral):
-    * Referred to: [destination]
-    * Timescale for referral: [timescale]
-    * Notes: [text or "No notes recorded"]
-  - Sensitive information section:
-    * Does this consultation contain sensitive health information? [Yes/No]
-  - Send consultation summary section:
-    * Send a summary letter electronically to GP? [Yes/No]
+  - Core sections display in order:
+    * Consultation details (read-only) with "Change" link
+    * Symptoms and history (read-only) with "Change" link
+    * Service, condition and tool (read-only) with "Change" link
+    * Clinical scoring assessment (conditional—varies by tool used) with "Change" link
+    * Point of Care test (conditional—if applicable) with "Change" link
+    * Consultation outcome (read-only) with "Change" link
+    * Medication(s) section (conditional—if outcome includes supply) with "Change" link
+    * Referral information (conditional—if outcome includes referral) with "Change" link
+    * Sensitive information (read-only) with "Change" link
+    * Send consultation summary (read-only) with "Change" link
   - Action buttons at bottom:
-    * Secondary button: "Previous" (navigate back to edit)
-    * Primary button: "Complete consultation" (finalize)
-    * Action link: "Cancel and exit" (discard)
-And all data is displayed in read-only format (no edit controls on this page)
-And the page layout uses maximum section width with equal left/right margins
-And all sections are properly labeled and organized sequentially
+    * "Previous" (secondary button)
+    * "Complete consultation" (primary button)
+    * "Cancel and exit" (action link)
+And all section data is displayed in read-only format (no inline edit controls)
+And each section displays a "Change" link that navigates back to the corresponding page to edit that section
+And all sections use maximum width with equal left/right margins
+And conditional sections appear or hide based on outcome type and pathway
+And all data matches what was recorded in the consultation workflow
 ```
 
 **Scenario 2: Centor scoring tool displays accurate clinical assessment data**
@@ -143,9 +125,11 @@ When the user views the Review Consultation Summary page
 Then the Clinical scoring assessment section displays:
   - Label: "Clinical scoring assessment"
   - All Centor criteria fields with recorded Yes/No values
-  - Clinical scoring outcome: [text explaining management based on score]
-  - Centor score: [calculated score]
+  - Clinical scoring outcome: as recorded/entered
+  - Centor score: as recorded/entered
   - Change link to navigate back to scoring section if needed
+And mandatory fields display: as recorded/entered
+And optional fields display: as recorded/entered or "Not recorded"
 And the data matches exactly what was entered during the Centor assessment page
 ```
 
@@ -159,8 +143,10 @@ When the user views the Review Consultation Summary page
 Then the Clinical scoring assessment section displays:
   - All FeverPAIN criteria fields with recorded Yes/No values
   - Current temperature if recorded
-  - Clinical scoring outcome: [text explaining management based on score]
-  - FeverPAIN score: [calculated score]
+  - Clinical scoring outcome: as recorded/entered
+  - FeverPAIN score: as recorded/entered
+And mandatory fields display: as recorded/entered
+And optional fields display: as recorded/entered or "Not recorded"
 And the data matches exactly what was entered during the FeverPAIN assessment page
 ```
 
@@ -173,13 +159,12 @@ Given a consultation without a predefined scoring template:
 And no clinical scoring tool was used in the consultation
 When the user views the Review Consultation Summary page
 Then the Clinical scoring assessment section displays:
-  - Message: "No clinical scoring tool used for this consultation"
-  - For CCM: General clinical assessment notes (if entered): [text or "Not provided"]
-  - For IPS: 
-    * Clinical assessment notes: [entered notes or "Not provided"]
-    * Examination notes: [entered notes or "Not provided"]
-And no scoring criteria fields (Centor, FeverPAIN, etc.) are shown
-And no scoring outcome or score calculation is displayed
+  - For CCM: General clinical assessment notes:
+    * Mandatory fields display: as recorded/entered
+    * Optional fields display: as recorded/entered or "Not recorded"
+  - For IPS:
+    * Clinical assessment notes (mandatory): as recorded/entered
+    * Examination notes (optional): as recorded/entered or "Not recorded"
 And the General clinical assessment section includes Change link to edit if needed
 ```
 
@@ -190,14 +175,20 @@ Given a CAS consultation with Supply & Refer outcome has been completed
 When the user views the Review Consultation Summary page
 Then the Medication(s) and Antibiotic(s) section displays:
   - Read-only table with columns: Medicine, Pack size, Quantity supplied (dose units), Dosage
-  - For formulary medications: Each medicine with its pack size, quantity, and dosage
-  - For antibiotics (if STTT/UTI): Antibiotic name, pack size, quantity, dosage, backup supply status
-  - Advice given to patient: [entered text or "No advice recorded"]
+  - For formulary medications:
+    * Mandatory fields display: as recorded/entered
+    * Optional fields display: as recorded/entered or "Not recorded"
+  - For antibiotics (if STTT/UTI):
+    * Antibiotic name, pack size, quantity, dosage (mandatory): as recorded/entered
+    * Backup supply status (mandatory): as recorded/entered
+  - Advice given to patient:
+    * Mandatory fields display: as recorded/entered
+    * Optional fields display: as recorded/entered or "Not provided"
   - Change link to edit medications if needed
 And all medication data matches what was entered during the medication entry page
 ```
 
-**Scenario 7: Summary data persists when user navigates back and returns**
+**Scenario 6: Summary data persists when user navigates back and returns**
 
 ```gherkin
 Given all consultation data has been entered and displayed on the Summary page
@@ -205,8 +196,6 @@ When the user clicks Previous to return to the previous outcome page
 And makes changes or reviews the data
 And navigates forward again to the Review Consultation Summary page
 Then all updated data is displayed with the changes reflected
-And the summary is accurate to the current consultation model state
-And the Complete consultation button remains enabled
 ```
 
 ### User Interaction
@@ -216,8 +205,10 @@ And the Complete consultation button remains enabled
 ```gherkin
 Given the summary displays referral details
 When viewing the summary for a Referral pathway consultation
-Then the referral destination (e.g., "GP", "Dentist", "A&E") is clearly displayed
-And the timescale (e.g., "Within 24 hours") is clearly displayed
+Then the referral destination (e.g., "GP", "Dentist", "A&E"):
+  - Mandatory fields display: as recorded/entered
+And the timescale (e.g., "Within 24 hours"):
+  - Mandatory fields display: as recorded/entered
 And both values are readable and match the consultation model
 And no edit controls appear inline
 ```
@@ -227,8 +218,11 @@ And no edit controls appear inline
 ```gherkin
 Given the summary displays CAS Supply details with antibiotic (STTT/UTI pathway)
 When viewing the summary
-Then the selected antibiotic name, quantity, and dosage are displayed
-And the backup supply status ("Yes" or "No") is clearly indicated
+Then the selected antibiotic information displays:
+  - Antibiotic name (mandatory): as recorded/entered
+  - Quantity (mandatory): as recorded/entered
+  - Dosage (mandatory): as recorded/entered
+  - Backup supply status (mandatory): as recorded/entered
 And only one antibiotic is displayed (mutual exclusivity confirmed)
 And the display matches the consultation model exactly
 ```
@@ -238,10 +232,8 @@ And the display matches the consultation model exactly
 ```gherkin
 Given the summary displays advice sections
 When viewing advice text
-Then the advice is displayed in full
-And if advice exceeds one line, scrolling is available
-And empty advice fields display as "Not provided" or similar placeholder
-And the advice text is read-only (no textarea field)
+Then mandatory advice fields display: as recorded/entered
+And optional advice fields display: as recorded/entered or "Not provided"
 ```
 
 **Scenario 11: User clicks Previous button to return to outcome page**
@@ -256,18 +248,39 @@ Then the user is navigated back to the last outcome page:
   - IPS outcome page (if IPS pathway)
 And all previously entered data remains in the consultation model
 And when the user navigates forward again to Summary
-Then all data is re-displayed and unchanged
+Then all data is re-displayed
 ```
 
-**Scenario 12: User clicks Cancel and exit without completing consultation**
+**Scenario 12: User clicks Change link on a section to edit that data**
+
+```gherkin
+Given the user is on the Review Consultation Summary page
+And a section displays with a "Change" link (e.g., Consultation details, Consultation outcome, Medication(s), etc.)
+When the user clicks the "Change" link for a specific section
+Then the user is navigated back to the corresponding edit page:
+  - Change on Consultation details → Consultation details page
+  - Change on Symptoms and history → Symptoms and history page
+  - Change on Consultation outcome → Outcome page (Referral, Advice, Supply, etc.)
+  - Change on Medication(s) → Medication entry page
+  - Change on Referral information → Referral details page
+  - Change on Clinical scoring assessment → Scoring page
+  - And so on for each section
+And the consultation model retains all current data
+And previously entered values are pre-populated in the form:
+  - Mandatory fields display: as recorded/entered
+  - Optional fields display: as recorded/entered or blank/empty
+And when the user updates data and navigates forward again to Summary
+Then the updated values are displayed on the Review Consultation Summary page
+And the change is reflected throughout the summary
+```
+
+**Scenario 13: User clicks Cancel and exit without completing consultation**
 
 ```gherkin
 Given the user is on the Review Consultation Summary page
 When the user clicks the "Cancel and exit" link
 Then the user is navigated to the Patient overview page
-And the consultation is NOT marked as complete
-And no data is saved in consultation completion state
-And the user can re-enter the consultation later to resume or complete
+And no data is saved
 ```
 
 ### Navigation & State Management
@@ -319,108 +332,53 @@ And the user must return to Supply page to select backup supply option
 And the consultation is not marked as complete
 ```
 
-**Scenario 14: User reaches Summary page without Clinical Assessment Notes via IPS pathway**
+**Scenario 15b: Complete consultation for CCM no-template (IPS pathway) validates Clinical Assessment Notes**
 
 ```gherkin
-Given the user is identified as an Independent Prescriber
-And the user has navigated to the Review Consultation Summary page via IPS pathway
-And the General clinical assessment section is displayed
-And the Clinical assessment notes field has not been completed
-And the Examination notes field has not been completed
-When the consultation summary is displayed
-Then the page shall render without validation errors
-And the Clinical assessment notes field shall display: "Not provided"
-And the Examination notes field shall display: "Not provided"
-And the consultation shall remain editable
-And the user shall be able to view all entered data in read-only format
-And no error message shall be displayed at this stage
-And the Complete consultation button shall be enabled
-And the user can print the prescription from the Medication(s) section without completing Clinical Assessment Notes
-And no data is persisted
-```
-
-**Scenario 15: User attempts to finalise consultation without Clinical Assessment Notes via IPS pathway**
-
-```gherkin
-Given the user is identified as an Independent Prescriber
-And the user is on the Review Consultation Summary page
-And the General clinical assessment section is displayed
-And both Clinical assessment notes and Examination notes fields are empty or show "Not provided"
-When the user clicks the "Complete consultation" button
+Given the user is on the Review Consultation Summary page
+And the consultation is CCM no-template via IPS pathway (e.g., Dry Eye)
+And the Clinical assessment notes field displays: "Not provided"
+And the Examination notes field displays: "Not provided"
+When the user clicks "Complete consultation"
 Then the completion request is rejected
-And a validation summary is displayed at the top of the page
-And the validation summary displays:
-  - "There is a problem" as the summary heading
-  - Error message in red: "Enter 'Clinical assessment notes'"
-And focus is moved to the validation summary with role="alert" and aria-live="polite"
-And the error message is presented as a link to navigate to the General clinical assessment section
+And an error summary is displayed at the top of the page with role="alert" and aria-live="polite"
+And the error summary heading displays: "There is a problem"
+And the error message displays: "Enter 'Clinical assessment notes'"
+And focus is moved to the error summary
+And the error message is presented as a link to the General clinical assessment section
 And the General clinical assessment section is visually identified with a red left border
-And the Clinical assessment notes and Examination notes fields display inline warning messages:
-  - "You may print a prescription before completing the 'General clinical assessment'. But you must add clinical assessment notes before selecting 'Complete consultation'"
+And the Clinical assessment notes and Examination notes fields display inline error messages
 And the consultation is not marked as complete
 And no data is persisted
 ```
 
-**Scenario 16: User completes Clinical Assessment Notes following Summary validation via IPS pathway**
+**Scenario 16: User completes Complete consultation and consultation is marked as complete**
 
 ```gherkin
-Given the user is identified as an Independent Prescriber
-And validation has been triggered on the Summary page due to missing Clinical Assessment Notes
-And the error summary displays "There is a problem" with the message "Enter 'Clinical assessment notes'"
-And the error message links to the General clinical assessment section
-When the user clicks the error link or navigates back using Previous button
-And enters Clinical assessment notes in the Clinical assessment notes field
-And navigates forward again to the Review Consultation Summary page
-And clicks "Complete consultation"
-Then the validation error summary is removed
-And the red left border on the General clinical assessment section is removed
-And the inline warning messages are cleared
-And the consultation shall be allowed to be finalised
-And the consultation is marked as "Complete"
+Given the user is on the Review Consultation Summary page
+And all consultation data is displayed in read-only format
+And all mandatory fields have been completed on prior outcome pages
+When the user clicks "Complete consultation"
+Then the consultation is marked as "Complete" in the system
 And a completion timestamp is recorded
 And the user is navigated to the post-completion page
+And the consultation enters read-only archive state
+And no further edits are permitted
 ```
 
-**Scenario 17: Independent Prescriber can print prescription before Clinical Assessment Notes are completed**
+**Scenario 17: IPS can print prescription before finalizing consultation**
 
 ```gherkin
-Given the user is identified as an Independent Prescriber
-And the consultation contains medication data in the Medication(s) section
-And the General clinical assessment section shows Clinical assessment notes as "No notes recorded"
-And the Examination notes field shows "No notes recorded"
-And validation has not been triggered (user has not attempted finalization)
-When the user is viewing the Review Consultation Summary page
-And the Print prescription button is displayed in the Medication(s) section
-And the user clicks the "Print prescription" button
-Then prescription generation and printing shall be permitted
-And the deferred Clinical Assessment validation shall not prevent prescription generation or printing
-And the user can print the prescription without completing Clinical Assessment Notes
-And the inline information message in the General clinical assessment section reminds:
-  - "You may print a prescription before completing the 'General clinical assessment'. But you must add clinical assessment notes before selecting 'Complete consultation'"
-And the user can then navigate back using Previous button to complete Clinical Assessment Notes before finalizing
+Given the user is identified as an Independent Prescriber Service (IPS)
+And the consultation is on the Review Consultation Summary page
+And the Medication(s) section displays prescription data
+When the user clicks the "Print prescription" button
+Then prescription generation and printing is permitted
+And the user can print the prescription without finalizing the consultation
+And prescription printing does not mark the consultation as complete
+And the user can then click "Complete consultation" to finalize
 And no data is persisted until final consultation completion
 ```
-
-**Scenario 18: Inline warning message guides Independent Prescriber on Clinical Assessment deferral**
-
-```gherkin
-Given the user is identified as an Independent Prescriber
-And the user is on the Review Consultation Summary page
-And the General clinical assessment section is displayed
-And both Clinical assessment notes and Examination notes fields show "No notes recorded" or are empty
-When the user views the General clinical assessment section
-Then an inline information message is displayed with a left border indicator:
-  - "You may print a prescription before completing the 'General clinical assessment'. But you must add clinical assessment notes before selecting 'Complete consultation'"
-And the message is visible and readable
-And the message appears above or adjacent to the Clinical assessment notes field
-And when the user clicks the Print prescription button
-Then the message confirms that prescription printing is permitted despite incomplete Clinical Assessment
-And when the user attempts to click Complete consultation
-Then the message context is linked to the validation error that appears
-And the message provides clear guidance on the deferral workflow
-```
-
-### Validation & Error Handling
 
 **Scenario 18: Summary data matches consultation model and displays conditional sections based on pathway**
 
@@ -450,6 +408,24 @@ Given a user has entered all consultation data and reached the Summary page
 When viewing the Summary
 Then all data has been previously saved to the consultation model
 And all sections contain the most recent data entered
+And if user navigates away and closes browser or loses connection
+And later re-opens the same patient consultation
+Then all entered data is still present and recoverable
+And data is displayed accurately in the Summary page
+And no data is lost between session reconnections
+```
+
+**Scenario 20: API failure retrieving summary data**
+
+```gherkin
+Given the Review Consultation Summary page is loading
+When the system attempts to retrieve consultation data from the API
+And the API call fails (500 error, timeout, network connectivity issue)
+Then an error message is displayed: "Unable to load consultation summary. Please try again."
+And a Retry button or Previous button is provided to the user
+And the page does not allow completion until data is successfully loaded
+And the user can attempt to retry the data load
+```
 And if user navigates away and closes browser or loses connection
 And later re-opens the same patient consultation
 Then all entered data is still present and recoverable
