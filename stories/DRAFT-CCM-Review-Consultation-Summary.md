@@ -81,7 +81,7 @@ The page structure remains consistent across all consultation types. Conditional
 
 ## Acceptance Criteria
 
-**Total Scenarios: 23**
+**Total Scenarios: 20**
 
 ### Page Structure & Content
 
@@ -422,10 +422,10 @@ And the message provides clear guidance on the deferral workflow
 
 ### Validation & Error Handling
 
-**Scenario 18: Summary data matches consultation model state exactly**
+**Scenario 18: Summary data matches consultation model and displays conditional sections based on pathway**
 
 ```gherkin
-Given a consultation with multiple data entries has been completed
+Given a consultation has been completed
 When viewing the Review Consultation Summary
 Then all displayed data matches exactly what was entered:
   - Referral: destination, timescale, information text, advice text
@@ -434,41 +434,16 @@ Then all displayed data matches exactly what was entered:
 And no values are truncated, reformatted, or altered on display
 And special characters and line breaks in text are preserved
 And numeric values (quantities, dosages) display with correct precision
+
+And conditional sections display based on pathway and outcome type:
+  - For Referral outcome: Referral sections displayed, CAS Supply and IPS sections NOT displayed
+  - For Advice outcome: Advice section displayed, Referral and CAS Supply sections NOT displayed
+  - For CAS Supply Non-STTT/UTI: Formulary medications displayed, Antibiotics section NOT displayed
+  - For CAS Supply STTT/UTI: Formulary and Antibiotics sections both displayed with backup status
+  - For IPS outcome: Service-specific sections displayed appropriately
 ```
 
-**Scenario 19: Summary correctly displays conditional sections based on pathway**
-
-```gherkin
-Given a consultation with Referral outcome
-When viewing the summary
-Then Referral sections are displayed
-And CAS Supply sections are NOT displayed
-And IPS sections are NOT displayed
-
-Given a CAS Supply consultation for Non-STTT/UTI condition
-When viewing the summary
-Then Formulary medications section is displayed
-And Antibiotics section is NOT displayed
-
-Given a CAS Supply consultation for STTT/UTI condition
-When viewing the summary
-Then Formulary medications section (if entries exist) is displayed
-And Antibiotics section is displayed with selected antibiotic and backup status
-```
-
-**Scenario 20: Patient information is current and accurate**
-
-```gherkin
-Given the Review Consultation Summary page loads
-When patient information is displayed (Name, NHS number, DOB, Age, Adverse reactions)
-Then all data is current and retrieved from the patient record
-And if patient demographics have changed during consultation session
-Then the Summary displays the current values
-And data is read-only (no edit capability on Summary page)
-And no data is persisted
-```
-
-**Scenario 21: Consultation data is persisted before completion button click**
+**Scenario 19: Consultation data is persisted and recoverable**
 
 ```gherkin
 Given a user has entered all consultation data and reached the Summary page
@@ -478,22 +453,11 @@ And all sections contain the most recent data entered
 And if user navigates away and closes browser or loses connection
 And later re-opens the same patient consultation
 Then all entered data is still present and recoverable
+And data is displayed accurately in the Summary page
+And no data is lost between session reconnections
 ```
 
-**Scenario 22: Completed consultation status is recorded with timestamp**
-
-```gherkin
-Given a user has successfully clicked "Complete consultation"
-And the consultation has been marked as complete
-When the consultation is retrieved later
-Then the consultation status shows: "Completed"
-And a completion timestamp is recorded in ISO 8601 format
-And the consultation can be viewed in consultation history/audit log
-And the consultation cannot be edited further (completion lock in place)
-And no data is persisted after completion
-```
-
-**Scenario 23: API failure retrieving summary data**
+**Scenario 20: API failure retrieving summary data**
 
 ```gherkin
 Given the Review Consultation Summary page is loading
@@ -509,7 +473,7 @@ And the user can attempt to retry the data load
 
 ## Definition of Done
 
-- [ ] All 23 acceptance criteria scenarios pass (manual or automated testing)
+- [ ] All 20 acceptance criteria scenarios pass (manual or automated testing)
 - [ ] Page structure matches DHCW Design System V2 components exactly
 - [ ] All consultation data is displayed in read-only format with appropriate styling
 - [ ] Patient information section clearly displays name, NHS number, DOB, age, adverse reactions
