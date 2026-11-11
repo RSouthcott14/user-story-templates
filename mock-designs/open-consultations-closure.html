@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Consultations - Choose Pharmacy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 157px;
+            background-color: #1e3a5f;
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .sidebar-logo {
+            padding: 0 20px 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-logo::before {
+            content: "⚕";
+            font-size: 24px;
+        }
+
+        .sidebar-logo span {
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            padding: 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 157px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-left h1 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e3a5f;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .user-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #0080d6;
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .pharmacy-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .sign-out {
+            color: #0080d6;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        /* Patient info bar */
+        .patient-info-bar {
+            background-color: white;
+            padding: 16px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .patient-details {
+            flex: 1;
+        }
+
+        .patient-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .patient-meta {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .patient-meta span {
+            margin-right: 16px;
+        }
+
+        .adverse-reactions-link {
+            color: #0080d6;
+            text-decoration: none;
+            font-size: 13px;
+            margin-left: 12px;
+        }
+
+        /* Tabs */
+        .tabs {
+            background-color: white;
+            border-bottom: 2px solid #e0e0e0;
+            padding: 0 30px;
+            display: flex;
+            gap: 0;
+        }
+
+        .tab {
+            padding: 14px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: #1e3a5f;
+        }
+
+        .tab.active {
+            color: #0080d6;
+            border-bottom-color: #0080d6;
+            font-weight: 500;
+        }
+
+        /* Page content */
+        .page-content {
+            flex: 1;
+            padding: 30px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NHS Warning Callout */
+        .nhsuk-warning-callout {
+            background-color: #fff7e6;
+            border-left: 4px solid #d7541c;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .nhsuk-warning-callout-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .nhsuk-warning-callout-label strong {
+            color: #d7541c;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-top: 2px;
+        }
+
+        .nhsuk-warning-icon {
+            font-size: 22px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .nhsuk-warning-callout-heading {
+            font-size: 19px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+            margin-top: 0;
+        }
+
+        .nhsuk-warning-callout p {
+            font-size: 16px;
+            color: #333;
+            margin: 0 0 12px 0;
+            line-height: 1.5;
+        }
+
+        .nhsuk-warning-callout ul {
+            margin: 12px 0 12px 20px;
+            padding: 0;
+        }
+
+        .nhsuk-warning-callout li {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* NHS Inset Text */
+        .nhsuk-inset-text {
+            background-color: #f0f4f5;
+            border-left: 4px solid #0080d6;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .nhsuk-inset-text p {
+            font-size: 16px;
+            color: #333;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Action section */
+        .action-section {
+            background-color: white;
+            padding: 24px;
+            border-radius: 0;
+            margin-bottom: 30px;
+        }
+
+        .nhsuk-heading-l {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: #333;
+        }
+
+        .nhsuk-body-m {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
+        }
+
+        /* NHS Button Group */
+        .nhsuk-button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .nhsuk-button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border: 2px solid transparent;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            line-height: 1.5;
+        }
+
+        .nhsuk-button-primary {
+            background-color: #007f3b;
+            color: white;
+        }
+
+        .nhsuk-button-primary:hover {
+            background-color: #005f2d;
+        }
+
+        .nhsuk-button-secondary {
+            background-color: white;
+            color: #007f3b;
+            border: 2px solid #007f3b;
+        }
+
+        .nhsuk-button-secondary:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            padding: 20px 30px;
+            display: flex;
+            justify-content: flex-start;
+            background-color: white;
+            border-top: 1px solid #e0e0e0;
+            margin-top: auto;
+        }
+
+        .cancel-link {
+            color: #0080d6;
+            text-decoration: underline;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .cancel-link:hover {
+            color: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <span>Choose<br>Pharmacy</span>
+            </div>
+            <nav class="sidebar-nav">
+                <li><a href="#">🏠 Home</a></li>
+                <li><a href="#">🔍 Patient search</a></li>
+                <li><a href="#">📊 Reports</a></li>
+                <li><a href="#">❓ Help</a></li>
+                <li><a href="#">⚙️ System settings</a></li>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1>Choose Pharmacy</h1>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-icon">JD</div>
+                        <span>Jane Doe</span>
+                    </div>
+                    <div class="pharmacy-selector">
+                        <span>📍</span>
+                        <span>[Pharmacy name]</span>
+                        <span>▼</span>
+                    </div>
+                    <a href="#" class="sign-out">Sign out</a>
+                </div>
+            </header>
+
+            <!-- Patient info bar -->
+            <div class="patient-info-bar">
+                <div class="patient-details">
+                    <div class="patient-name">ANDERSON, Mary (Ms)</div>
+                    <div class="patient-meta">
+                        <span>Date of birth: 4 Apr 1990 (35y 5m)</span>
+                        <span>NHS number: 123 456 7890</span>
+                        <span>Gender: Female</span>
+                        <span>Adverse reactions: <strong>Peanuts, Milk, Lactose, Eggs, Shellfish</strong></span>
+                        <a href="#" class="adverse-reactions-link">View or change</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active">Consultation</button>
+                <button class="tab">Overview</button>
+                <button class="tab">Patient details</button>
+                <button class="tab">Adverse reactions</button>
+                <button class="tab">History</button>
+                <button class="tab">Pharmacy services</button>
+                <button class="tab">WGPR</button>
+                <button class="tab">Notes</button>
+            </div>
+
+            <!-- Page content -->
+            <div class="page-content">
+                <!-- NHS Warning Callout - Keep at top -->
+                <div class="nhsuk-warning-callout">
+                    <div class="nhsuk-warning-callout-label">
+                        <span class="nhsuk-warning-icon">!</span>
+                        <strong>Important</strong>
+                    </div>
+                    <h2 class="nhsuk-warning-callout-heading">Open or Incomplete Consultations</h2>
+                    <p>This patient has an open consultation:</p>
+                    <ul>
+                        <li><strong>Service:</strong> Clinical Conditions Management (CCM)</li>
+                        <li><strong>Pharmacy:</strong> Test Pharmacy, Postcode</li>
+                        <li><strong>Started:</strong> 15 Oct 2026</li>
+                    </ul>
+                    <p><strong>If you proceed, this will be automatically closed.</strong></p>
+                </div>
+
+                <!-- Action section -->
+                <div class="action-section">
+                    <h2 class="nhsuk-heading-l">What would you like to do?</h2>
+                    <p class="nhsuk-body-m">Confirm if the patient wants to proceed or close this consultation.</p>
+                    <div class="nhsuk-button-group">
+                        <button class="nhsuk-button nhsuk-button-primary">Confirm and continue</button>
+                        <button class="nhsuk-button nhsuk-button-secondary">Refuse and close consultation</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom navigation -->
+            <div class="bottom-nav">
+                <a href="#" class="cancel-link">Cancel and exit</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
