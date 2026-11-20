@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independent Prescribers - Medications Supplied Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #003366;
+            color: white;
+            padding: 25px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+        
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .filter-summary {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .filter-summary strong {
+            color: #003366;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 600;
+            color: #003366;
+            margin-bottom: 8px;
+        }
+        
+        .stat-card .label {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .diagnosis-section {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .diagnosis-header {
+            background-color: #f9f9f9;
+            border-bottom: 2px solid #003366;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #003366;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .diagnosis-count {
+            font-size: 13px;
+            color: #666;
+            font-weight: normal;
+        }
+        
+        .medication-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .medication-table thead {
+            background-color: #f5f5f5;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .medication-table th {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .medication-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        
+        .medication-row {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .medication-row:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .medication-row.expanded {
+            background-color: #f0f7ff;
+        }
+        
+        .medication-name {
+            font-weight: 500;
+            color: #003366;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .expand-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #003366;
+            transition: transform 0.2s;
+        }
+        
+        .medication-row.expanded .expand-icon {
+            transform: rotate(90deg);
+        }
+        
+        .quantity {
+            text-align: center;
+            color: #666;
+        }
+        
+        .times-supplied {
+            text-align: center;
+            font-weight: 600;
+            color: #003366;
+        }
+        
+        .detail-row {
+            display: none;
+            background-color: #f0f7ff;
+        }
+        
+        .detail-row.show {
+            display: table-row;
+        }
+        
+        .empty-state {
+            padding: 30px;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+        
+        footer {
+            margin-top: 30px;
+            padding: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Independent Prescribers - Medications Supplied Report</h1>
+            <p>Summary of medications prescribed and supplied by working diagnosis | Pharmacist: Sarah Williams | Period: November 2024</p>
+        </header>
+        
+        <div class="filter-summary">
+            <strong>Filters Applied:</strong> Prescriber: Sarah Williams | Service: Independent Prescriber | Date Range: 01 Nov 2024 - 30 Nov 2024 | Status: All
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="number">156</div>
+                <div class="label">Total Medications Prescribed</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">34</div>
+                <div class="label">Working Diagnoses</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">89</div>
+                <div class="label">Total Consultations</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">1.75</div>
+                <div class="label">Avg Medications per Consultation</div>
+            </div>
+        </div>
+        
+        <!-- Hypertension -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Hypertension</span>
+                <span class="diagnosis-count">12 medications | 18 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Ramipril 2.5 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">9</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">40 tablets</td>
+                        <td class="quantity">40 tablets</td>
+                        <td class="times-supplied">5</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Amlodipine 5 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">8</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">3</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">30 tablets</td>
+                        <td class="quantity">30 tablets</td>
+                        <td class="times-supplied">5</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Lisinopril 10 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">6</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">6</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Indapamide 2.5 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Type 2 Diabetes -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Type 2 Diabetes Mellitus</span>
+                <span class="diagnosis-count">9 medications | 14 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Metformin 500 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">11</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">6</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">30 tablets</td>
+                        <td class="quantity">30 tablets</td>
+                        <td class="times-supplied">5</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Dapagliflozin 10 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">7</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">7</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Sitagliptin 100 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">5</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">5</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Asthma -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Asthma</span>
+                <span class="diagnosis-count">7 medications | 11 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Salbutamol 100 mcg inhaler (blue)</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">11</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">1 inhaler</td>
+                        <td class="quantity">1 inhaler</td>
+                        <td class="times-supplied">11</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Beclometasone 100 mcg inhaler (brown)</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">9</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">1 inhaler</td>
+                        <td class="quantity">1 inhaler</td>
+                        <td class="times-supplied">9</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Salmeterol 50 mcg inhaler</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">3</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">1 inhaler</td>
+                        <td class="quantity">1 inhaler</td>
+                        <td class="times-supplied">2</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">2 inhalers</td>
+                        <td class="quantity">2 inhalers</td>
+                        <td class="times-supplied">1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Hyperlipidaemia -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Hyperlipidaemia</span>
+                <span class="diagnosis-count">6 medications | 10 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Atorvastatin 20 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">8</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">8</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Simvastatin 40 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">6</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">6</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Urinary Tract Infection -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Urinary Tract Infection</span>
+                <span class="diagnosis-count">5 medications | 9 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Trimethoprim 200 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">9</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">5 tablets</td>
+                        <td class="quantity">5 tablets</td>
+                        <td class="times-supplied">9</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Nitrofurantoin 100 mg capsules</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">8 capsules</td>
+                        <td class="quantity">8 capsules</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Dyspepsia / GORD -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Dyspepsia / Gastro-Oesophageal Reflux Disease</span>
+                <span class="diagnosis-count">8 medications | 13 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Omeprazole 20 mg capsules</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">9</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 capsules</td>
+                        <td class="quantity">20 capsules</td>
+                        <td class="times-supplied">8</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">30 capsules</td>
+                        <td class="quantity">30 capsules</td>
+                        <td class="times-supplied">1</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Lansoprazole 15 mg capsules</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">7</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 capsules</td>
+                        <td class="quantity">20 capsules</td>
+                        <td class="times-supplied">7</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Ranitidine 150 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">3</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">20 tablets</td>
+                        <td class="quantity">20 tablets</td>
+                        <td class="times-supplied">3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Atopic Eczema / Dermatitis -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Atopic Eczema / Dermatitis</span>
+                <span class="diagnosis-count">6 medications | 8 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Betamethasone 0.1% cream</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">1 tube</td>
+                        <td class="quantity">1 tube</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                    
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Triamcinolone 0.1% cream</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">4</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">1 tube</td>
+                        <td class="quantity">1 tube</td>
+                        <td class="times-supplied">3</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">2 tubes</td>
+                        <td class="quantity">2 tubes</td>
+                        <td class="times-supplied">1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Migraine / Tension Headache -->
+        <div class="diagnosis-section">
+            <div class="diagnosis-header">
+                <span>Migraine / Tension Headache</span>
+                <span class="diagnosis-count">4 medications | 7 consultations</span>
+            </div>
+            <table class="medication-table">
+                <thead>
+                    <tr>
+                        <th>Medication Name</th>
+                        <th>Quantity Supplied</th>
+                        <th>Times Supplied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="medication-row" onclick="toggleDetail(this)">
+                        <td class="medication-name"><span class="expand-icon">▶</span>Sumatriptan 50 mg tablets</td>
+                        <td class="quantity">-</td>
+                        <td class="times-supplied">7</td>
+                    </tr>
+                    <tr class="detail-row">
+                        <td class="medication-name" style="padding-left: 40px;">5 tablets</td>
+                        <td class="quantity">5 tablets</td>
+                        <td class="times-supplied">7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <footer>
+            <p>Generated: 18 November 2024 | Report Period: 1 November - 30 November 2024</p>
+        </footer>
+    </div>
+    
+    <script>
+        function toggleDetail(row) {
+            // Find all detail rows that follow this medication row
+            let currentRow = row.nextElementSibling;
+            let isExpanding = !row.classList.contains('expanded');
+            
+            // Toggle the expanded state
+            row.classList.toggle('expanded');
+            
+            // Show/hide all consecutive detail rows
+            while (currentRow && currentRow.classList.contains('detail-row')) {
+                currentRow.classList.toggle('show');
+                currentRow = currentRow.nextElementSibling;
+            }
+        }
+    </script>
+</body>
+</html>
